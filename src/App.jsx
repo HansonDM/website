@@ -858,7 +858,7 @@ function App() {
 
       {/* 互動功能 */}
       {showQuiz && <BusinessTroubleQuiz setShowQuiz={setShowQuiz} setQuizResult={setQuizResult} />}
-      {showAIDemo && <AICareerAssistantDemo setShowAIDemo={setShowAIDemo} />}
+      {showAIDemo && <AICareerAssistantDemo isOpen={showAIDemo} onClose={() => setShowAIDemo(false)} />}
     </div>
   )
 }
