@@ -368,24 +368,24 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h3 className="text-3xl font-bold text-gray-900 mb-6">品牌故事</h3>
-              <p className="text-lg text-gray-700 mb-6">
+              <p className="text-lg text-gray-800 mb-6">
                 韓森管理顧問成立於2020年，由一群具有豐富企業經驗的專業顧問共同創立。我們深信每個企業和個人都有無限的潛能，只需要正確的引導和支持。
               </p>
-              <p className="text-lg text-gray-700 mb-6">
+              <p className="text-lg text-gray-800 mb-6">
                 我們的使命是透過專業的諮詢服務，協助企業解決營運挑戰，同時幫助個人實現職涯目標。我們不只是顧問，更是您成功路上的夥伴。
               </p>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center">
                   <Heart className="w-5 h-5 text-red-500 mr-2" />
-                  <span className="text-gray-700">同理心</span>
+                  <span className="text-gray-800">同理心</span>
                 </div>
                 <div className="flex items-center">
                   <Lightbulb className="w-5 h-5 text-yellow-500 mr-2" />
-                  <span className="text-gray-700">創新思維</span>
+                  <span className="text-gray-800">創新思維</span>
                 </div>
                 <div className="flex items-center">
                   <Shield className="w-5 h-5 text-blue-500 mr-2" />
-                  <span className="text-gray-700">專業可靠</span>
+                  <span className="text-gray-800">專業可靠</span>
                 </div>
               </div>
             </div>
@@ -805,7 +805,7 @@ function App() {
                   <div className="space-y-3">
                     <div className="flex items-center">
                       <Phone className="w-5 h-5 text-blue-600 mr-3" />
-                      <span>+886-2-1234-5678</span>
+                      <span>+886-982-899-889</span>
                     </div>
                     <div className="flex items-center">
                       <Mail className="w-5 h-5 text-blue-600 mr-3" />
