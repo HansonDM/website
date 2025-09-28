@@ -712,7 +712,7 @@ function App() {
             <Card className="p-8 shadow-lg flex flex-col items-center justify-center text-center">
               <CardHeader className="p-0 mb-6">
                 <CardTitle className="text-3xl font-bold">諮詢表單</CardTitle>
-                <CardDescription className="text-gray-600">點擊下方按鈕，前往填寫諮詢表單，我們將為您匹配最適合的顧問。</CardDescription>
+                <CardDescription className="text-gray-600">留下您的煩惱，我們將為您匹配最適合的顧問。點擊下方按鈕，前往填寫諮詢表單。</CardDescription>
               </CardHeader>
               <Button 
                 size="lg" 
