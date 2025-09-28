@@ -134,7 +134,7 @@ function App() {
       image: teamPhoto
     },
     {
-      name: '李總監',
+      name: '王總監',
       position: '人才發展總監',
       keywords: ['職涯諮詢', '教練認證', '人才培訓'],
       image: teamPhoto
