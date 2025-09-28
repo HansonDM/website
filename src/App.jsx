@@ -710,7 +710,7 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* 諮詢表單 */}
             <Card className="p-8 shadow-lg flex flex-col items-center justify-center text-center">
-              <CardHeader className="p-0 mb-6">
+              <CardHeader className="p-0 mb-6 flex flex-row items-center justify-center">
                 <CardTitle className="text-3xl font-bold">諮詢表單</CardTitle>
                 <CardDescription className="text-gray-600">留下您的煩惱，我們將為您匹配最適合的顧問。點擊下方按鈕，前往填寫諮詢表單。</CardDescription>
               </CardHeader>
@@ -728,7 +728,7 @@ function App() {
             <div className="space-y-10">
               {/* 聯絡資訊 */}
               <Card className="p-8 shadow-lg">
-                <CardHeader className="p-0 mb-6">
+                <CardHeader className="p-0 mb-6 flex flex-row items-center justify-center">
                   <CardTitle className="text-3xl font-bold">聯絡資訊</CardTitle>
                   <CardDescription className="text-gray-600">隨時與我們保持聯繫。</CardDescription>
                 </CardHeader>
@@ -754,7 +754,7 @@ function App() {
 
               {/* 合作機構 / 協會 Logo */}
               <Card className="p-8 shadow-lg">
-                <CardHeader className="p-0 mb-6">
+                <CardHeader className="p-0 mb-6 flex flex-row items-center justify-center">
                   <CardTitle className="text-3xl font-bold">合作夥伴</CardTitle>
                   <CardDescription className="text-gray-600">我們與業界頂尖機構攜手合作，提供最優質的服務。</CardDescription>
                 </CardHeader>
