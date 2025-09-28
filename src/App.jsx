@@ -709,81 +709,18 @@ function App() {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* 諮詢表單 */}
-            <Card className="p-8 shadow-lg">
+            <Card className="p-8 shadow-lg flex flex-col items-center justify-center text-center">
               <CardHeader className="p-0 mb-6">
                 <CardTitle className="text-3xl font-bold">諮詢表單</CardTitle>
-                <CardDescription className="text-gray-600">留下您的煩惱，我們將為您匹配最適合的顧問。</CardDescription>
+                <CardDescription className="text-gray-600">點擊下方按鈕，前往填寫諮詢表單，我們將為您匹配最適合的顧問。</CardDescription>
               </CardHeader>
-              <form onSubmit={handleFormSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">姓名</label>
-                  <Input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="您的姓名"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">電子郵件</label>
-                  <Input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formData.email} 
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="您的電子郵件"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">公司名稱 (選填)</label>
-                  <Input 
-                    type="text" 
-                    id="company" 
-                    name="company" 
-                    value={formData.company} 
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="您的公司名稱"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="problemType" className="block text-sm font-medium text-gray-700 mb-2">煩惱類型</label>
-                  <Select 
-                    value={formData.problemType}
-                    onValueChange={(value) => setFormData({ ...formData, problemType: value })}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="請選擇您的煩惱類型" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="企業組織">企業組織</SelectItem>
-                      <SelectItem value="個人職涯">個人職涯</SelectItem>
-                      <SelectItem value="數位轉型">數位轉型</SelectItem>
-                      <SelectItem value="永續發展">永續發展</SelectItem>
-                      <SelectItem value="其他">其他</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">詳細描述您的煩惱</label>
-                  <Textarea 
-                    id="description" 
-                    name="description" 
-                    value={formData.description} 
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="請詳細描述您遇到的問題或需求，以便我們提供更精準的協助。"
-                    rows={5}
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  提交諮詢
-                </Button>
-              </form>
+              <Button 
+                size="lg" 
+                className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+                onClick={() => window.open("https://app.smartsheet.com/b/form/780c706bfc0f47ca81cb3773eff062e6", "_blank")}
+              >
+                前往填寫諮詢表單
+              </Button>
             </Card>
 
             {/* 聯絡資訊與CTA */}
