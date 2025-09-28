@@ -710,10 +710,9 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* 諮詢表單 */}
             <Card className="p-8 shadow-lg flex flex-col items-center justify-center text-center max-w-lg mx-auto">
-              <CardHeader className="p-0 mb-6 flex flex-col items-center justify-center text-center">
+              <CardHeader className="p-0 mb-6 text-center">
                 <CardTitle className="text-3xl font-bold mb-2">諮詢表單</CardTitle>
-                <CardDescription className="text-gray-600 text-base text-center">留下您的煩惱，我們將為您匹配最適合的顧問。點擊下方按鈕，前往填寫諮詢表單。</CardDescription>
-              </CardHeader>
+      <CardDescription className="text-gray-600 text-base text-center max-w-md mx-auto">留下您的煩惱，我們將為您匹配最適合的顧問。點擊下方按鈕，前往填寫諮詢表單。</CardDescription>        </CardHeader>
 <a 
                 href="https://app.smartsheet.com/b/form/780c706bfc0f47ca81cb3773eff062e6" 
                 target="_blank" 
