@@ -801,7 +801,7 @@ function App() {
                   </div>
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 text-blue-600 mr-3" />
-                    <span>contact@hansenconsulting.com</span>
+                    <span>hanson.lin@hansondm.com</span>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="w-5 h-5 text-blue-600 mr-3" />
