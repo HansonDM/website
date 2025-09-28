@@ -774,10 +774,12 @@ function App() {
 
               {/* CTA */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg">
-                  <Star className="w-6 h-6 mr-3" />
-                  預約免費初談
-                </Button>
+                <a href="https://calendar.app.google/mVxoNiZ5xwsfudnD7" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg">
+                    <Star className="w-6 h-6 mr-3" />
+                    預約免費初談
+                  </Button>
+                </a>
                 <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 py-6 text-lg">
                   <Download className="w-6 h-6 mr-3" />
                   下載白皮書
