@@ -847,7 +847,7 @@ function App() {
       </section>
 
       {/* 小優對話框 */}
-      {/* <XiaoYouChatbot /> */}
+      <XiaoYouChatbot />
 
       {/* 頁腳 */}
       <footer className="bg-gray-800 text-white py-8">
