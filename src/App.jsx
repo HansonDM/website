@@ -34,7 +34,7 @@ import {
   Bot
 } from 'lucide-react'
 import './App.css'
-// import { BusinessTroubleQuiz, AICareerAssistantDemo, XiaoYouChatbot, SROIESGVisualization } from './components/InteractiveFeatures.jsx'
+import { BusinessTroubleQuiz, AICareerAssistantDemo, XiaoYouChatbot, SROIESGVisualization } from './components/InteractiveFeatures.jsx'
 
 // 導入圖片
 import homepageBanner from './assets/homepage_banner.jpg'
@@ -857,7 +857,7 @@ function App() {
       </footer>
 
       {/* 互動功能 */}
-      {/* {showQuiz && <BusinessTroubleQuiz setShowQuiz={setShowQuiz} setQuizResult={setQuizResult} />} */}
+      {showQuiz && <BusinessTroubleQuiz setShowQuiz={setShowQuiz} setQuizResult={setQuizResult} />}
       {/* {showAIDemo && <AICareerAssistantDemo setShowAIDemo={setShowAIDemo} />} */}
     </div>
   )
