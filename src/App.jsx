@@ -128,7 +128,7 @@ function App() {
 
   const teamMembers = [
     {
-      name: '張執行長',
+      name: '林執行長',
       position: '執行長暨首席顧問',
       keywords: ['組織發展', '策略規劃', '領導力'],
       image: teamPhoto
