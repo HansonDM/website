@@ -100,6 +100,7 @@ function App() {
     { id: 'home', label: '首頁' },
     { id: 'about', label: '關於我們' },
     { id: 'solutions', label: '解憂方案' },
+    { id: 'workshop', label: '人才盤點工作坊' },
     { id: 'cases', label: '成功案例' },
     { id: 'insights', label: '內容專區' },
     { id: 'contact', label: '聯絡我們' }
@@ -144,6 +145,19 @@ function App() {
       position: '數位轉型經理',
       keywords: ['AI應用', '數據分析', '流程優化'],
       image: teamPhoto
+    }
+  ]
+
+  const professionalCapabilities = [
+    {
+      title: 'AI 客服訓練師',
+      description: '專精於中文/英文智能客服機器人的知識庫建置、問題排除與優化系統。具備AI語意分析邏輯、對話內容撰寫、數據分析等專業能力。',
+      skills: ['知識庫建置', 'AI語意分析', '對話設計', '數據分析']
+    },
+    {
+      title: 'Power BI 應用管理及 AI 數據整合分析師',
+      description: '專業於數據蒐集整合、Power BI 報表設計維護、AI與數據分析應用。能夠將複雜數據轉化為商業洞察，提供決策支持。',
+      skills: ['數據整合', 'Power BI', '機器學習', '商業分析']
     }
   ]
 
@@ -376,6 +390,9 @@ function App() {
               <p className="text-lg text-gray-800 mb-6">
                 我們的使命是透過專業的諮詢服務，協助企業解決營運挑戰，同時幫助個人實現職涯目標。我們不只是顧問，更是您成功路上的夥伴。
               </p>
+              <p className="text-lg text-gray-800 mb-6">
+                作為企業解憂事務所，我們提供一站式企業管理諮詢服務，涵蓋組織發展、人才盤點、ESG永續發展等。我們結合AI工具與數據分析，提供客製化解決方案，確保每一分投資都能創造可衡量的價值。
+              </p>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center">
                   <Heart className="w-5 h-5 text-red-500 mr-2" />
@@ -429,7 +446,7 @@ function App() {
           </div>
 
           {/* 顧問團隊介紹 */}
-          <div>
+          <div className="mb-16">
             <h3 className="text-3xl font-bold text-gray-900 mb-12 text-center">顧問團隊</h3>
             <div className="grid md:grid-cols-3 gap-8">
               {teamMembers.map((member, index) => (
@@ -445,6 +462,28 @@ function App() {
                     <div className="flex flex-wrap justify-center gap-2">
                       {member.keywords.map((keyword, idx) => (
                         <Badge key={idx} variant="secondary">{keyword}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* 專業能力展示 */}
+          <div>
+            <h3 className="text-3xl font-bold text-gray-900 mb-12 text-center">專業能力</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              {professionalCapabilities.map((capability, index) => (
+                <Card key={index} className="hover:shadow-xl transition-shadow duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="text-xl font-bold mb-3 text-blue-600">{capability.title}</h4>
+                    <p className="text-gray-700 mb-4">{capability.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {capability.skills.map((skill, idx) => (
+                        <Badge key={idx} variant="outline" className="text-blue-600 border-blue-200">
+                          {skill}
+                        </Badge>
                       ))}
                     </div>
                   </CardContent>
@@ -553,6 +592,176 @@ function App() {
             </div>
           </div>
           
+
+        </div>
+      </section>
+
+      {/* 人才盤點工作坊 */}
+      <section id="workshop" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">人才盤點評測工作坊</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              認識自我 × 對齊公司目標 × 制定學習計劃
+            </p>
+          </div>
+
+          {/* 工作坊目標 */}
+          <div className="mb-16">
+            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">工作坊目標</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-3">了解自身特質</h4>
+                  <p className="text-gray-700">協助員工透過心理測驗了解自身特質、能力與潛在職涯方向</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-3">連結組織需求</h4>
+                  <p className="text-gray-700">將個人測驗結果與組織的人才盤點需求做連結</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <BookOpen className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-3">制定發展計畫</h4>
+                  <p className="text-gray-700">引導員工制定符合公司目標的個人化學習與發展計畫 (IDP)</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* 工作坊流程 */}
+          <div className="mb-16">
+            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">工作坊流程</h3>
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">1</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">暖身與引導</h4>
+                        <p className="text-gray-700 mb-2"><strong>破冰活動：</strong>一句話形容工作風格</p>
+                        <p className="text-gray-700"><strong>說明目的：</strong>認識自己 × 看見與公司發展的交集</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">2</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">心理測驗進行</h4>
+                        <p className="text-gray-700 mb-2"><strong>測驗選擇：</strong>HOLLAND / MBTI / DISC / 工作價值觀 / 華格納</p>
+                        <p className="text-gray-700"><strong>活動：</strong>線上或紙本作答，快速生成個人報告</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">3</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">結果分享與討論</h4>
+                        <p className="text-gray-700 mb-2"><strong>個人反思：</strong>最有共鳴、最意外的發現</p>
+                        <p className="text-gray-700"><strong>小組討論：</strong>特質如何幫助工作？哪些能力需要提升？</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="space-y-6">
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">4</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">公司目標對焦</h4>
+                        <p className="text-gray-700 mb-2">分享公司未來 1-3 年發展重點</p>
+                        <p className="text-gray-700 mb-2">呈現人才盤點核心能力需求</p>
+                        <p className="text-gray-700">示意圖：組織需求 × 員工特質交集</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">5</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">個人學習計畫 (IDP)</h4>
+                        <div className="text-gray-700 space-y-1">
+                          <p>• 測驗亮點</p>
+                          <p>• 需加強的能力 / 行為</p>
+                          <p>• 與公司策略連結</p>
+                          <p>• 學習行動 (課程 / 專案 / 導師)</p>
+                          <p>• 6-12 個月追蹤指標</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start">
+                      <div className="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4 mt-1 text-sm font-bold">6</div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-2">行動承諾與成效檢核</h4>
+                        <p className="text-gray-700 mb-2"><strong>便利貼：</strong>寫下下一步行動，貼在行動牆</p>
+                        <p className="text-gray-700 mb-2"><strong>公司支持：</strong>培訓資源、導師制度、學習平台</p>
+                        <p className="text-gray-700"><strong>追蹤：</strong>員工自我覺察提升、學習計畫完成率</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+
+          {/* 工作坊效益 */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8">
+            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">工作坊效益</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Brain className="w-8 h-8 text-blue-600" />
+                </div>
+                <h4 className="text-lg font-semibold mb-2">提升自我覺察</h4>
+                <p className="text-gray-700">透過科學化測驗，員工能更深入了解自己的特質與潛能</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-green-600" />
+                </div>
+                <h4 className="text-lg font-semibold mb-2">對齊組織目標</h4>
+                <p className="text-gray-700">將個人發展與公司策略緊密結合，創造雙贏局面</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp className="w-8 h-8 text-purple-600" />
+                </div>
+                <h4 className="text-lg font-semibold mb-2">促進持續成長</h4>
+                <p className="text-gray-700">建立系統化的學習發展機制，支持長期職涯發展</p>
+              </div>
+            </div>
+          </div>
 
         </div>
       </section>
