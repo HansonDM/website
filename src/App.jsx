@@ -714,14 +714,13 @@ function App() {
                 <CardTitle className="text-3xl font-bold">諮詢表單</CardTitle>
                 <CardDescription className="text-gray-600">留下您的煩惱，我們將為您匹配最適合的顧問。點擊下方按鈕，前往填寫諮詢表單。</CardDescription>
               </CardHeader>
-              <a 
-                href="https://app.smartsheet.com/b/form/780c706bfc0f47ca81cb3773eff062e6" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-10 rounded-md px-6 has-[>svg]:px-4 bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+<Button 
+                size="lg" 
+                className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+                onClick={() => window.open("https://app.smartsheet.com/b/form/780c706bfc0f47ca81cb3773eff062e6", "_blank")}
               >
                 前往填寫諮詢表單
-              </a>
+              </Button>
             </Card>
 
             {/* 聯絡資訊與CTA */}
