@@ -651,10 +651,12 @@ function App() {
                 </div>
                 <h4 className="text-lg font-semibold mb-3">「企業解憂事務所」專區</h4>
                 <p className="text-gray-700 mb-4">深度訪談企業領袖，分享經營智慧與解憂之道。</p>
-                <Button variant="outline" className="w-full">
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  前往收聽
-                </Button>
+                <a href="https://podcasts.apple.com/us/podcast/%E4%BC%81%E6%A5%AD%E8%A7%A3%E6%86%82%E4%BA%8B%E5%8B%99%E6%89%80/id1667165320" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full">
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                    前往收聽
+                  </Button>
+                </a>
               </CardContent>
             </Card>
 
