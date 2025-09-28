@@ -322,8 +322,8 @@ function App() {
                   <div className={`${entry.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white group-hover:scale-110 transition-transform`}>
                     {entry.icon}
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{entry.title}</h3>
-                  <p className="text-sm opacity-80">{entry.description}</p>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-900">{entry.title}</h3>
+                  <p className="text-sm text-gray-700">{entry.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -334,7 +334,7 @@ function App() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+              className="bg-white/20 border-white/30 text-gray-900 hover:bg-white/30"
               onClick={() => setShowQuiz(true)}
             >
               <HelpCircle className="w-5 h-5 mr-2" />
@@ -343,7 +343,7 @@ function App() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+              className="bg-white/20 border-white/30 text-gray-900 hover:bg-white/30"
               onClick={() => setShowAIDemo(true)}
             >
               <Bot className="w-5 h-5 mr-2" />
