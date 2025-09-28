@@ -459,7 +459,7 @@ function App() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
               透過數據呈現我們在永續發展和社會影響力方面的具體成效，讓每一分投資都能創造可衡量的價值。
             </p>
-            {/* <SROIESGVisualization /> */}
+            <SROIESGVisualization />
           </div>
         </div>
       </section>
@@ -566,7 +566,7 @@ function App() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
               透過數據呈現我們在永續發展和社會影響力方面的具體成效，讓每一分投資都能創造可衡量的價值。
             </p>
-            {/* <SROIESGVisualization /> */}
+            <SROIESGVisualization />
           </div>
         </div>
       </section>
@@ -624,7 +624,7 @@ function App() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
               透過數據呈現我們在永續發展和社會影響力方面的具體成效，讓每一分投資都能創造可衡量的價值。
             </p>
-            {/* <SROIESGVisualization /> */}
+            <SROIESGVisualization />
           </div>
         </div>
       </section>
