@@ -744,12 +744,24 @@ function App() {
                   <CardDescription className="text-gray-600">我們與業界頂尖機構攜手合作，提供最優質的服務。</CardDescription>
                 </CardHeader>
                 <div className="grid grid-cols-3 gap-6 items-center justify-center">
-                  <img src="https://via.placeholder.com/100x50?text=Partner1" alt="Partner 1" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
-                  <img src="https://via.placeholder.com/100x50?text=Partner2" alt="Partner 2" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
-                  <img src="https://via.placeholder.com/100x50?text=Partner3" alt="Partner 3" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
-                  <img src="https://via.placeholder.com/100x50?text=Partner4" alt="Partner 4" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
-                  <img src="https://via.placeholder.com/100x50?text=Partner5" alt="Partner 5" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
-                  <img src="https://via.placeholder.com/100x50?text=Partner6" alt="Partner 6" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  <a href="https://www.facebook.com/lpahk" target="_blank" rel="noopener noreferrer">
+                    <img src="/home/ubuntu/upload/search_images/XQJgcnkDCrsp.png" alt="Facebook" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/hansen-management-consulting/" target="_blank" rel="noopener noreferrer">
+                    <img src="/home/ubuntu/upload/search_images/3tkMvUUaM3gf.png" alt="LinkedIn" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
+                  <a href="https://www.youtube.com/@hansondm" target="_blank" rel="noopener noreferrer">
+                    <img src="/home/ubuntu/upload/search_images/KVQpc2KCkH7e.png" alt="YouTube" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
+                  <a href="https://www.instagram.com/hansen.consulting/" target="_blank" rel="noopener noreferrer">
+                    <img src="/home/ubuntu/upload/search_images/sGlBBd0aTpTV.png" alt="Instagram" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
+                  <a href="https://www.earsun888.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://via.placeholder.com/100x50?text=Earsun" alt="Earsun" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
+                  <a href="https://www.earsun888.com" target="_blank" rel="noopener noreferrer">
+                    <img src="/home/ubuntu/upload/pasted_file_u9WbM1_image.png" alt="Earsun" className="mx-auto opacity-75 hover:opacity-100 transition-opacity" />
+                  </a>
                 </div>
               </Card>
 
