@@ -140,7 +140,7 @@ function App() {
       image: teamPhoto
     },
     {
-      name: '王經理',
+      name: '李經理',
       position: '數位轉型經理',
       keywords: ['AI應用', '數據分析', '流程優化'],
       image: teamPhoto
