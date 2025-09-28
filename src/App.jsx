@@ -809,7 +809,7 @@ function App() {
                   </div>
                   <div className="flex items-center">
                     <Globe className="w-5 h-5 text-blue-600 mr-3" />
-                    <span>www.hansenconsulting.com</span>
+                    <span>www.hansondm.com</span>
                   </div>
                 </div>
               </Card>
