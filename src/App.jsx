@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { Input } from '@/components/ui/input.jsx'
-import { Textarea } from '@/components/ui/textarea.jsx'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.jsx'
+
 import {
   Menu,
   X,
@@ -59,13 +57,6 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    problemType: '',
-    description: ''
-  })
   const [showQuiz, setShowQuiz] = useState(false)
   const [showAIDemo, setShowAIDemo] = useState(false)
   const [quizResult, setQuizResult] = useState(null)
@@ -87,17 +78,7 @@ function App() {
     }
   }
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-    alert('感謝您的諮詢！我們將盡快與您聯繫。')
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      problemType: '',
-      description: ''
-    })
-  }
+
 
   const navigation = [
     { id: 'home', label: '首頁' },
@@ -583,66 +564,22 @@ function App() {
               </div>
             </div>
 
-            {/* 聯絡表單 */}
+            {/* Google Forms 嵌入 */}
             <div>
               <h3 className="text-2xl font-bold mb-6">線上諮詢</h3>
-              <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    placeholder="您的姓名"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="電子郵件"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    placeholder="公司名稱"
-                    value={formData.company}
-                    onChange={(e) => setFormData({...formData, company: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <Select 
-                    value={formData.problemType}
-                    onValueChange={(value) => setFormData({...formData, problemType: value})}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="諮詢類型" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="esg">ESG策略與人力資源</SelectItem>
-                      <SelectItem value="digital">數位顧問</SelectItem>
-                      <SelectItem value="communication">員工關係與溝通</SelectItem>
-                      <SelectItem value="talent">職涯與人才盤點</SelectItem>
-                      <SelectItem value="training">職涯規劃與內訓</SelectItem>
-                      <SelectItem value="project">專案管理與流程優化</SelectItem>
-                      <SelectItem value="other">其他</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Textarea
-                    placeholder="請描述您的需求..."
-                    value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    rows={5}
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                  送出諮詢
-                </Button>
-              </form>
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden" style={{height: '1000px'}}>
+                <iframe 
+                  src="https://docs.google.com/forms/d/e/1FAIpQLSfMKueT9qwmBsAFvTeWnYExu_UITI8_ceqFkB0icH7gj8/viewform?embedded=true" 
+                  width="100%" 
+                  height="100%" 
+                  frameBorder="0" 
+                  marginHeight="0" 
+                  marginWidth="0"
+                  title="韓森管理顧問線上諮詢表單"
+                >
+                  載入中…
+                </iframe>
+              </div>
             </div>
           </div>
         </div>
