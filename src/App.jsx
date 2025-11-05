@@ -566,14 +566,16 @@ function App() {
                   <MessageCircle className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-900">LINE</p>
-                    <p className="text-gray-600">請掃描 QR Code 或搜尋 ID 加入</p>
+                    <a href="https://lin.ee/X8h0cv5" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                      點此加入 LINE 官方帳號
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Globe className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-900">Google Calendar 預約</p>
-                    <a href="#" className="text-blue-600 hover:underline">
+                    <a href="https://calendar.app.google/gsmSP4Yu1vvqYxub8" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                       點此預約諮詢時間
                     </a>
                   </div>
