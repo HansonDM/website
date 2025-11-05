@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韓森管理顧問 - 靜態測試頁面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 韓森管理顧問網站測試成功！</h1>
+        
+        <div class="status">
+            <strong>✅ 靜態檔案載入正常</strong><br>
+            如果您看到這個頁面，表示 GitHub Pages 基礎設定正常運作。
+        </div>
+        
+        <div class="info">
+            <strong>📋 測試項目：</strong>
+            <ul>
+                <li>HTML 檔案正確載入</li>
+                <li>CSS 樣式正常顯示</li>
+                <li>中文字體正確顯示</li>
+                <li>GitHub Pages 部署成功</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="testJavaScript()">測試 JavaScript 功能</button>
+        </div>
+        
+        <div id="jsResult" style="margin-top: 20px;"></div>
+    </div>
+    
+    <script>
+        function testJavaScript() {
+            const result = document.getElementById('jsResult');
+            result.innerHTML = `
+                <div class="status">
+                    <strong>✅ JavaScript 功能正常</strong><br>
+                    時間：${new Date().toLocaleString('zh-TW')}<br>
+                    用戶代理：${navigator.userAgent.substring(0, 50)}...
+                </div>
+            `;
+        }
+        
+        // 自動顯示載入時間
+        window.onload = function() {
+            console.log('韓森管理顧問測試頁面載入完成');
+            document.title = '韓森管理顧問 - 測試成功 ✅';
+        };
+    </script>
+</body>
+</html>
