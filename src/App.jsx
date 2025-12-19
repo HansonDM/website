@@ -37,6 +37,7 @@ import {
 } from 'lucide-react'
 import './App.css'
 import { BusinessTroubleQuiz, AICareerAssistantDemo, XiaoYouChatbot, SROIESGVisualization } from './components/InteractiveFeatures.jsx'
+import ChatBot from './components/ChatBot.jsx'
 
 // 導入圖片
 import homepageBanner from './assets/homepage_banner.jpg'
@@ -798,6 +799,9 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* 聊天機器人 */}
+      <ChatBot />
     </div>
   )
 }
