@@ -537,13 +537,13 @@ function App() {
               </h3>
               <div className="aspect-video rounded-lg overflow-hidden bg-gray-100">
                 <iframe 
-                  src="https://open.firstory.me/embed/user/ckfvkxpn3xtxl0877iqw4oy1k" 
+                  title="Firstory"
+                  src="https://open.firstory.me/user/biznutrify543/platforms" 
                   height="450" 
                   width="100%" 
                   frameBorder="0" 
                   scrolling="no"
                   className="w-full h-full"
-                  title="企業解憂事務所 Podcast"
                 />
               </div>
             </div>
