@@ -13,6 +13,14 @@ const ChatBot = () => {
   ])
   const [inputMessage, setInputMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [sessionId] = useState(() => {
+    // 生成唯一的 sessionId，如果已存在則使用現有的
+    const existing = localStorage.getItem('chatbot_session_id')
+    if (existing) return existing
+    const newId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+    localStorage.setItem('chatbot_session_id', newId)
+    return newId
+  })
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -46,7 +54,11 @@ const ChatBot = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({
+          action: 'sendMessage',
+          sessionId: sessionId,
+          chatInput: userMessage
+        })
       })
 
       if (!response.ok) {
