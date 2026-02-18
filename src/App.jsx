@@ -204,19 +204,6 @@ function App() {
     }
   ]
 
-  const partnerBrands = [
-    { name: '裕隆集團', category: '製造業' },
-    { name: 'Microsoft', category: '科技業' },
-    { name: 'BIONIME 博寧', category: '醫療器材' },
-    { name: 'gogoro', category: '智慧移動' },
-    { name: 'CORNING', category: '材料科學' },
-    { name: 'Louis Vuitton', category: '精品零售' },
-    { name: 'Chanel', category: '精品零售' },
-    { name: 'CHAUMET', category: '精品珠寶' },
-    { name: 'JOYCE', category: '時尚零售' },
-    { name: 'Starbucks', category: '餐飲連鎖' }
-  ]
-
   const caseStudies = [
     {
       category: '企業組織案例',
@@ -424,22 +411,7 @@ function App() {
             </div>
           </div>
 
-          {/* 合作品牌 */}
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-12 text-center">合作品牌</h3>
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-                {partnerBrands.map((brand, index) => (
-                  <div key={index} className="text-center">
-                    <div className="bg-gray-100 rounded-lg p-4 mb-2 hover:bg-gray-200 transition-colors">
-                      <p className="font-semibold text-gray-800">{brand.name}</p>
-                    </div>
-                    <p className="text-xs text-gray-500">{brand.category}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
 
