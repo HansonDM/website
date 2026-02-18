@@ -43,6 +43,7 @@ import ChatBot from './components/ChatBot.jsx'
 import homepageBanner from './assets/homepage_banner.jpg'
 import teamPhoto from './assets/team_photo.jpg'
 import hansonPhoto from './assets/hanson_lin_photo.jpg'
+import vincentPhoto from './assets/vincent_wu_photo.jpg'
 import cxFramework from './assets/enterprise_service_cx_framework.png'
 import talentMapping from './assets/enterprise_service_talent_mapping.png'
 import esgImage from './assets/enterprise_service_esg.jpg'
@@ -129,7 +130,7 @@ function App() {
       keywords: ['人才發展', '品牌管理', '通路開發', '顧客體驗'],
       brands: ['Louis Vuitton', 'Chanel', 'CHAUMET', 'JOYCE', 'Starbucks'],
       additionalInfo: '2025年師範大學全球時尚EMBA客座講師，授課主題：「從精品通路到感官場景，打造打動人心的品牌五感體驗」',
-      image: teamPhoto
+      image: vincentPhoto
     }
   ]
 
