@@ -116,17 +116,18 @@ function App() {
   const teamMembers = [
     {
       name: 'Hanson Lin 林明輝',
-      position: '韓森管理顧問有限公司負責人',
-      description: '企業解憂事務所共同創辦人、諾亞未來人才教育學會理事',
-      keywords: ['職涯領導力', '客戶服務管理', '企業數位轉型', '數位行銷', '專案管理', '資訊管理'],
+      position: '資深企業架構師與數位轉型顧問',
+      description: '韓森管理顧問有限公司負責人、企業解憂事務所共同創辦人、諾亞未來人才教育學會理事',
+      keywords: ['資訊管理顧問', '專案管理顧問', '客戶服務管理顧問', '數位行銷顧問', '企業數位轉型顧問', '職涯領導力顧問'],
       image: teamPhoto
     },
     {
       name: 'Vincent C. L. Wu 吳志倫',
-      position: '全球市場拓展與品牌戰略顧問',
-      description: '蓋洛普優勢認證教練,擁有超過25年橫跨亞洲、歐洲與非洲的國際市場及大型零售旗艦/商業地產實戰經驗',
-      keywords: ['人才發展', '品牌管理', '通路開發', '顧客體驗', '全球時尚EMBA客座講師'],
+      position: '橫跨三洲的國際奢侈品品牌戰略家',
+      description: '全球市場拓展與品牌戰略顧問、蓋洛普優勢認證教練。擁有超過25年，橫跨亞洲、歐洲與非洲的國際市場及大型零售旗艦實戰經驗。外派歷程：西非、荷蘭、泰國、中國大陸。',
+      keywords: ['人才發展', '品牌管理', '通路開發', '顧客體驗'],
       brands: ['Louis Vuitton', 'Chanel', 'CHAUMET', 'JOYCE', 'Starbucks'],
+      additionalInfo: '2025年師範大學全球時尚EMBA客座講師，授課主題：「從精品通路到感官場景，打造打動人心的品牌五感體驗」',
       image: teamPhoto
     }
   ]
@@ -403,9 +404,16 @@ function App() {
                       </div>
                     </div>
                     {member.brands && (
-                      <div>
+                      <div className="mb-4">
                         <h5 className="font-semibold text-gray-800 mb-2">曾任職品牌：</h5>
                         <p className="text-gray-600 text-sm">{member.brands.join(', ')}</p>
+                      </div>
+                    )}
+                    {member.additionalInfo && (
+                      <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                        <p className="text-gray-700 text-sm">
+                          <span className="font-semibold text-blue-600">未來動態：</span> {member.additionalInfo}
+                        </p>
                       </div>
                     )}
                   </CardContent>
