@@ -44,6 +44,7 @@ import homepageBanner from './assets/homepage_banner.jpg'
 import teamPhoto from './assets/team_photo.jpg'
 import hansonPhoto from './assets/hanson_lin_photo.jpg'
 import vincentPhoto from './assets/vincent_wu_photo.jpg'
+import hansonBrands from './assets/hanson_brands.png'
 import cxFramework from './assets/enterprise_service_cx_framework.png'
 import talentMapping from './assets/enterprise_service_talent_mapping.png'
 import esgImage from './assets/enterprise_service_esg.jpg'
@@ -121,7 +122,8 @@ function App() {
       position: '資深企業架構師與數位轉型顧問',
       description: '韓森管理顧問有限公司負責人、企業解憂事務所共同創辦人、諾亞未來人才教育學會理事',
       keywords: ['資訊管理顧問', '專案管理顧問', '客戶服務管理顧問', '數位行銷顧問', '企業數位轉型顧問', '職涯領導力顧問'],
-      image: hansonPhoto
+      image: hansonPhoto,
+      brandsImage: hansonBrands
     },
     {
       name: 'Vincent C. L. Wu 吳志倫',
@@ -396,6 +398,18 @@ function App() {
                       <div className="mb-4">
                         <h5 className="font-semibold text-gray-800 mb-2">曾任職品牌：</h5>
                         <p className="text-gray-600 text-sm">{member.brands.join(', ')}</p>
+                      </div>
+                    )}
+                    {member.brandsImage && (
+                      <div className="mt-4">
+                        <h5 className="font-semibold text-gray-800 mb-3">服務過的品牌：</h5>
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <img 
+                            src={member.brandsImage} 
+                            alt="服務過的品牌" 
+                            className="w-full h-auto"
+                          />
+                        </div>
                       </div>
                     )}
                     {member.additionalInfo && (
