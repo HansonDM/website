@@ -610,7 +610,7 @@ function App() {
                 Spotify
               </a>
               <a 
-                href="https://podcasts.apple.com/podcast/your-podcast-id" 
+                href="https://podcasts.apple.com/tw/podcast/%E4%BC%81%E6%A5%AD%E8%A7%A3%E6%86%82%E4%BA%8B%E5%8B%99%E6%89%80/id1667165320" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors duration-200"
