@@ -57,6 +57,7 @@ import dataAnalytics from './assets/digital_tool_data_analytics.png'
 import businessCase from './assets/case_study_business.png'
 import careerCase from './assets/case_study_career.jpg'
 import digitalCase from './assets/case_study_digital_transformation.jpg'
+import talentStrategyMap from './assets/talent_strategy_map.webp'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -365,6 +366,111 @@ function App() {
             <h3 className="text-3xl font-bold mb-4">企業願景</h3>
             <p className="text-2xl font-semibold mb-2">成為亞洲職涯發展與企業數位轉型的領航者</p>
             <p className="text-xl opacity-90">打造「人 × 數據 × 未來」管理典範</p>
+          </div>
+
+          {/* 人才戰略全景圖 */}
+          <div className="mb-16">
+            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">人才戰略全景圖</h3>
+            <p className="text-xl text-gray-600 text-center mb-8">從錯置內耗到文化飛輪的 SDB 轉化系統</p>
+            
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <img 
+                src={talentStrategyMap} 
+                alt="人才戰略全景圖：從錯置內耗到文化飛輪的SDB轉化系統" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+
+            {/* SDB 三部曲說明 */}
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              <Card className="hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-2xl font-bold text-blue-600">1</span>
+                    </div>
+                    <CardTitle className="text-xl">SEE 看見戰位</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    運用科學工具（如 Gallup、Holland、WEPSS）診斷，找到個人<strong>天賦、興趣與人格</strong>的最佳投資。
+                  </p>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <p className="text-sm text-blue-800 font-semibold">核心理念</p>
+                    <p className="text-sm text-gray-700">90% 團隊的內耗與低士氣，往往不是「不努力」，而是「位置不對」。</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-2xl font-bold text-purple-600">2</span>
+                    </div>
+                    <CardTitle className="text-xl">DO 落地執行</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    停止修補弱點，轉而<strong>編製團隊戰力地圖</strong>，將個人優勢串連，共同應對挑戰。
+                  </p>
+                  <div className="bg-purple-50 p-4 rounded-lg">
+                    <p className="text-sm text-purple-800 font-semibold">管理升級</p>
+                    <p className="text-sm text-gray-700">從「努力導向」轉向「配置導向」，把對的人放在對的位置。</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-2xl font-bold text-green-600">3</span>
+                    </div>
+                    <CardTitle className="text-xl">BECOME 文化內化</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    將<strong>領導力與戰略思維融入組織 DNA</strong>，讓高效協作成為共同語言與行動。
+                  </p>
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <p className="text-sm text-green-800 font-semibold">終極價值</p>
+                    <p className="text-sm text-gray-700">讓人才成為最重要的戰略資產，提升效率並降低流失風險。</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* 終極價值主張 */}
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-8">
+              <h4 className="text-2xl font-bold text-gray-900 mb-6 text-center">終極價值主張</h4>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp className="w-8 h-8 text-amber-600" />
+                  </div>
+                  <h5 className="font-bold text-lg mb-2">成本轉為資產</h5>
+                  <p className="text-gray-600 text-sm">讓人不再是最大的成本，而是最重要的戰略資產</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Zap className="w-8 h-8 text-orange-600" />
+                  </div>
+                  <h5 className="font-bold text-lg mb-2">效率倍增</h5>
+                  <p className="text-gray-600 text-sm">對的人在對的位置，讓團隊成果與凝聚力倍增</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Shield className="w-8 h-8 text-red-600" />
+                  </div>
+                  <h5 className="font-bold text-lg mb-2">留才穩健</h5>
+                  <p className="text-gray-600 text-sm">提升敬業度與成就感，降低關鍵人才流失風險</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 顧問團隊介紹 */}
