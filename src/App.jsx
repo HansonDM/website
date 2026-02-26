@@ -599,7 +599,7 @@ function App() {
             <h3 className="text-xl font-bold text-gray-900 mb-6">在您喜歡的平台收聽</h3>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <a 
-                href="https://open.spotify.com/show/your-show-id" 
+                href="https://open.spotify.com/show/6r47ye68Z6NzICFUD2DmbX" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors duration-200"
