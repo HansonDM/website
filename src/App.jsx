@@ -67,9 +67,19 @@ function App() {
   const [showQuiz, setShowQuiz] = useState(false)
   const [showAIDemo, setShowAIDemo] = useState(false)
   const [quizResult, setQuizResult] = useState(null)
-  const [currentPage, setCurrentPage] = useState(
-    window.location.pathname === '/whatsnew' ? 'whatsnew' : 'home'
-  )
+  // 支援直接訪問 /whatsnew URL（GitHub Pages 靜態部署）
+  const getInitialPage = () => {
+    // 檢查 sessionStorage 中的 redirect 路徑（由 public/whatsnew/index.html 設定）
+    const redirectPath = sessionStorage.getItem('redirectPath')
+    if (redirectPath === 'whatsnew') {
+      sessionStorage.removeItem('redirectPath')
+      return 'whatsnew'
+    }
+    // 也檢查 pathname（本地開發環境）
+    if (window.location.pathname === '/whatsnew') return 'whatsnew'
+    return 'home'
+  }
+  const [currentPage, setCurrentPage] = useState(getInitialPage())
 
   const navigateToWhatsNew = () => {
     setCurrentPage('whatsnew')
