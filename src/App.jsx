@@ -38,6 +38,7 @@ import {
 import './App.css'
 import { BusinessTroubleQuiz, AICareerAssistantDemo, XiaoYouChatbot, SROIESGVisualization } from './components/InteractiveFeatures.jsx'
 import ChatBot from './components/ChatBot.jsx'
+import WhatsNew from './components/WhatsNew.jsx'
 
 // 導入圖片
 import homepageBanner from './assets/homepage_banner.jpg'
@@ -66,6 +67,21 @@ function App() {
   const [showQuiz, setShowQuiz] = useState(false)
   const [showAIDemo, setShowAIDemo] = useState(false)
   const [quizResult, setQuizResult] = useState(null)
+  const [currentPage, setCurrentPage] = useState(
+    window.location.pathname === '/whatsnew' ? 'whatsnew' : 'home'
+  )
+
+  const navigateToWhatsNew = () => {
+    setCurrentPage('whatsnew')
+    window.history.pushState({}, '', '/whatsnew')
+    window.scrollTo(0, 0)
+  }
+
+  const navigateToMain = () => {
+    setCurrentPage('home')
+    window.history.pushState({}, '', '/')
+    window.scrollTo(0, 0)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,6 +104,7 @@ function App() {
 
   const navigation = [
     { id: 'home', label: '首頁' },
+    { id: 'whatsnew', label: '最新消息', isPage: true },
     { id: 'about', label: '關於我們' },
     { id: 'services', label: '核心服務' },
     { id: 'cases', label: '成功案例' },
@@ -234,6 +251,11 @@ function App() {
     }
   ]
 
+  // 如果是最新消息頁面，顯示 WhatsNew 元件
+  if (currentPage === 'whatsnew') {
+    return <WhatsNew onBack={navigateToMain} />
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* 導航列 */}
@@ -250,17 +272,28 @@ function App() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 {navigation.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      activeSection === item.id
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
+                  item.isPage ? (
+                    <button
+                      key={item.id}
+                      onClick={navigateToWhatsNew}
+                      className="px-3 py-2 rounded-md text-sm font-medium transition-colors text-orange-600 hover:text-orange-700 hover:bg-orange-50 font-semibold relative"
+                    >
+                      {item.label}
+                      <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                    </button>
+                  ) : (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                        activeSection === item.id
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  )
                 ))}
               </div>
             </div>
@@ -282,13 +315,23 @@ function App() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
               {navigation.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 w-full text-left"
-                >
-                  {item.label}
-                </button>
+                item.isPage ? (
+                  <button
+                    key={item.id}
+                    onClick={() => { navigateToWhatsNew(); setIsMenuOpen(false) }}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 hover:text-orange-700 hover:bg-orange-50 w-full text-left font-semibold"
+                  >
+                    {item.label} 🔔
+                  </button>
+                ) : (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 w-full text-left"
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
             </div>
           </div>
@@ -843,8 +886,8 @@ function App() {
                 {navigation.map((item) => (
                   <li key={item.id}>
                     <button
-                      onClick={() => scrollToSection(item.id)}
-                      className="text-gray-400 hover:text-white transition-colors"
+                      onClick={() => item.isPage ? navigateToWhatsNew() : scrollToSection(item.id)}
+                      className={`hover:text-white transition-colors ${item.isPage ? 'text-orange-400' : 'text-gray-400'}`}
                     >
                       {item.label}
                     </button>
