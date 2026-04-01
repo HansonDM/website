@@ -283,7 +283,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">韓森管理顧問</h1>
+              <h1 className={`text-xl font-bold transition-colors ${isScrolled ? 'text-gray-900' : 'text-white'}`}>韓森管理顧問</h1>
             </div>
             
             {/* 桌面版導航 */}
@@ -294,7 +294,7 @@ function App() {
                     <button
                       key={item.id}
                       onClick={navigateToWhatsNew}
-                      className="px-3 py-2 rounded-md text-sm font-medium transition-colors text-orange-600 hover:text-orange-700 hover:bg-orange-50 font-semibold relative"
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors font-semibold relative ${isScrolled ? 'text-orange-600 hover:text-orange-700 hover:bg-orange-50' : 'text-orange-300 hover:text-orange-200 hover:bg-white/10'}`}
                     >
                       {item.label}
                       <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
@@ -305,8 +305,8 @@ function App() {
                       onClick={() => scrollToSection(item.id)}
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         activeSection === item.id
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                          ? (isScrolled ? 'bg-blue-100 text-blue-700' : 'bg-white/20 text-white')
+                          : (isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' : 'text-white/90 hover:text-white hover:bg-white/10')
                       }`}
                     >
                       {item.label}
@@ -320,7 +320,7 @@ function App() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+                className={`inline-flex items-center justify-center p-2 rounded-md transition-colors ${isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-100' : 'text-white hover:text-white hover:bg-white/10'}`}
               >
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
