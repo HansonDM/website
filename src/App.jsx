@@ -140,6 +140,14 @@ function App() {
       title: '職涯與人才盤點',
       description: '評估員工技能和偏好,進行職涯規劃',
       color: 'bg-green-500'
+    },
+    {
+      icon: <Zap className="w-8 h-8" />,
+      title: 'SEE·DO·BECOME 工作坊',
+      description: '企業職能三部曲，用數據看見接班人才戰位',
+      color: 'bg-gradient-to-r from-amber-500 to-yellow-400',
+      isHighlight: true,
+      link: 'https://hansonwork-ysqrxueu.manus.space'
     }
   ]
 
@@ -368,19 +376,36 @@ function App() {
             韓森管理顧問有限公司 - 打造管理典範
           </p>
           
-          {/* 三大快速入口 */}
-          <div className="grid md:grid-cols-3 gap-6 mt-16">
-            {quickEntries.map((entry, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
-                <CardContent className="p-6 text-center">
-                  <div className={`${entry.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white`}>
-                    {entry.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{entry.title}</h3>
-                  <p className="text-sm opacity-90">{entry.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+          {/* 四大快速入口 */}
+          <div className="grid md:grid-cols-4 gap-6 mt-16">
+            {quickEntries.map((entry, index) => {
+              const cardContent = (
+                <Card key={index} className={`backdrop-blur-md transition-all duration-300 cursor-pointer ${
+                  entry.isHighlight
+                    ? 'bg-gradient-to-br from-amber-500/20 to-yellow-400/10 border-amber-400/50 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/20 ring-1 ring-amber-400/30'
+                    : 'bg-white/10 border-white/20 hover:bg-white/20'
+                }`}>
+                  <CardContent className="p-6 text-center">
+                    <div className={`${entry.isHighlight ? 'bg-gradient-to-r from-amber-500 to-yellow-400' : entry.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white`}>
+                      {entry.icon}
+                    </div>
+                    <h3 className={`text-lg font-semibold mb-2 ${entry.isHighlight ? 'text-amber-300' : ''}`}>{entry.title}</h3>
+                    <p className="text-sm opacity-90">{entry.description}</p>
+                    {entry.isHighlight && (
+                      <div className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full">
+                        <Zap className="w-3 h-3" />
+                        免費說明會開放報名中
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )
+              return entry.link ? (
+                <a key={index} href={entry.link} target="_blank" rel="noopener noreferrer" className="no-underline text-white">
+                  {cardContent}
+                </a>
+              ) : cardContent
+            })}
           </div>
 
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
