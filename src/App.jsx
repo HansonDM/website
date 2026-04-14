@@ -147,7 +147,7 @@ function App() {
       description: '企業職能三部曲，用數據看見接班人才戰位',
       color: 'bg-gradient-to-r from-amber-500 to-yellow-400',
       isHighlight: true,
-      link: 'https://hansonwork-ysqrxueu.manus.space'
+      link: 'https://event20260606.hansondm.com'
     }
   ]
 
