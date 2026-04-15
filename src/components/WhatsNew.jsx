@@ -1,30 +1,6 @@
-import { useState } from 'react'
-import { ArrowLeft, CheckCircle, Star, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Star, ChevronRight } from 'lucide-react'
 
 const WhatsNew = ({ onBack }) => {
-  const [formData, setFormData] = useState({
-    needs: [],
-    name: '',
-    company: '',
-    title: '',
-    phone: ''
-  })
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleNeedToggle = (need) => {
-    setFormData(prev => ({
-      ...prev,
-      needs: prev.needs.includes(need)
-        ? prev.needs.filter(n => n !== need)
-        : [...prev.needs, need]
-    }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans">
       {/* 頂部導覽 */}
@@ -267,8 +243,8 @@ const WhatsNew = ({ onBack }) => {
         </div>
       </section>
 
-      {/* 報名表單 */}
-      <section id="register" className="py-20">
+      {/* 報名表單已移除 */}
+      {false && <section id="register" className="py-20">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-[#c9a84c]/60 text-xs tracking-widest uppercase mb-3">立即行動</p>
@@ -356,9 +332,8 @@ const WhatsNew = ({ onBack }) => {
               </p>
             </form>
           )}
-        </div>
-      </section>
-
+         </div>
+      </section>}
       {/* 頁尾 */}
       <footer className="py-12 border-t border-white/10">
         <div className="max-w-4xl mx-auto px-6 text-center">
