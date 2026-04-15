@@ -167,7 +167,6 @@ function App() {
       description: '全球市場拓展與品牌戰略顧問、蓋洛普優勢認證教練。擁有超過25年，橫跨亞洲、歐洲與非洲的國際市場及大型零售旗艦實戰經驗。外派歷程：西非、荷蘭、泰國、中國大陸。',
       keywords: ['人才發展', '品牌管理', '通路開發', '顧客體驗'],
       brands: ['Louis Vuitton', 'Chanel', 'CHAUMET', 'JOYCE', 'Starbucks'],
-      additionalInfo: '2025年師範大學全球時尚EMBA客座講師，授課主題：「從精品通路到感官場景，打造打動人心的品牌五感體驗」',
       image: vincentPhoto
     }
   ]
