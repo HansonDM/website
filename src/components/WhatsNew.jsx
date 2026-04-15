@@ -90,8 +90,9 @@ const WhatsNew = ({ onBack }) => {
           {/* CTA 按鈕 */}
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#register"
-              onClick={(e) => { e.preventDefault(); document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' }) }}
+              href="https://app.smartsheet.com/b/form/019d8f994b117dc99aed7b9e759ab753"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#c9a84c] text-black px-8 py-4 rounded-full font-semibold hover:bg-[#e8c96d] transition-all duration-300 hover:scale-105"
             >
               立即報名
