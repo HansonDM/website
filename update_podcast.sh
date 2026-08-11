@@ -19,6 +19,15 @@ echo ""
 # 切換到網站目錄
 cd /home/ubuntu/website
 
+# 設定 GitHub 憑證：優先使用 GITHUB_PUSH_TOKEN 環境變數（沙盒重建後仍可透過排程任務注入）
+if [ -n "$GITHUB_PUSH_TOKEN" ]; then
+  git remote set-url origin "https://github.com/HansonDM/website.git"
+  echo "machine github.com login HansonDM password $GITHUB_PUSH_TOKEN" > /tmp/.github-creds
+  chmod 600 /tmp/.github-creds
+  export GIT_ASKPASS=/dev/null
+  git config --local credential.helper "store --file /tmp/.github-creds"
+fi
+
 # 1. 抓取 RSS Feed 並解析為 JSON
 echo -e "${GREEN}[1/6] 正在從 Firstory RSS Feed 抓取最新集數...${NC}"
 
@@ -130,6 +139,9 @@ echo ""
 # 5. 推送到 GitHub
 echo -e "${GREEN}[5/6] 正在推送到 GitHub...${NC}"
 git push origin main
+
+# 推送完成後移除本地憑證檔案，避免洩漏
+rm -f /tmp/.github-creds
 echo -e "${GREEN}✓ 已推送到 GitHub${NC}"
 echo ""
 
