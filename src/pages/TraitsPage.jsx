@@ -29,7 +29,6 @@ import {
   X
 } from 'lucide-react'
 
-import seeItModuleImg from '../assets/see_it_module.png'
 import seeItVennImg from '../assets/see_it_venn.png'
 
 function TraitsPage() {
@@ -65,9 +64,6 @@ function TraitsPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // 構建 Google Form 提交 URL
-    const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdZUb_CSKZjUrRQ9wfs39jX6qc8FBcddWyAvt_23cG7d-zIOw/formResponse'
-    
     const formBody = new URLSearchParams()
     formBody.append('entry.1234567890', formData.name)
     formBody.append('entry.1234567891', formData.company)

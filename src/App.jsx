@@ -1,986 +1,328 @@
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
-import podcastData from './podcast_episodes.json'
-
+import { createElement, useEffect, useState } from 'react'
 import {
-  Menu,
-  X,
-  ChevronRight,
-  Users,
-  Target,
-  TrendingUp,
-  Brain,
-  Award,
-  BookOpen,
-  Cpu,
-  BarChart3,
-  CheckCircle,
   ArrowRight,
-  Phone,
-  Mail,
-  MapPin,
-  Globe,
-  MessageCircle,
-  Download,
-  Play,
-  Star,
+  BarChart3,
+  BriefcaseBusiness,
+  CalendarDays,
+  Check,
+  ChevronRight,
+  CircleDot,
+  Compass,
+  Database,
+  HeartHandshake,
+  Layers3,
   Lightbulb,
-  Heart,
-  Shield,
-  HelpCircle,
-  Bot,
-  Leaf,
-  Zap,
-  LineChart
+  Mail,
+  Menu,
+  MessageCircle,
+  Network,
+  Phone,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  UsersRound,
+  X,
 } from 'lucide-react'
 import './App.css'
-import { BusinessTroubleQuiz, AICareerAssistantDemo, XiaoYouChatbot, SROIESGVisualization } from './components/InteractiveFeatures.jsx'
-import ChatBot from './components/ChatBot.jsx'
 import WhatsNew from './components/WhatsNew.jsx'
-
-// 導入圖片
-import homepageBanner from './assets/homepage_banner.jpg'
-import teamPhoto from './assets/team_photo.jpg'
+import heroImage from './assets/organization-intelligence-hero.webp'
 import hansonPhoto from './assets/hanson_lin_photo.jpg'
 import vincentPhoto from './assets/vincent_wu_photo.jpg'
-import hansonBrands from './assets/hanson_brands.png'
-import cxFramework from './assets/enterprise_service_cx_framework.png'
-import talentMapping from './assets/enterprise_service_talent_mapping.png'
-import esgImage from './assets/enterprise_service_esg.jpg'
-import leadershipTraining from './assets/talent_training_leadership.png'
-import coachCertification from './assets/talent_training_coach_certification.png'
-import coachingImage from './assets/talent_training_coaching.jpg'
-import aiAssistant from './assets/digital_tool_ai_assistant.png'
-import resilienceCards from './assets/digital_tool_resilience_cards.jpg'
-import dataAnalytics from './assets/digital_tool_data_analytics.png'
-import businessCase from './assets/case_study_business.png'
-import careerCase from './assets/case_study_career.jpg'
-import digitalCase from './assets/case_study_digital_transformation.jpg'
-import talentStrategyMap from './assets/talent_strategy_map.webp'
+
+const CALENDAR_URL = 'https://calendar.app.google/gsmSP4Yu1vvqYxub8'
+const LINE_URL = 'https://lin.ee/X8h0cv5'
+const EVENT_URL = 'https://event20260606.hansondm.com'
+
+const navigation = [
+  { id: 'solutions', label: '解決方案' },
+  { id: 'diagnostic', label: '七維戰位' },
+  { id: 'methodology', label: 'SDB 方法論' },
+  { id: 'team', label: '顧問團隊' },
+  { id: 'insights', label: '洞見觀點' },
+]
+
+const dimensions = [
+  { id: 'D1', title: '策略與組織發展', description: '讓組織方向、優先取捨與人才架構支撐業務策略。', icon: Compass },
+  { id: 'D2', title: '績效與團隊管理', description: '建立目標、問責與執行節奏，讓成果可被看見。', icon: Target },
+  { id: 'D3', title: '人才發展與培訓', description: '看見人才需求，設計學習、繼任與成長路徑。', icon: UsersRound },
+  { id: 'D4', title: '跨部門協作與文化推動', description: '打通協作障礙，讓變革溝通與文化真正發生。', icon: Network },
+  { id: 'D5', title: '核心人才作業', description: '優化招募、職位、薪酬與關鍵人資作業。', icon: BriefcaseBusiness },
+  { id: 'D6', title: '員工關係與敬業度', description: '建立信任、傾聽與歸屬，穩定關鍵人才。', icon: HeartHandshake },
+  { id: 'D7', title: '數據化人才資源管理', description: '用人才數據支持規劃、決策與永續揭露。', icon: Database },
+]
+
+const solutionCards = [
+  {
+    eyebrow: '01 / STRATEGY',
+    title: '組織與策略',
+    text: '當方向、角色與資源尚未對齊，先把真正影響經營的優先事項看清楚。',
+    tags: ['組織設計', '策略對焦', '人力規劃'],
+  },
+  {
+    eyebrow: '02 / TALENT',
+    title: '人才與領導',
+    text: '從人才盤點到接班與主管帶隊，讓每個關鍵角色發揮應有影響力。',
+    tags: ['人才盤點', '接班規劃', '領導力發展'],
+  },
+  {
+    eyebrow: '03 / TRANSFORMATION',
+    title: '文化、流程與數位',
+    text: '將跨部門協作、流程優化與數據能力串成可持續推進的轉型節奏。',
+    tags: ['協作文化', '流程優化', '數位決策'],
+  },
+]
+
+const journey = [
+  { id: '01', title: '盤點現況', text: '看見組織訊號與關鍵戰位。', icon: Search },
+  { id: '02', title: '對焦議題', text: '找出影響成效的優先順序。', icon: CircleDot },
+  { id: '03', title: '共創方案', text: '設計能被團隊採用的行動。', icon: Lightbulb },
+  { id: '04', title: '追蹤落地', text: '建立節奏，讓改變持續發生。', icon: BarChart3 },
+]
+
+const sdbSteps = [
+  { id: 'SEE', title: '看見戰位', text: '看見人才、角色、協作與數據的真實訊號。' },
+  { id: 'DO', title: '落地執行', text: '將優先議題轉為計畫、節奏與管理行動。' },
+  { id: 'BECOME', title: '文化內化', text: '讓領導、協作與決策方式成為日常系統。' },
+]
+
+function RadarIllustration() {
+  return (
+    <div className="radar-card" aria-label="七維戰位概念圖，涵蓋七個組織面向">
+      <div className="radar-card__topline">
+        <span>ORGANIZATION INTELLIGENCE</span>
+        <span>七維戰位</span>
+      </div>
+      <svg viewBox="0 0 200 195" role="img" aria-label="七維戰位概念雷達圖">
+        <title>七維戰位概念雷達圖</title>
+        <polygon className="radar-grid" points="100,18 164,49 181,119 136,174 64,174 19,119 36,49" />
+        <polygon className="radar-grid radar-grid--mid" points="100,45 143,66 154,113 124,148 76,148 46,113 57,66" />
+        <polygon className="radar-grid radar-grid--inner" points="100,69 124,81 130,108 115,128 85,128 70,108 76,81" />
+        <line className="radar-axis" x1="100" y1="18" x2="100" y2="174" />
+        <line className="radar-axis" x1="36" y1="49" x2="164" y2="119" />
+        <line className="radar-axis" x1="164" y1="49" x2="36" y2="119" />
+        <line className="radar-axis" x1="181" y1="119" x2="64" y2="174" />
+        <polygon className="radar-data" points="100,50 138,69 144,112 119,146 73,143 50,113 61,75" />
+        {[['100','50'], ['138','69'], ['144','112'], ['119','146'], ['73','143'], ['50','113'], ['61','75']].map(([cx, cy]) => (
+          <circle key={`${cx}-${cy}`} className="radar-dot" cx={cx} cy={cy} r="3.7" />
+        ))}
+      </svg>
+      <div className="radar-card__legend">
+        <span><i className="legend-dot legend-dot--blue" />組織現況</span>
+        <span><i className="legend-dot legend-dot--outline" />診斷面向</span>
+      </div>
+    </div>
+  )
+}
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false)
-  const [showQuiz, setShowQuiz] = useState(false)
-  const [showAIDemo, setShowAIDemo] = useState(false)
-  const [quizResult, setQuizResult] = useState(null)
-  // 支援直接訪問 /whatsnew URL（GitHub Pages 靜態部署）
-  const getInitialPage = () => {
-    // 檢查 sessionStorage 中的 redirect 路徑（由 public/whatsnew/index.html 設定）
-    const redirectPath = sessionStorage.getItem('redirectPath')
-    if (redirectPath === 'whatsnew') {
+  const [currentPage, setCurrentPage] = useState(() => {
+    const redirected = sessionStorage.getItem('redirectPath')
+    if (redirected === 'whatsnew' || window.location.pathname === '/whatsnew') {
       sessionStorage.removeItem('redirectPath')
       return 'whatsnew'
     }
-    // 也檢查 pathname（本地開發環境）
-    if (window.location.pathname === '/whatsnew') return 'whatsnew'
     return 'home'
+  })
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 12)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const onPopState = () => setCurrentPage(window.location.pathname === '/whatsnew' ? 'whatsnew' : 'home')
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setIsMenuOpen(false)
   }
-  const [currentPage, setCurrentPage] = useState(getInitialPage())
 
   const navigateToWhatsNew = () => {
     setCurrentPage('whatsnew')
     window.history.pushState({}, '', '/whatsnew')
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0 })
   }
 
   const navigateToMain = () => {
     setCurrentPage('home')
     window.history.pushState({}, '', '/')
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0 })
   }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setActiveSection(sectionId)
-      setIsMenuOpen(false)
-    }
-  }
-
-
-
-  const navigation = [
-    { id: 'home', label: '首頁' },
-    { id: 'whatsnew', label: '最新消息', isPage: true },
-    { id: 'about', label: '關於我們' },
-    { id: 'services', label: '核心服務' },
-    { id: 'cases', label: '成功案例' },
-    { id: 'podcast', label: 'Podcast' },
-    { id: 'contact', label: '聯絡我們' }
-  ]
-
-  const quickEntries = [
-    {
-      icon: <Target className="w-8 h-8" />,
-      title: 'ESG策略與人力資源',
-      description: '環境、社會、治理目標與人力資源實踐對齊',
-      color: 'bg-blue-500'
-    },
-    {
-      icon: <Cpu className="w-8 h-8" />,
-      title: '數位顧問',
-      description: '協助企業整合AI工具並優化數位流程',
-      color: 'bg-purple-500'
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: '職涯與人才盤點',
-      description: '評估員工技能和偏好,進行職涯規劃',
-      color: 'bg-green-500'
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: 'SEE·DO·BECOME 工作坊',
-      description: '企業職能三部曲，用數據看見接班人才戰位',
-      color: 'bg-gradient-to-r from-amber-500 to-yellow-400',
-      isHighlight: true,
-      link: 'https://event20260606.hansondm.com'
-    }
-  ]
-
-  // 更新團隊成員資訊,新增吳志倫顧問
-  const teamMembers = [
-    {
-      name: 'Hanson Lin 林明輝',
-      position: '資深企業架構師與數位轉型顧問',
-      description: '韓森管理顧問有限公司負責人、企業解憂事務所共同創辦人、諾亞未來人才教育學會理事',
-      keywords: ['資訊管理顧問', '專案管理顧問', '客戶服務管理顧問', '數位行銷顧問', '企業數位轉型顧問', '職涯領導力顧問'],
-      image: hansonPhoto,
-      brandsImage: hansonBrands
-    },
-    {
-      name: 'Vincent C. L. Wu 吳志倫',
-      position: '橫跨三洲的國際奢侈品品牌戰略家',
-      description: '全球市場拓展與品牌戰略顧問、蓋洛普優勢認證教練。擁有超過25年，橫跨亞洲、歐洲與非洲的國際市場及大型零售旗艦實戰經驗。外派歷程：西非、荷蘭、泰國、中國大陸。',
-      keywords: ['人才發展', '品牌管理', '通路開發', '顧客體驗'],
-      brands: ['Louis Vuitton', 'Chanel', 'CHAUMET', 'JOYCE', 'Starbucks'],
-      image: vincentPhoto
-    }
-  ]
-
-  // 更新核心服務架構
-  const coreServices = [
-    {
-      icon: <Leaf className="w-12 h-12 text-green-600" />,
-      title: 'ESG策略與人力資源',
-      description: '將環境、社會和治理目標與人力資源實踐對齊。',
-      details: [
-        '永續發展策略規劃',
-        '社會責任實踐',
-        '公司治理優化',
-        '人力資源ESG整合'
-      ]
-    },
-    {
-      icon: <Cpu className="w-12 h-12 text-blue-600" />,
-      title: '數位顧問',
-      description: '協助企業整合AI工具並優化數位流程。',
-      details: [
-        'AI工具導入與應用',
-        '數位轉型策略',
-        '流程數位化',
-        '智能決策系統'
-      ]
-    },
-    {
-      icon: <MessageCircle className="w-12 h-12 text-orange-600" />,
-      title: '員工關係與溝通',
-      description: '診斷並改善內部溝通以增強員工關係。',
-      details: [
-        '內部溝通診斷',
-        '員工關係改善',
-        '團隊協作優化',
-        '組織文化建設'
-      ]
-    },
-    {
-      icon: <Users className="w-12 h-12 text-purple-600" />,
-      title: '職涯與人才盤點',
-      description: '評估員工的技能和偏好,以進行職涯規劃。',
-      details: [
-        '人才技能評估',
-        '職涯路徑規劃',
-        '接班人計畫',
-        '核心人才識別'
-      ]
-    },
-    {
-      icon: <BookOpen className="w-12 h-12 text-red-600" />,
-      title: '職涯規劃與內訓',
-      description: '設計客製化的培訓計劃以促進員工成長。',
-      details: [
-        '客製化培訓設計',
-        '領導力發展',
-        '專業技能提升',
-        '個人發展計畫(IDP)'
-      ]
-    },
-    {
-      icon: <LineChart className="w-12 h-12 text-indigo-600" />,
-      title: '專案管理與流程優化',
-      description: '實施敏捷方法以提高效率。',
-      details: [
-        '敏捷專案管理',
-        '流程優化改善',
-        '效率提升方案',
-        '績效監控系統'
-      ]
-    }
-  ]
-
-  const caseStudies = [
-    {
-      category: '企業組織案例',
-      title: '某科技公司組織轉型',
-      problem: '組織架構老化，跨部門協作效率低下',
-      solution: '重新設計組織架構，建立敏捷工作模式',
-      result: '工作效率提升40%，員工滿意度增加35%',
-      image: businessCase
-    },
-    {
-      category: '個人職涯案例',
-      title: '中階主管職涯轉型',
-      problem: '職涯發展遇到瓶頸，缺乏明確方向',
-      solution: '透過職涯諮詢與教練陪跑，重新定位職涯目標',
-      result: '成功轉職到理想企業，薪資提升50%',
-      image: careerCase
-    },
-    {
-      category: '數位轉型案例',
-      title: '傳統製造業數位化',
-      problem: '生產流程缺乏數位化，決策依賴經驗',
-      solution: '導入數據分析系統，建立智能決策機制',
-      result: '生產效率提升30%，成本降低20%',
-      image: digitalCase
-    }
-  ]
-
-  // 如果是最新消息頁面，顯示 WhatsNew 元件
-  if (currentPage === 'whatsnew') {
-    return <WhatsNew onBack={navigateToMain} />
-  }
+  if (currentPage === 'whatsnew') return <WhatsNew onBack={navigateToMain} />
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* 導航列 */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className={`text-xl font-bold transition-colors ${isScrolled ? 'text-gray-900' : 'text-white'}`}>韓森管理顧問</h1>
-            </div>
-            
-            {/* 桌面版導航 */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {navigation.map((item) => (
-                  item.isPage ? (
-                    <button
-                      key={item.id}
-                      onClick={navigateToWhatsNew}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors font-semibold relative ${isScrolled ? 'text-orange-600 hover:text-orange-700 hover:bg-orange-50' : 'text-orange-300 hover:text-orange-200 hover:bg-white/10'}`}
-                    >
-                      {item.label}
-                      <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                    </button>
-                  ) : (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        activeSection === item.id
-                          ? (isScrolled ? 'bg-blue-100 text-blue-700' : 'bg-white/20 text-white')
-                          : (isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' : 'text-white/90 hover:text-white hover:bg-white/10')
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  )
-                ))}
-              </div>
-            </div>
+    <div className="site-shell">
+      <a className="skip-link" href="#main-content">跳至主要內容</a>
 
-            {/* 手機版選單按鈕 */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`inline-flex items-center justify-center p-2 rounded-md transition-colors ${isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-100' : 'text-white hover:text-white hover:bg-white/10'}`}
-              >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
+      <header className={`site-header ${isScrolled ? 'site-header--scrolled' : ''}`}>
+        <div className="container header-inner">
+          <button className="brand-mark" onClick={() => scrollToSection('home')} aria-label="回到韓森管理顧問首頁">
+            <span className="brand-mark__icon">H</span>
+            <span>
+              <strong>韓森管理顧問</strong>
+              <small>HANSON MANAGEMENT CONSULTING</small>
+            </span>
+          </button>
+
+          <nav className="desktop-nav" aria-label="主要導覽">
+            {navigation.map((item) => (
+              <button key={item.id} onClick={() => scrollToSection(item.id)}>{item.label}</button>
+            ))}
+          </nav>
+
+          <a className="header-cta" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">
+            預約顧問諮詢 <ArrowRight size={16} aria-hidden="true" />
+          </a>
+
+          <button className="menu-button" onClick={() => setIsMenuOpen((open) => !open)} aria-expanded={isMenuOpen} aria-label={isMenuOpen ? '關閉選單' : '開啟選單'}>
+            {isMenuOpen ? <X size={23} /> : <Menu size={25} />}
+          </button>
         </div>
 
-        {/* 手機版選單 */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-              {navigation.map((item) => (
-                item.isPage ? (
-                  <button
-                    key={item.id}
-                    onClick={() => { navigateToWhatsNew(); setIsMenuOpen(false) }}
-                    className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 hover:text-orange-700 hover:bg-orange-50 w-full text-left font-semibold"
-                  >
-                    {item.label} 🔔
-                  </button>
-                ) : (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 w-full text-left"
-                  >
-                    {item.label}
-                  </button>
-                )
-              ))}
-            </div>
-          </div>
+          <nav className="mobile-nav" aria-label="手機主要導覽">
+            {navigation.map((item) => <button key={item.id} onClick={() => scrollToSection(item.id)}>{item.label}<ChevronRight size={17} /></button>)}
+            <a href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">預約顧問諮詢 <ArrowRight size={17} /></a>
+          </nav>
         )}
-      </nav>
+      </header>
 
-      {/* 首頁 */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${homepageBanner})` }}
-        >
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            人 × 數據 × 未來
-          </h1>
-          <p className="text-2xl md:text-3xl mb-4 opacity-90 font-semibold">
-            成為亞洲職涯發展與企業數位轉型的領航者
-          </p>
-          <p className="text-xl md:text-2xl mb-12 opacity-80">
-            韓森管理顧問有限公司 - 打造管理典範
-          </p>
-          
-          {/* 四大快速入口 */}
-          <div className="grid md:grid-cols-4 gap-6 mt-16">
-            {quickEntries.map((entry, index) => {
-              const cardContent = (
-                <Card key={index} className={`backdrop-blur-md transition-all duration-300 cursor-pointer ${
-                  entry.isHighlight
-                    ? 'bg-gradient-to-br from-amber-500/20 to-yellow-400/10 border-amber-400/50 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/20 ring-1 ring-amber-400/30'
-                    : 'bg-white/10 border-white/20 hover:bg-white/20'
-                }`}>
-                  <CardContent className="p-6 text-center">
-                    <div className={`${entry.isHighlight ? 'bg-gradient-to-r from-amber-500 to-yellow-400' : entry.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white`}>
-                      {entry.icon}
-                    </div>
-                    <h3 className={`text-lg font-semibold mb-2 ${entry.isHighlight ? 'text-amber-300' : ''}`}>{entry.title}</h3>
-                    <p className="text-sm opacity-90">{entry.description}</p>
-                    {entry.isHighlight && (
-                      <div className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full">
-                        <Zap className="w-3 h-3" />
-                        免費說明會開放報名中
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              )
-              return entry.link ? (
-                <a key={index} href={entry.link} target="_blank" rel="noopener noreferrer" className="no-underline text-white">
-                  {cardContent}
-                </a>
-              ) : cardContent
-            })}
-          </div>
-
-          <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-              onClick={() => scrollToSection('contact')}
-            >
-              立即諮詢
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-              onClick={() => scrollToSection('services')}
-            >
-              了解服務
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* 關於我們 */}
-      <section id="about" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">關於我們</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              在未來,能持續成長的企業,必須同時掌握<strong>數據化的決策能力</strong>與<strong>以人為本的領導力</strong>,這正是我們的獨特定位與價值所在。
-            </p>
-          </div>
-
-          {/* 企業願景 */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-12 mb-16 text-white text-center">
-            <h3 className="text-3xl font-bold mb-4">企業願景</h3>
-            <p className="text-2xl font-semibold mb-2">成為亞洲職涯發展與企業數位轉型的領航者</p>
-            <p className="text-xl opacity-90">打造「人 × 數據 × 未來」管理典範</p>
-          </div>
-
-          {/* 人才戰略全景圖 */}
-          <div className="mb-16">
-            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">人才戰略全景圖</h3>
-            <p className="text-xl text-gray-600 text-center mb-8">從錯置內耗到文化飛輪的 SDB 轉化系統</p>
-            
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <img 
-                src={talentStrategyMap} 
-                alt="人才戰略全景圖：從錯置內耗到文化飛輪的SDB轉化系統" 
-                className="w-full h-auto rounded-lg"
-              />
-            </div>
-
-            {/* SDB 三部曲說明 */}
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <Card className="hover:shadow-xl transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-2xl font-bold text-blue-600">1</span>
-                    </div>
-                    <CardTitle className="text-xl">SEE 看見戰位</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">
-                    運用科學工具（如 Gallup、Holland、WEPSS）診斷，找到個人<strong>天賦、興趣與人格</strong>的最佳投資。
-                  </p>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <p className="text-sm text-blue-800 font-semibold">核心理念</p>
-                    <p className="text-sm text-gray-700">90% 團隊的內耗與低士氣，往往不是「不努力」，而是「位置不對」。</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hover:shadow-xl transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-2xl font-bold text-purple-600">2</span>
-                    </div>
-                    <CardTitle className="text-xl">DO 落地執行</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">
-                    停止修補弱點，轉而<strong>編製團隊戰力地圖</strong>，將個人優勢串連，共同應對挑戰。
-                  </p>
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <p className="text-sm text-purple-800 font-semibold">管理升級</p>
-                    <p className="text-sm text-gray-700">從「努力導向」轉向「配置導向」，把對的人放在對的位置。</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hover:shadow-xl transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-2xl font-bold text-green-600">3</span>
-                    </div>
-                    <CardTitle className="text-xl">BECOME 文化內化</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">
-                    將<strong>領導力與戰略思維融入組織 DNA</strong>，讓高效協作成為共同語言與行動。
-                  </p>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <p className="text-sm text-green-800 font-semibold">終極價值</p>
-                    <p className="text-sm text-gray-700">讓人才成為最重要的戰略資產，提升效率並降低流失風險。</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* 終極價值主張 */}
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-8">
-              <h4 className="text-2xl font-bold text-gray-900 mb-6 text-center">終極價值主張</h4>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <TrendingUp className="w-8 h-8 text-amber-600" />
-                  </div>
-                  <h5 className="font-bold text-lg mb-2">成本轉為資產</h5>
-                  <p className="text-gray-600 text-sm">讓人不再是最大的成本，而是最重要的戰略資產</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Zap className="w-8 h-8 text-orange-600" />
-                  </div>
-                  <h5 className="font-bold text-lg mb-2">效率倍增</h5>
-                  <p className="text-gray-600 text-sm">對的人在對的位置，讓團隊成果與凝聚力倍增</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-red-600" />
-                  </div>
-                  <h5 className="font-bold text-lg mb-2">留才穩健</h5>
-                  <p className="text-gray-600 text-sm">提升敬業度與成就感，降低關鍵人才流失風險</p>
-                </div>
+      <main id="main-content">
+        <section id="home" className="hero-section">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="container hero-layout">
+            <div className="hero-copy">
+              <p className="eyebrow">PEOPLE <span>×</span> INSIGHT <span>×</span> ACTION</p>
+              <h1>把組織問題，<br /><em>變成可行動的決策</em></h1>
+              <p className="hero-intro">以七維戰位看見組織真實狀態，串連人才、文化、流程與數據；韓森協助企業從診斷、優先排序到轉型落地，建立可持續的成長能力。</p>
+              <div className="hero-actions">
+                <button className="button button--primary" onClick={() => scrollToSection('diagnostic')}>啟動七維戰位診斷 <ArrowRight size={18} /></button>
+                <a className="button button--secondary" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">預約顧問諮詢</a>
+              </div>
+              <div className="hero-anchor-list" aria-label="核心專業">
+                <span>組織診斷</span><span>人才策略</span><span>轉型落地</span>
               </div>
             </div>
-          </div>
 
-          {/* 顧問團隊介紹 */}
-          <div className="mb-16">
-            <h3 className="text-3xl font-bold text-gray-900 mb-12 text-center">顧問團隊</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              {teamMembers.map((member, index) => (
-                <Card key={index} className="hover:shadow-xl transition-shadow duration-300">
-                  <CardContent className="p-8">
-                    <div className="flex items-start mb-4">
-                      <img 
-                        src={member.image} 
-                        alt={member.name} 
-                        className="w-24 h-24 rounded-full object-cover mr-6"
-                      />
-                      <div className="flex-1">
-                        <h4 className="text-2xl font-bold mb-2">{member.name}</h4>
-                        <p className="text-blue-600 font-semibold mb-2">{member.position}</p>
-                        <p className="text-gray-700 text-sm">{member.description}</p>
-                      </div>
-                    </div>
-                    <div className="mb-4">
-                      <h5 className="font-semibold text-gray-800 mb-2">專業領域：</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {member.keywords.map((keyword, idx) => (
-                          <Badge key={idx} variant="secondary">{keyword}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                    {member.brands && (
-                      <div className="mb-4">
-                        <h5 className="font-semibold text-gray-800 mb-2">曾任職品牌：</h5>
-                        <p className="text-gray-600 text-sm">{member.brands.join(', ')}</p>
-                      </div>
-                    )}
-                    {member.brandsImage && (
-                      <div className="mt-4">
-                        <h5 className="font-semibold text-gray-800 mb-3">服務過的品牌：</h5>
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                          <img 
-                            src={member.brandsImage} 
-                            alt="服務過的品牌" 
-                            className="w-full h-auto"
-                          />
-                        </div>
-                      </div>
-                    )}
-                    {member.additionalInfo && (
-                      <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                        <p className="text-gray-700 text-sm">
-                          <span className="font-semibold text-blue-600">未來動態：</span> {member.additionalInfo}
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+            <div className="hero-visual">
+              <img src={heroImage} alt="企業團隊在現代辦公環境中進行策略協作，象徵人與數據的連結" />
+              <div className="hero-image-wash" aria-hidden="true" />
+              <RadarIllustration />
+              <div className="hero-visual-label" aria-hidden="true">HUMAN<br />INTELLIGENCE<br />IN ACTION</div>
+            </div>
+          </div>
+        </section>
+
+        <section className="credibility-strip" aria-label="韓森管理顧問的服務特點">
+          <div className="container credibility-grid">
+            <div className="credibility-lead"><strong>人</strong><span>×</span><strong>數據</strong><span>×</span><strong>未來</strong></div>
+            <div><UsersRound size={22} /><p><strong>以人為本的組織洞察</strong><br /><span>從真實工作情境看見關鍵訊號。</span></p></div>
+            <div><BarChart3 size={22} /><p><strong>資料化的管理視角</strong><br /><span>協助領導者聚焦真正重要的議題。</span></p></div>
+            <div><Sparkles size={22} /><p><strong>能夠落地的轉型節奏</strong><br /><span>讓方案成為團隊日常的行動。</span></p></div>
+          </div>
+        </section>
+
+        <section id="solutions" className="section section--white">
+          <div className="container">
+            <div className="section-heading section-heading--split">
+              <div><p className="eyebrow eyebrow--dark">WHERE TO BEGIN</p><h2>從問題出發，<br />找到最適合的解題路徑</h2></div>
+              <p>不同階段的企業，面對的從不是單一人資議題。韓森從經營脈絡出發，協助領導團隊建立更清楚的判斷與行動。</p>
+            </div>
+            <div className="solution-grid">
+              {solutionCards.map((card) => (
+                <article className="solution-card" key={card.eyebrow}>
+                  <p>{card.eyebrow}</p><h3>{card.title}</h3><span className="solution-card__line" /><p className="solution-card__description">{card.text}</p>
+                  <ul>{card.tags.map((tag) => <li key={tag}><Check size={15} />{tag}</li>)}</ul>
+                  <button onClick={() => scrollToSection('contact')}>探索解題方式 <ArrowRight size={17} /></button>
+                </article>
               ))}
             </div>
           </div>
+        </section>
 
-
-        </div>
-      </section>
-
-      {/* 核心服務 */}
-      <section id="services" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">核心服務</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              六大核心服務領域,為企業提供全方位的管理諮詢與解決方案
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coreServices.map((service, index) => (
-              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <CardContent className="p-8">
-                  <div className="mb-6">
-                    {service.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-                  <p className="text-gray-700 mb-6">{service.description}</p>
-                  <div className="space-y-2">
-                    {service.details.map((detail, idx) => (
-                      <div key={idx} className="flex items-center text-sm">
-                        <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                        <span className="text-gray-600">{detail}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 成功案例 */}
-      <section id="cases" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">成功案例</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              實際案例展示我們如何協助企業與個人達成目標
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {caseStudies.map((caseItem, index) => (
-              <Card key={index} className="hover:shadow-xl transition-shadow duration-300">
-                <div className="relative h-48 overflow-hidden rounded-t-lg">
-                  <img 
-                    src={caseItem.image} 
-                    alt={caseItem.title} 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-blue-600">{caseItem.category}</Badge>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-4">{caseItem.title}</h3>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <p className="font-semibold text-red-600 mb-1">問題：</p>
-                      <p className="text-gray-700">{caseItem.problem}</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-blue-600 mb-1">解決方案：</p>
-                      <p className="text-gray-700">{caseItem.solution}</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-600 mb-1">成果：</p>
-                      <p className="text-gray-700">{caseItem.result}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      {/* Podcast 區塊 */}
-      <section id="podcast" className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-6">
-              <Play className="w-8 h-8 text-white" />
+        <section id="diagnostic" className="section diagnostic-section">
+          <div className="container diagnostic-layout">
+            <div className="diagnostic-copy">
+              <p className="eyebrow eyebrow--blue">SEVEN-DIMENSION ORGANIZATION INTELLIGENCE</p>
+              <h2>七維戰位，<br /><em>全面掌握組織健康度</em></h2>
+              <p>以七個彼此關聯的面向盤點組織，從策略到人才、從文化到資料化能力，看見真正影響成效與成長的優先順序。</p>
+              <button className="text-link" onClick={() => scrollToSection('contact')}>申請診斷說明 <ArrowRight size={18} /></button>
             </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">企業解憂事務所 Podcast</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              由 Hanson 數位管理顧問團隊主持，每集用最生活化的故事，分享企業真實痛點與職涯領導力解方
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <Badge className="bg-blue-600 text-white px-4 py-2 text-sm">{podcastData.total} 集數</Badge>
-              <Badge className="bg-purple-600 text-white px-4 py-2 text-sm">企業管理</Badge>
-              <Badge className="bg-green-600 text-white px-4 py-2 text-sm">職涯發展</Badge>
-              <Badge className="bg-orange-600 text-white px-4 py-2 text-sm">AI 應用</Badge>
-            </div>
-          </div>
-
-          {/* 最新集數 - 使用 RSS 資料 */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">最新集數</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {podcastData.episodes.slice(0, 6).map((episode, index) => {
-                const gradients = [
-                  'from-blue-500 to-purple-600',
-                  'from-green-500 to-blue-600',
-                  'from-orange-500 to-red-600',
-                  'from-pink-500 to-purple-600',
-                  'from-indigo-500 to-blue-600',
-                  'from-teal-500 to-green-600'
-                ];
-                
-                const badgeColors = [
-                  'bg-blue-100 text-blue-800',
-                  'bg-green-100 text-green-800',
-                  'bg-orange-100 text-orange-800',
-                  'bg-pink-100 text-pink-800',
-                  'bg-indigo-100 text-indigo-800',
-                  'bg-teal-100 text-teal-800'
-                ];
-
+            <div className="dimension-grid">
+              {dimensions.map(({ id, title, description, icon }) => {
                 return (
-                  <a
-                    key={index}
-                    href={episode.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
-                          <div className="flex-shrink-0">
-                            <div className={`w-16 h-16 bg-gradient-to-br ${gradients[index % gradients.length]} rounded-lg flex items-center justify-center`}>
-                              <Play className="w-8 h-8 text-white" />
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            {episode.number && (
-                              <Badge className={`${badgeColors[index % badgeColors.length]} mb-2`}>
-                                {episode.number}
-                              </Badge>
-                            )}
-                            <h4 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-                              {episode.title}
-                            </h4>
-                            {episode.description && (
-                              <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                                {episode.description}
-                              </p>
-                            )}
-                            <div className="flex items-center text-xs text-gray-500">
-                              {episode.date && <span>{episode.date}</span>}
-                              {episode.date && episode.duration && <span className="mx-2">•</span>}
-                              {episode.duration && <span>{episode.duration}</span>}
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </a>
-                );
+                  <article key={id} className="dimension-card">
+                    <span className="dimension-card__icon">{createElement(icon, { size: 21 })}</span>
+                    <div><small>{id}</small><h3>{title}</h3><p>{description}</p></div>
+                    <ArrowRight className="dimension-card__arrow" size={17} aria-hidden="true" />
+                  </article>
+                )
               })}
             </div>
           </div>
+        </section>
 
-          {/* 多平台連結 */}
-          <div className="text-center">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">在您喜歡的平台收聽</h3>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <a 
-                href="https://open.spotify.com/show/6r47ye68Z6NzICFUD2DmbX" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors duration-200"
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-                </svg>
-                Spotify
-              </a>
-              <a 
-                href="https://podcasts.apple.com/tw/podcast/%E4%BC%81%E6%A5%AD%E8%A7%A3%E6%86%82%E4%BA%8B%E5%8B%99%E6%89%80/id1667165320" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors duration-200"
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.302 0-9.6-4.298-9.6-9.6S6.698 2.4 12 2.4s9.6 4.298 9.6 9.6-4.298 9.6-9.6 9.6zm0-16.8c-3.978 0-7.2 3.222-7.2 7.2s3.222 7.2 7.2 7.2 7.2-3.222 7.2-7.2-3.222-7.2-7.2-7.2zm0 12c-2.651 0-4.8-2.149-4.8-4.8s2.149-4.8 4.8-4.8 4.8 2.149 4.8 4.8-2.149 4.8-4.8 4.8zm0-7.2c-1.325 0-2.4 1.075-2.4 2.4s1.075 2.4 2.4 2.4 2.4-1.075 2.4-2.4-1.075-2.4-2.4-2.4z"/>
-                </svg>
-                Apple Podcasts
-              </a>
-              <a 
-                href="https://www.youtube.com/@BSCS-HJ" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors duration-200"
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                YouTube
-              </a>
-              <a 
-                href="https://biznutrify543.firstory.io/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-200"
-              >
-                <Globe className="w-5 h-5 mr-2" />
-                查看所有集數
-              </a>
+        <section className="section journey-section">
+          <div className="container">
+            <div className="section-heading journey-heading"><p className="eyebrow eyebrow--dark">FROM INSIGHT TO ACTION</p><h2>從洞察到行動的<br />四步診斷路徑</h2><p>診斷不是一份報告，而是讓團隊理解現況、對焦議題並持續前進的共同語言。</p></div>
+            <div className="journey-grid">
+              {journey.map(({ id, title, text, icon }, index) => {
+                return <article className="journey-step" key={id}><div className="journey-step__number">{id}</div><div className="journey-step__icon">{createElement(icon, { size: 25 })}</div><h3>{title}</h3><p>{text}</p>{index < journey.length - 1 && <ChevronRight className="journey-step__arrow" size={22} aria-hidden="true" />}</article>
+              })}
+            </div>
+            <div className="journey-cta"><span>您將獲得</span><strong>組織健康地圖、優先改善議題與下一步行動建議</strong><button onClick={() => scrollToSection('contact')}>開始一場有準備的對談 <ArrowRight size={17} /></button></div>
+          </div>
+        </section>
+
+        <section id="methodology" className="section methodology-section">
+          <div className="container methodology-layout">
+            <div className="methodology-intro"><p className="eyebrow">THE SDB TRANSFORMATION SYSTEM</p><h2>看見，落地，<br /><em>成為組織能力</em></h2><p>七維戰位幫助企業看見現況；SDB 則將洞察轉為一套能被團隊持續實踐的轉化系統。</p></div>
+            <div className="sdb-list">{sdbSteps.map((step, index) => <article key={step.id} className="sdb-step"><div><span>0{index + 1}</span><h3>{step.id}</h3></div><div><h4>{step.title}</h4><p>{step.text}</p></div><ChevronRight size={23} aria-hidden="true" /></article>)}</div>
+          </div>
+        </section>
+
+        <section id="team" className="section section--white team-section">
+          <div className="container">
+            <div className="section-heading section-heading--center"><p className="eyebrow eyebrow--dark">THE PEOPLE BEHIND THE METHOD</p><h2>顧問，是方法的解讀者</h2><p>不同產業與不同階段的問題，需要能連結經營現場、人與組織系統的專業陪伴。</p></div>
+            <div className="team-grid">
+              <article className="team-card"><img src={hansonPhoto} alt="Hanson Lin 林明輝" /><div className="team-card__content"><p>企業架構與數位轉型</p><h3>Hanson Lin<br /><span>林明輝</span></h3><p className="team-card__description">資深企業架構師與數位轉型顧問，專注於以管理系統與數位能力回應企業成長挑戰。</p><span className="team-card__tag">組織策略 · 數位轉型 · 專案管理</span></div></article>
+              <article className="team-card"><img src={vincentPhoto} alt="Vincent C. L. Wu 吳志倫" /><div className="team-card__content"><p>人才發展與品牌策略</p><h3>Vincent C. L. Wu<br /><span>吳志倫</span></h3><p className="team-card__description">橫跨三洲的國際品牌戰略顧問與蓋洛普優勢認證教練，擅長連結人才、顧客與成長策略。</p><span className="team-card__tag">人才發展 · 品牌管理 · 顧客體驗</span></div></article>
             </div>
           </div>
-        </div>
-      </section>
-      </section>
+        </section>
 
-      {/* 聯絡我們 */}
-      <section id="contact" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">聯絡我們</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              歡迎與我們聯繫,讓我們一起探討如何協助您達成目標
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* 聯絡資訊 */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6">聯絡資訊</h3>
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <Mail className="w-6 h-6 text-blue-600 mr-4 mt-1" />
-                  <div>
-                    <p className="font-semibold text-gray-900">電子郵件</p>
-                    <a href="mailto:hanson.lin@hansondm.com" className="text-blue-600 hover:underline">
-                      hanson.lin@hansondm.com
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Phone className="w-6 h-6 text-blue-600 mr-4 mt-1" />
-                  <div>
-                    <p className="font-semibold text-gray-900">電話</p>
-                    <a href="tel:+886982899889" className="text-blue-600 hover:underline">
-                      +886-982-899889
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <MessageCircle className="w-6 h-6 text-blue-600 mr-4 mt-1" />
-                  <div>
-                    <p className="font-semibold text-gray-900">LINE</p>
-                    <a href="https://lin.ee/X8h0cv5" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      點此加入 LINE 官方帳號
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Globe className="w-6 h-6 text-blue-600 mr-4 mt-1" />
-                  <div>
-                    <p className="font-semibold text-gray-900">Google Calendar 預約</p>
-                    <a href="https://calendar.app.google/gsmSP4Yu1vvqYxub8" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      點此預約諮詢時間
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Google Forms 嵌入 */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6">線上諮詢</h3>
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden" style={{height: '1000px'}}>
-                <iframe 
-                  src="https://docs.google.com/forms/d/e/1FAIpQLSdZUb_CSKZjUrRQ9wfs39jX6qc8FBcddWyAvt_23cG7d-zIOw/viewform?embedded=true" 
-                  width="100%" 
-                  height="100%" 
-                  frameBorder="0" 
-                  marginHeight="0" 
-                  marginWidth="0"
-                  title="韓森管理顧問線上諮詢表單"
-                >
-                  載入中…
-                </iframe>
-              </div>
+        <section id="insights" className="section insights-section">
+          <div className="container insights-layout">
+            <div><p className="eyebrow eyebrow--blue">INSIGHT &amp; PRACTICE</p><h2>讓洞見，<br />成為下一步行動</h2><p>從組織與人才議題的觀點文章，到可參與的工作坊與活動，持續累積團隊可用的管理語言。</p><button className="text-link" onClick={navigateToWhatsNew}>閱讀最新觀點 <ArrowRight size={18} /></button></div>
+            <div className="insight-cards">
+              <button className="insight-card" onClick={navigateToWhatsNew}><span>INSIGHT</span><h3>從「努力導向」走向「配置導向」</h3><p>重新理解人才戰位，讓管理資源投入在最能創造影響力的地方。</p><ArrowRight size={18} /></button>
+              <a className="insight-card insight-card--accent" href={EVENT_URL} target="_blank" rel="noopener noreferrer"><span>WORKSHOP</span><h3>SEE · DO · BECOME<br />企業職能三部曲</h3><p>以實作與對話，探索組織與人才升級的起點。</p><ArrowRight size={18} /></a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 頁尾 */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">韓森管理顧問</h3>
-              <p className="text-gray-400">
-                成為亞洲職涯發展與企業數位轉型的領航者
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">快速連結</h4>
-              <ul className="space-y-2">
-                {navigation.map((item) => (
-                  <li key={item.id}>
-                    <button
-                      onClick={() => item.isPage ? navigateToWhatsNew() : scrollToSection(item.id)}
-                      className={`hover:text-white transition-colors ${item.isPage ? 'text-orange-400' : 'text-gray-400'}`}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">聯絡方式</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Email: hanson.lin@hansondm.com</li>
-                <li>電話: +886-982-899889</li>
-              </ul>
-            </div>
+        <section id="contact" className="section contact-section">
+          <div className="container contact-layout">
+            <div className="contact-copy"><p className="eyebrow">LET'S START WITH THE RIGHT QUESTION</p><h2>先釐清問題，<br /><em>再決定下一步</em></h2><p>預約一場 30 分鐘的組織診斷對談，與顧問一起理解您現在面臨的挑戰，找到合適的起點。</p><div className="contact-methods"><a href={`mailto:hanson.lin@hansondm.com`}><Mail size={18} />hanson.lin@hansondm.com</a><a href="tel:+886982899889"><Phone size={18} />+886-982-899889</a><a href={LINE_URL} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />加入 LINE 官方帳號</a></div></div>
+            <div className="contact-panel"><div className="contact-panel__badge"><CalendarDays size={19} />30 分鐘組織診斷對談</div><h3>開始一場有準備的對談</h3><p>您可以直接選擇合適時段，或透過線上表單留下您的需求。</p><a className="button button--primary button--wide" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">查看可預約時段 <ArrowRight size={18} /></a><div className="contact-panel__divider"><span>或</span></div><a className="button button--secondary button--wide" href="https://docs.google.com/forms/d/e/1FAIpQLSdZUb_CSKZjUrRQ9wfs39jX6qc8FBcddWyAvt_23cG7d-zIOw/viewform" target="_blank" rel="noopener noreferrer">填寫線上諮詢表單</a><p className="contact-panel__privacy"><ShieldCheck size={14} />資料僅用於回覆您的諮詢需求。</p></div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 韓森管理顧問有限公司. All rights reserved.</p>
-          </div>
-        </div>
+        </section>
+      </main>
+
+      <footer className="site-footer">
+        <div className="container footer-grid"><div><div className="footer-brand">H</div><h2>韓森管理顧問</h2><p>以人 × 數據 × 未來，打造更具韌性的企業組織。</p></div><div><h3>探索韓森</h3>{navigation.slice(0, 4).map((item) => <button key={item.id} onClick={() => scrollToSection(item.id)}>{item.label}</button>)}</div><div><h3>保持聯繫</h3><a href={`mailto:hanson.lin@hansondm.com`}>hanson.lin@hansondm.com</a><a href="tel:+886982899889">+886-982-899889</a><a href={LINE_URL} target="_blank" rel="noopener noreferrer">LINE 官方帳號</a></div></div>
+        <div className="container footer-bottom"><span>© 2026 韓森管理顧問有限公司</span><span>People × Insight × Action</span></div>
       </footer>
 
-      {/* 互動功能彈窗 */}
-      {showQuiz && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-2xl font-bold">企業煩惱快速診斷</h3>
-                <button onClick={() => setShowQuiz(false)} className="text-gray-500 hover:text-gray-700">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              <BusinessTroubleQuiz onComplete={(result) => {
-                setQuizResult(result)
-                setShowQuiz(false)
-              }} />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showAIDemo && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-2xl font-bold">AI職涯助理體驗</h3>
-                <button onClick={() => setShowAIDemo(false)} className="text-gray-500 hover:text-gray-700">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              <AICareerAssistantDemo />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 聊天機器人 */}
-      <ChatBot />
+      <a className="mobile-float-cta" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer"><CalendarDays size={17} />預約診斷對談</a>
     </div>
   )
 }
