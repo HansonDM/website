@@ -28,6 +28,40 @@ function replyContent(text) {
   })
 }
 
+function messageContent(text) {
+  const lines = text.split('\n')
+  const blocks = []
+  const cells = (line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim())
+  for (let index = 0; index < lines.length; index += 1) {
+    if (/^\s*```/.test(lines[index])) {
+      const code = []
+      const start = index
+      while (++index < lines.length && !/^\s*```/.test(lines[index])) code.push(lines[index])
+      blocks.push(<pre className="webchat__code" key={`code-${start}`}><code>{code.join('\n')}</code></pre>)
+      continue
+    }
+    const headings = cells(lines[index])
+    const separator = lines[index + 1] && cells(lines[index + 1])
+    if (headings.length > 1 && separator?.length === headings.length && separator.every((cell) => /^:?-{3,}:?$/.test(cell))) {
+      const start = index
+      const records = []
+      index += 2
+      while (index < lines.length && lines[index].includes('|')) {
+        const values = cells(lines[index])
+        if (values.length !== headings.length) break
+        records.push(values)
+        index += 1
+      }
+      index -= 1
+      blocks.push(<div className="webchat__records" key={`table-${start}`}>{records.map((values, row) => <dl className="webchat__record" key={row}>{headings.map((heading, column) => <div key={column}><dt>{replyContent(heading)}</dt><dd>{replyContent(values[column])}</dd></div>)}</dl>)}</div>)
+      continue
+    }
+    const heading = lines[index].match(/^#{1,6}\s+(.+)$/)
+    blocks.push(<span key={`line-${index}`}>{heading ? <strong>{replyContent(heading[1])}</strong> : replyContent(lines[index])}{index < lines.length - 1 ? '\n' : ''}</span>)
+  }
+  return blocks
+}
+
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([{ role: 'assistant', content: welcome }])
@@ -113,7 +147,7 @@ export default function ChatBot() {
             <button ref={closeRef} className="webchat__icon-button" type="button" onClick={close} aria-label="關閉聊天"><X size={21} /></button>
           </header>
           <div ref={listRef} className="webchat__messages" role="log" aria-label="聊天紀錄" aria-live="polite" aria-relevant="additions">
-            {messages.map((message, index) => <div key={index} className={`webchat__message webchat__message--${message.role}`}>{replyContent(message.content)}</div>)}
+            {messages.map((message, index) => <div key={index} className={`webchat__message webchat__message--${message.role}`}>{message.role === 'assistant' ? messageContent(message.content) : message.content}</div>)}
             {isLoading && <div className="webchat__waiting" role="status"><Loader2 size={17} className="webchat__spinner" />正在準備回覆…</div>}
           </div>
           {notice && <div className="webchat__notice" role="status">{notice}{pending && !isLoading && <button type="button" onClick={() => { void requestReply(pending) }}>查詢回覆</button>}</div>}
