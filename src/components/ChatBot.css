@@ -1,0 +1,28 @@
+.webchat { font-family: inherit; color: #142c4b; }
+.webchat__launcher { position: fixed; right: 24px; bottom: 24px; z-index: 80; display: flex; align-items: center; gap: 9px; min-height: 54px; padding: 0 21px; border: 1px solid #3478cc; border-radius: 999px; color: #fff; background: #1459b5; box-shadow: 0 8px 28px #102c5133; font-size: 14px; font-weight: 700; cursor: pointer; }
+.webchat__launcher:hover { background: #0c458e; }
+.webchat__panel { position: fixed; right: 24px; bottom: 92px; z-index: 81; display: flex; flex-direction: column; width: 420px; max-width: calc(100vw - 32px); height: min(650px, calc(100dvh - 112px)); overflow: hidden; border: 1px solid #c7d7eb; border-radius: 18px; background: #fff; box-shadow: 0 16px 60px #102c5138; }
+.webchat__header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; padding: 18px 20px; color: #fff; background: #102c51; }
+.webchat__header h2 { margin: 0; color: inherit; font-family: inherit; font-size: 18px; line-height: 1.5; letter-spacing: 0; }
+.webchat__header p { margin: 4px 0 0; color: #d6e5fa; font-size: 12px; }
+.webchat__icon-button { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 8px; color: inherit; background: transparent; cursor: pointer; }
+.webchat__icon-button:hover { background: #ffffff20; }
+.webchat__messages { display: flex; flex: 1; min-height: 0; flex-direction: column; align-items: flex-start; gap: 14px; overflow-y: auto; overscroll-behavior: contain; padding: 20px 16px; background: #f3f7fc; }
+.webchat__message { max-width: 92%; padding: 12px 14px; border: 1px solid #dfe8f3; border-radius: 12px 12px 12px 3px; background: #fff; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.75; }
+.webchat__message--user { align-self: flex-end; border-color: #175bb0; border-radius: 12px 12px 3px 12px; color: #fff; background: #175bb0; }
+.webchat__message a { color: #1056ac; text-decoration: underline; text-underline-offset: 3px; }
+.webchat__message--user a { color: inherit; }
+.webchat__waiting { display: flex; align-items: center; gap: 8px; color: #536b87; font-size: 13px; }
+.webchat__spinner { animation: webchat-spin 1s linear infinite; }
+@keyframes webchat-spin { to { transform: rotate(360deg); } }
+.webchat__form { display: flex; flex-shrink: 0; gap: 10px; padding: 14px 14px 8px; border-top: 1px solid #dfe8f3; }
+.webchat__form textarea { flex: 1; min-width: 0; resize: none; border: 1px solid #bccde2; border-radius: 9px; padding: 10px 12px; color: #142c4b; background: #fff; font: inherit; font-size: 14px; line-height: 1.5; }
+.webchat__form button { display: grid; place-items: center; align-self: flex-end; width: 42px; height: 42px; border: 0; border-radius: 9px; color: #fff; background: #1459b5; cursor: pointer; }
+.webchat__form button:disabled { opacity: .45; cursor: default; }
+.webchat__standalone { display: inline-flex; align-items: center; align-self: center; gap: 5px; padding: 4px 10px 12px; color: #576f8a; font-size: 11px; }
+.webchat__notice { flex-shrink: 0; padding: 10px 15px; color: #664909; background: #fff5dc; font-size: 12px; line-height: 1.6; }
+.webchat__notice button { display: block; margin-top: 6px; padding: 5px 10px; border: 1px solid #c4a963; border-radius: 6px; color: inherit; background: #fff; cursor: pointer; }
+.webchat button:focus-visible, .webchat a:focus-visible, .webchat textarea:focus-visible { outline: 3px solid #4d9bff; outline-offset: 3px; }
+.webchat__sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+@media (max-width: 560px) { .webchat__form textarea { font-size: 16px; } .webchat__launcher { right: 15px; bottom: 72px; min-height: 46px; padding: 0 15px; font-size: 12px; } .webchat__panel { right: 12px; bottom: 130px; width: calc(100vw - 24px); max-width: none; height: min(620px, calc(100dvh - 145px)); border-radius: 14px; } .webchat__header { padding: 12px 15px; } .webchat__messages { padding: 15px 12px; } }
+@media (prefers-reduced-motion: reduce) { .webchat__spinner { animation: none; } }
