@@ -26,3 +26,10 @@
 .webchat__sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 @media (max-width: 560px) { .webchat__form textarea { font-size: 16px; } .webchat__launcher { right: 15px; bottom: 72px; min-height: 46px; padding: 0 15px; font-size: 12px; } .webchat__panel { right: 12px; bottom: 130px; width: calc(100vw - 24px); max-width: none; height: min(620px, calc(100dvh - 145px)); border-radius: 14px; } .webchat__header { padding: 12px 15px; } .webchat__messages { padding: 15px 12px; } }
 @media (prefers-reduced-motion: reduce) { .webchat__spinner { animation: none; } }
+
+.webchat__records { display: grid; gap: 12px; margin: 10px 0; white-space: normal; }
+.webchat__record { display: grid; gap: 8px; margin: 0; padding: 12px; border: 1px solid #d5e1ef; border-radius: 8px; background: #f8fbff; }
+.webchat__record > div { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 8px; }
+.webchat__record dt { color: #60748c; font-size: 12px; }
+.webchat__record dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.webchat__code { max-width: 100%; overflow-x: auto; margin: 10px 0; padding: 10px; border-radius: 6px; color: #dce8f8; background: #142c4b; white-space: pre; font-size: 12px; }
