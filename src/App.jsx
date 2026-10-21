@@ -26,6 +26,7 @@ import {
 } from 'lucide-react'
 import './App.css'
 import WhatsNew from './components/WhatsNew.jsx'
+import ChatBot from './components/ChatBot.jsx'
 import heroImage from './assets/organization-intelligence-hero.webp'
 import hansonPhoto from './assets/hanson_lin_photo.jpg'
 import vincentPhoto from './assets/vincent_wu_photo.jpg'
@@ -322,6 +323,7 @@ function App() {
         <div className="container footer-bottom"><span>© 2026 韓森管理顧問有限公司</span><span>People × Insight × Action</span></div>
       </footer>
 
+      <ChatBot />
       <a className="mobile-float-cta" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer"><CalendarDays size={17} />預約診斷對談</a>
     </div>
   )
