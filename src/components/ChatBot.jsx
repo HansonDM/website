@@ -1,185 +1,133 @@
-import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { useEffect, useRef, useState } from 'react'
+import { ExternalLink, Loader2, MessageCircle, Send, X } from 'lucide-react'
+import './ChatBot.css'
 
-const ChatBot = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: '您好！我是企業解憂助手 🤖\n\n我可以幫您：\n• 推薦適合的 Podcast 集數\n• 解答企業管理問題\n• 提供職涯發展建議\n\n請問有什麼可以幫助您的嗎？'
-    }
-  ])
-  const [inputMessage, setInputMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [sessionId] = useState(() => {
-    // 生成唯一的 sessionId，如果已存在則使用現有的
-    const existing = localStorage.getItem('chatbot_session_id')
-    if (existing) return existing
-    const newId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-    localStorage.setItem('chatbot_session_id', newId)
-    return newId
-  })
-  const messagesEndRef = useRef(null)
-  const inputRef = useRef(null)
+export const CHAT_URL = 'https://hansondm.app.n8n.cloud/webhook/bd42b249-6f0f-4f5d-bb7f-232b591bba16/chat'
+const welcome = '您好！我是企業解憂助手。\n可以和我聊企業管理、職涯發展，或查詢企業解憂事務所 Podcast。'
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+function sessionKey() {
+  try {
+    const saved = localStorage.getItem('chatbot_session_id')
+    if (/^[A-Za-z0-9_.:-]{8,160}$/.test(saved || '')) return saved
+    const fresh = crypto.randomUUID()
+    localStorage.setItem('chatbot_session_id', fresh)
+    return fresh
+  } catch {
+    return crypto.randomUUID()
   }
+}
+
+// React text nodes keep model-generated text escaped; only http(s) links are interactive.
+function replyContent(text) {
+  return text.split(/(\[[^\]\n]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s<>]+|\*\*[^*\n]+\*\*)/g).map((part, index) => {
+    const link = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/)
+    if (link) return <a key={index} href={link[2]} target="_blank" rel="noopener noreferrer">{link[1]}</a>
+    if (/^https?:\/\//.test(part)) return <a key={index} href={part} target="_blank" rel="noopener noreferrer">{part}</a>
+    if (/^\*\*.+\*\*$/.test(part)) return <strong key={index}>{part.slice(2, -2)}</strong>
+    return part
+  })
+}
+
+export default function ChatBot() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [messages, setMessages] = useState([{ role: 'assistant', content: welcome }])
+  const [draft, setDraft] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [pending, setPending] = useState(null)
+  const [notice, setNotice] = useState('')
+  const [sessionId] = useState(sessionKey)
+  const inFlight = useRef(false)
+  const closeRef = useRef(null)
+  const launcherRef = useRef(null)
+  const listRef = useRef(null)
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
-
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus()
-    }
+    if (isOpen) closeRef.current?.focus()
   }, [isOpen])
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isLoading) return
+  useEffect(() => {
+    const list = listRef.current
+    if (list) list.scrollTop = list.scrollHeight
+  }, [messages, isLoading, isOpen])
 
-    const userMessage = inputMessage.trim()
-    setInputMessage('')
-    
-    // 添加用戶訊息
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+  const close = () => {
+    setIsOpen(false)
+    launcherRef.current?.focus()
+  }
+
+  async function requestReply(request) {
+    if (inFlight.current) return
+    inFlight.current = true
     setIsLoading(true)
-
+    setNotice('')
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), 120000)
     try {
-      const response = await fetch('https://bscsconsult.zeabur.app/webhook/bd42b249-6f0f-4f5d-bb7f-232b591bba16/chat', {
+      const response = await fetch(CHAT_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: 'sendMessage',
-          sessionId: sessionId,
-          chatInput: userMessage
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+        signal: controller.signal,
       })
-
-      if (!response.ok) {
-        throw new Error('API request failed')
-      }
-
+      if (!response.ok) throw new Error('Chat response unavailable')
       const data = await response.json()
-      
-      // 添加 AI 回覆
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.text || '抱歉，我現在無法回答這個問題。'
-      }])
-    } catch (error) {
-      console.error('Chat API error:', error)
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: '抱歉，連線發生問題，請稍後再試。'
-      }])
+      if (data.pending) {
+        setNotice('回覆仍在處理，請稍後按「查詢回覆」，不用重複輸入。')
+        return
+      }
+      if (data.failed) {
+        setPending(null)
+        setNotice('這筆訊息未完成處理，請重新輸入您的問題。')
+        return
+      }
+      const content = data.text || data.output
+      if (typeof content !== 'string' || !content.trim()) throw new Error('Empty reply')
+      setMessages((previous) => [...previous, { role: 'assistant', content }])
+      setPending(null)
+    } catch {
+      setNotice('連線中斷，尚未確認回覆結果。請按「查詢回覆」，不要重複輸入同一筆訊息。')
     } finally {
+      clearTimeout(timer)
+      inFlight.current = false
       setIsLoading(false)
     }
   }
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
-    }
+  function submit(event) {
+    event.preventDefault()
+    const text = draft.trim()
+    if (!text || text.length > 12000 || inFlight.current || pending) return
+    const request = { action: 'sendMessage', sessionId, chatInput: text, requestId: crypto.randomUUID() }
+    setMessages((previous) => [...previous, { role: 'user', content: text }])
+    setDraft('')
+    setPending(request)
+    void requestReply(request)
   }
 
   return (
-    <>
-      {/* 聊天視窗 */}
+    <div className="webchat">
       {isOpen && (
-        <Card className="fixed bottom-24 right-4 w-96 max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-8rem)] shadow-2xl z-50 flex flex-col">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-            <div className="flex items-center space-x-2">
-              <MessageCircle className="w-5 h-5" />
-              <CardTitle className="text-lg font-bold">企業解憂助手</CardTitle>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 h-8 w-8"
-            >
-              <X className="w-5 h-5" />
-            </Button>
-          </CardHeader>
-          
-          <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                    message.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
-                </div>
-              </div>
-            ))}
-            
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-gray-100 rounded-lg px-4 py-2">
-                  <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-                </div>
-              </div>
-            )}
-            
-            <div ref={messagesEndRef} />
-          </CardContent>
-
-          <div className="p-4 border-t bg-white rounded-b-lg">
-            <div className="flex space-x-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="輸入您的問題..."
-                disabled={isLoading}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isLoading}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4"
-              >
-                <Send className="w-5 h-5" />
-              </Button>
-            </div>
+        <section id="webchat-panel" className="webchat__panel" role="dialog" aria-modal="false" aria-labelledby="webchat-title" onKeyDown={(event) => { if (event.key === 'Escape') close() }}>
+          <header className="webchat__header">
+            <div><h2 id="webchat-title">企業解憂助手</h2><p>管理問題・職涯建議・Podcast</p></div>
+            <button ref={closeRef} className="webchat__icon-button" type="button" onClick={close} aria-label="關閉聊天"><X size={21} /></button>
+          </header>
+          <div ref={listRef} className="webchat__messages" role="log" aria-label="聊天紀錄" aria-live="polite" aria-relevant="additions">
+            {messages.map((message, index) => <div key={index} className={`webchat__message webchat__message--${message.role}`}>{replyContent(message.content)}</div>)}
+            {isLoading && <div className="webchat__waiting" role="status"><Loader2 size={17} className="webchat__spinner" />正在準備回覆…</div>}
           </div>
-        </Card>
+          {notice && <div className="webchat__notice" role="status">{notice}{pending && !isLoading && <button type="button" onClick={() => { void requestReply(pending) }}>查詢回覆</button>}</div>}
+          <form className="webchat__form" onSubmit={submit}>
+            <label className="webchat__sr-only" htmlFor="webchat-question">輸入您的問題</label>
+            <textarea id="webchat-question" rows={2} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={12000} disabled={isLoading || !!pending} placeholder="輸入您的問題…" onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form.requestSubmit() } }} />
+            <button type="submit" disabled={!draft.trim() || isLoading || !!pending} aria-label="傳送訊息"><Send size={19} /></button>
+          </form>
+          <a className="webchat__standalone" href={CHAT_URL} target="_blank" rel="noopener noreferrer">另開完整聊天視窗 <ExternalLink size={12} /></a>
+        </section>
       )}
-
-      {/* 聊天按鈕 */}
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-2xl z-50 transition-all duration-300 ${
-          isOpen 
-            ? 'bg-gray-600 hover:bg-gray-700' 
-            : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 animate-pulse'
-        }`}
-      >
-        {isOpen ? (
-          <X className="w-6 h-6 text-white" />
-        ) : (
-          <MessageCircle className="w-6 h-6 text-white" />
-        )}
-      </Button>
-    </>
+      <button ref={launcherRef} type="button" className="webchat__launcher" aria-label={isOpen ? '關閉企業解憂助手' : '開啟企業解憂助手'} aria-expanded={isOpen} aria-controls={isOpen ? 'webchat-panel' : undefined} onClick={() => { if (isOpen) close(); else setIsOpen(true) }}>
+        {isOpen ? <X size={21} aria-hidden="true" /> : <MessageCircle size={21} aria-hidden="true" />}<span>企業解憂助手</span>
+      </button>
+    </div>
   )
 }
-
-export default ChatBot
