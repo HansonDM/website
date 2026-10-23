@@ -1,3 +1,5 @@
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
+import {pageMetadata} from '@/lib/site-metadata';
+export const metadata=pageMetadata('/404');
 export default function NotFound(){return <main id="main" className="interior-page not-found-page"><PageBanner page={{slug:'not-found',bannerSlug:'knowledge',title:'這個頁面目前找不到',en:'404 / FIND ANOTHER WAY',intro:'連結可能已變更。可以從服務總覽繼續探索，或到知識中心搜尋相關內容。'}}/><div className="interior-body"><section className="interior-section"><div className="interior-section-heading"><h2>讓我們幫你找到下一步。</h2><p>選擇你想了解的方向，繼續瀏覽網站。</p></div><div className="related-grid"><Link href="/ai-transformation">AI 數位轉型 <span>→</span></Link><Link href="/talent-development">人才資產發展 <span>→</span></Link><Link href="/academy">企業學院 <span>→</span></Link><Link href="/knowledge#search">搜尋網站內容 <span>→</span></Link></div><Link className="button gold-button" href="/">返回首頁 →</Link></section></div></main>}

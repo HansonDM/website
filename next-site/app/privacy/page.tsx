@@ -1,8 +1,8 @@
-import type {Metadata} from 'next';
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import {privacyNotice} from '@/lib/privacy-notice';
-export const metadata:Metadata={title:'資料使用告知（草稿）',robots:{index:false,follow:false}};
+import {pageMetadata} from '@/lib/site-metadata';
+export const metadata=pageMetadata('/privacy');
 export default function PrivacyPage(){return <main id="main" className="interior-page">
  <PageBanner page={{slug:'privacy',bannerSlug:'contact',title:'資料使用告知',en:'YOUR INFORMATION, WITH CARE',intro:'說明洽詢資料的用途與收件流程，讓每一次聯繫都有清楚的依據。'}}/>
  <div className="interior-body privacy-body">
