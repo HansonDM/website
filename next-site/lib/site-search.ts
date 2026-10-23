@@ -1,4 +1,5 @@
 import {pages} from './content';
+import {podcastEpisodes,podcastEpisodeHref,podcastExcerpt} from './podcast-content';
 import {communityTopics,communityHref} from './community-content';
 import {servicePlanners,planningHref} from './service-planning';
 import {detailPages} from './detail-content';
@@ -6,10 +7,11 @@ import {faqs} from './interior-content';
 import {consultantExpertise} from './consultant-team';
 import {caseTopicHref,type CasePreviewEntry} from './case-preview-model';
 
-export const searchKinds=[{value:'all',label:'全部內容'},{value:'page',label:'網站與顧問團隊'},{value:'service',label:'服務方案'},{value:'course',label:'內訓規劃'},{value:'company-case',label:'公司專案題材'},{value:'consultant-experience',label:'顧問歷任經驗'},{value:'partnership',label:'合作方向'},{value:'guide',label:'成果觀察指南'},{value:'article',label:'文章初稿'},{value:'faq',label:'常見問題'}] as const;
+export const searchKinds=[{value:'all',label:'全部內容'},{value:'page',label:'網站與顧問團隊'},{value:'service',label:'服務方案'},{value:'course',label:'內訓規劃'},{value:'company-case',label:'公司專案題材'},{value:'consultant-experience',label:'顧問歷任經驗'},{value:'partnership',label:'合作方向'},{value:'guide',label:'成果觀察指南'},{value:'article',label:'文章初稿'},{value:'podcast',label:'Podcast 單集'},{value:'faq',label:'常見問題'}] as const;
 export type SearchKind=typeof searchKinds[number]['value'];
 export type SearchRecord={id:string;kind:Exclude<SearchKind,'all'>;title:string;summary:string;body:string;href:string;label:string;topic:string};
 export const searchRecords:SearchRecord[]=[
+ ...podcastEpisodes.map(episode=>({id:'podcast-'+episode.id,kind:'podcast' as const,title:episode.title,summary:podcastExcerpt(episode),body:episode.description,href:podcastEpisodeHref(episode.id)!,label:'Podcast · Firstory 原始單集',topic:'企業解憂事務所'})),
  {id:'home',kind:'page',title:'韓森管理顧問有限公司／企業解憂事務所',summary:'以 AI 賦能企業，以人才資產發展驅動未來。',body:'中小企業 AI 數位轉型，大型企業人才資產發展。企業診斷、組織效能、永續成長。',href:'/',label:'首頁',topic:'企業解憂'},
  ...pages.map(p=>({id:p.slug,kind:'page' as const,title:p.title,summary:p.intro,body:[p.detail,...p.items].join(' '),href:`/${p.slug}`,label:'主題總覽',topic:p.title})),
  ...communityTopics.map(t=>({id:`community-${t.id}`,kind:'page' as const,title:'社群主題｜'+t.title,summary:t.intro,body:[...t.paragraphs,...t.prompts].join(' '),href:communityHref(t.id),label:'主題交流指南',topic:t.topic})),

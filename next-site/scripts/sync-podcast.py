@@ -64,11 +64,12 @@ def parse_feed(raw, now=None):
             'publishedAt': published.isoformat().replace('+00:00', 'Z'),
             'description': description, 'durationSeconds': seconds}
     if not episodes: raise ValueError('No valid published episode in the official RSS')
-    latest = max(episodes.values(), key=lambda episode: (episode['publishedAt'], episode['id']))
-    return {'version': 1, 'showTitle': channel.findtext('title'),
+    recent = sorted(episodes.values(), key=lambda episode: (episode['publishedAt'], episode['id']), reverse=True)[:6]
+    latest = recent[0]
+    return {'version': 2, 'showTitle': channel.findtext('title'),
         'showDescription': plain_text(channel.findtext('description'), 2000),
         'showUrl': SHOW_URL, 'feedUrl': FEED_URL, 'embedUrl': EMBED_URL,
-        'checkedAt': now.isoformat().replace('+00:00', 'Z'), 'latest': latest}
+        'checkedAt': now.isoformat().replace('+00:00', 'Z'), 'latest': latest, 'episodes': recent}
 
 class FirstoryRedirects(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):

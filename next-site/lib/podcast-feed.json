@@ -1,11 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "showTitle": "企業解憂事務所",
   "showDescription": "🔍 企業解憂事務所\n\n為企業找答案，替管理解痛點！\n\n在組織轉型、人才發展、專案管理、內部溝通、ESG落實的每一個卡關時刻，我們陪你拆解問題、重構解方，讓決策更精準、團隊更有感、績效更有力。\n\n💼 服務項目｜\n\n• 組織顧問與人才盤點\n\n• 職涯規劃與內訓設計\n\n• 專案管理與AI應用導入\n\n• 員工關係與內部溝通診斷\n\n• ESG策略與人力資源連結\n\n🎯 我們相信：每個企業都有獨一無二的解憂之道，只要找到對的方法，就能走得更穩、更遠。\n\n📩 私訊我們，讓我們一起為你的企業「解憂、解鎖、再升級」！\n\nPowered by Firstory Hosting",
   "showUrl": "https://open.firstory.fm/user/biznutrify543",
   "feedUrl": "https://feed.firstory.me/rss/user/cld2k5uon026b01tj3x31cprb",
   "embedUrl": "https://open.firstory.fm/embed/user/biznutrify543",
-  "checkedAt": "2026-10-23T08:51:27.586913Z",
+  "checkedAt": "2026-10-23T09:28:08.940118Z",
   "latest": {
     "id": "cmvfc130600l701xr4dx28sbo",
     "title": "EP161｜小優的12話專案管理鬼故事09- 見微知著還是小題大作？專業PM必備的風險嗅覺！ 🎧",
@@ -13,5 +13,55 @@
     "publishedAt": "2026-10-19T14:14:11Z",
     "description": "👤 Hanson：「小羅，大家平常看你人那麼好，怎麼專案裡還有人敢對你『報喜不報憂』啊？這不是找麻煩嗎？」\n\n👤 小羅：「唉，報喜不報憂不是新歡舊愛的問題啦！很多人不是故意隱瞞，而是因為『面子』、或是以為私下喝兩杯就能『喬』掉，結果把未爆彈越藏越深，等到快上線才突然炸開！」\n\n👤 Hanson：「真的！很多團隊在週會看投影幕全部亮綠燈很安心，殊不知私底下Bug已經產生連鎖反應。甚至連實施敏捷管理的團隊或PMO，都超級害怕這種情況發生。」\n\n👤 小羅：「沒錯，最可怕的從來不是黑天鵝，而是大家為了粉飾太平，親手幫黑天鵝披上隱形斗篷！這集我們就來拆解傳說中的『專案頭七』鬼故事，並教大家如何利用風險預演和Trigger機制，徹底瓦解報喜不報憂的職場怪象！」\n\n🎧 這集《企業解憂事務所》的內容，是探討揭開職場「喬事情文化」背後的未爆彈！\n\n收聽本集你會了解：\n\n🔍報喜不報憂的人性根源\n\n🔍綠燈背後的專案「頭七」危機\n\n🔍敏捷管理與PMO的死角\n\n🔍專案「火警演習」機制\n\n🔍識別觸發條件的關鍵技巧\n\n🔍建立「知情必報」的制度化流程\n\n🎙️ 🎙️ 🎙️ 收體連結在這邊\n\nYoutube 🎙️ https://www.youtube.com/@BSCS-HJ\n\nFirstory🎙️ https://reurl.cc/jrpQ7L\n\nSpotify🎙️ https://reurl.cc/RkDL1D\n\nApplePodcast🎙️ https://reurl.cc/vLXp1l\n\nKKBOX🎙️ https://reurl.cc/jrpQq1\n\nSoundOn🎙️ https://reurl.cc/ZNMZQp\n\nMixerBox🎙️ https://reurl.cc/3Mm6aX\n\nPocket Cast🎙️ https://reurl.cc/Y4nDgX\n\nRadiopublic🎙️ https://reurl.cc/E127v1\n\nPlayer.fm🎙️ https://reurl.cc/z6b8k7\n\nAmazon Music🎙️ https://reurl.cc/Y0W1ox\n\n讓企業經營不再卡關，預約一個小時的企業免費解憂 (診治醫生：Hanson & 小羅)：\n\nHanson：https://reurl.cc/4NY0AR\n\n小羅：https://reurl.cc/ZNMZng\n\nPowered by Firstory Hosting",
     "durationSeconds": 1246
-  }
+  },
+  "episodes": [
+    {
+      "id": "cmvfc130600l701xr4dx28sbo",
+      "title": "EP161｜小優的12話專案管理鬼故事09- 見微知著還是小題大作？專業PM必備的風險嗅覺！ 🎧",
+      "url": "https://open.firstory.fm/story/cmvfc130600l701xr4dx28sbo",
+      "publishedAt": "2026-10-19T14:14:11Z",
+      "description": "👤 Hanson：「小羅，大家平常看你人那麼好，怎麼專案裡還有人敢對你『報喜不報憂』啊？這不是找麻煩嗎？」\n\n👤 小羅：「唉，報喜不報憂不是新歡舊愛的問題啦！很多人不是故意隱瞞，而是因為『面子』、或是以為私下喝兩杯就能『喬』掉，結果把未爆彈越藏越深，等到快上線才突然炸開！」\n\n👤 Hanson：「真的！很多團隊在週會看投影幕全部亮綠燈很安心，殊不知私底下Bug已經產生連鎖反應。甚至連實施敏捷管理的團隊或PMO，都超級害怕這種情況發生。」\n\n👤 小羅：「沒錯，最可怕的從來不是黑天鵝，而是大家為了粉飾太平，親手幫黑天鵝披上隱形斗篷！這集我們就來拆解傳說中的『專案頭七』鬼故事，並教大家如何利用風險預演和Trigger機制，徹底瓦解報喜不報憂的職場怪象！」\n\n🎧 這集《企業解憂事務所》的內容，是探討揭開職場「喬事情文化」背後的未爆彈！\n\n收聽本集你會了解：\n\n🔍報喜不報憂的人性根源\n\n🔍綠燈背後的專案「頭七」危機\n\n🔍敏捷管理與PMO的死角\n\n🔍專案「火警演習」機制\n\n🔍識別觸發條件的關鍵技巧\n\n🔍建立「知情必報」的制度化流程\n\n🎙️ 🎙️ 🎙️ 收體連結在這邊\n\nYoutube 🎙️ https://www.youtube.com/@BSCS-HJ\n\nFirstory🎙️ https://reurl.cc/jrpQ7L\n\nSpotify🎙️ https://reurl.cc/RkDL1D\n\nApplePodcast🎙️ https://reurl.cc/vLXp1l\n\nKKBOX🎙️ https://reurl.cc/jrpQq1\n\nSoundOn🎙️ https://reurl.cc/ZNMZQp\n\nMixerBox🎙️ https://reurl.cc/3Mm6aX\n\nPocket Cast🎙️ https://reurl.cc/Y4nDgX\n\nRadiopublic🎙️ https://reurl.cc/E127v1\n\nPlayer.fm🎙️ https://reurl.cc/z6b8k7\n\nAmazon Music🎙️ https://reurl.cc/Y0W1ox\n\n讓企業經營不再卡關，預約一個小時的企業免費解憂 (診治醫生：Hanson & 小羅)：\n\nHanson：https://reurl.cc/4NY0AR\n\n小羅：https://reurl.cc/ZNMZng\n\nPowered by Firstory Hosting",
+      "durationSeconds": 1246
+    },
+    {
+      "id": "cmv0meiin02hq01u114ki3c1h",
+      "title": "EP160 小優的12話專案管理鬼故事08- 會議上都說沒問題，為何事後爆雷？敏捷管理破解假面甜心",
+      "url": "https://open.firstory.fm/story/cmv0meiin02hq01u114ki3c1h",
+      "publishedAt": "2026-10-12T15:47:24Z",
+      "description": "專案會議上，大家一口同聲：「沒問題！」；會議結束後，卻有人私下補一句：「其實我不同意。」等到會議紀錄發出、工作開始執行，原本的共識又被翻盤，最後留下來背鍋的，往往是 PM。\n\nHanson 與小羅從專案會議、住戶區權會議的真實鬼故事聊起：有人當場簽名同意，回家後卻在群組發聲明改口；也有人在會議上不說反對，散會後才私下放炮。這些「假面甜心」表面上都說沒問題，實際上卻讓團隊無法確認承諾、進度與責任，專案也可能一路拖成無法驗收的爛尾樓。\n\n面對跨部門成員各自有原部門工作、資源可能臨時被調走，或市場與 AI 變化快到一週就不同的情況，PM 不能只期待每個人自動做出承諾，而要調整管理方式：縮短開發與驗收週期，讓流程透明，並每天把真正的困難攤在桌上。\n\n這一集，你將聽見他們如何：\n\n1. 縮短開發週期，邊做邊驗收\n\n不再等三個月、半年甚至一年後才驗收，而是每完成一小段就請使用者確認，及早發現「這不是我要的」，也讓已完成的成果可以分段收款。\n\n2. 用看板把工作視覺化\n\n將工作清楚分成 To do、Ongoing、Done，讓團隊一眼看見待辦、進行中與已完成的項目，避免進度只藏在個人腦中或私下對話裡。\n\n3. 用站立會議問三個問題\n\n每天快速確認：昨天完成了什麼、今天預計做什麼、遇到什麼困難。讓每個人的工作與阻礙被看見，團隊不用等到專案失控才發現問題。\n\n4. 讓問題及早浮現，而不是事後翻案\n\n透過短迭代、透明流程與每日同步，拆穿「沒問題」的假象；就連長時間不處理的 Bug，也要讓它在看板上持續被看見，不能默默堆到最後。\n\n如果你也常遇到「會議上大家都點頭，會後卻開始改口」的困境，這一集會讓你重新理解：敏捷不只是快速開發，而是一套讓承諾、進度與困難提早現形的專案管理方法。\n\n立即收聽《企業解憂事務所》EP160。聽完後，下一場專案會議直接試用三個問題，並把工作貼到 To do、Ongoing、Done 三欄，讓團隊從明天開始看見真正的進度。\n\nYoutube 🎙️ https://www.youtube.com/@BSCS-HJ\n\nFirstory 🎙️ https://reurl.cc/jrpQ7L\n\nSpotify 🎙️ https://reurl.cc/RkDL1D\n\nApple Podcast 🎙️ https://reurl.cc/vLXp1l\n\n讓企業經營不再卡關，預約一個小時的企業免費解憂（診治醫生：Hanson & 小羅）：\n\nHanson：https://reurl.cc/4NY0AR\n\n小羅：https://reurl.cc/ZNMZng\n\n加入會員，支持節目：https://biznutrify543.firstory.cc/join\n\nPowered by Firstory Hosting",
+      "durationSeconds": 1100
+    },
+    {
+      "id": "cmuw8w1ut01dg01tuarsghwxb",
+      "title": "EP159｜小優的12話專案管理鬼故事07- 科學的盡頭是通靈？自動檢測敗給人體檢測儀的真實慘案 🎧",
+      "url": "https://open.firstory.fm/story/cmuw8w1ut01dg01tuarsghwxb",
+      "publishedAt": "2026-10-06T05:38:15Z",
+      "description": "👤 小羅： 「人家說科學的盡頭是玄學，今天我們要來聊聊專案裡的『靈異事件』！」\n\n👤 Hanson： 「你說的靈異事件，該不會是我們剛才錄音室冷氣不冷、聲音怪怪的那種吧？那可是要趕快去安太歲的！」\n\n👤 小羅： 「安太歲不如安太座啦！不過今天講的不是這個，是一個『品質鬼故事』。你有聽過『通靈驗收』嗎？明明合約白紙黑字寫著系統辨識率要達99%，黃金樣本也順利驗證過關了，結果客戶廠內的資深品管主管『林阿姨』一句：『今天下雨天，烤漆顏色會變深』，直接讓PM當場爆血管！」\n\n👤 Hanson： 「哇塞，這真的太玄了吧！標準瞬間從科學變成玄學，那這個專案後來到底怎麼收尾？難道又要請業務去喬嗎？」\n\n👤 小羅： 「今天就讓我們來拆解這個『被詛咒的黃金樣本』，看看在傳產數位轉型中，如何不被通靈驗收給搞死！」\n\n🎧 這集《企業解憂事務所》的內容，是探討專案管理最瞎的「通靈驗收」情況\n\n收聽本集你會了解：\n\n🔍「99% 準確率」的合約陷阱\n\n🔍 黃金樣本 (Golden Sample) 的盲點\n\n🔍 「通靈驗收」的本質\n\n🔍 規格外的災難處理\n\n🔍 業務手腕與 PM 防線的拉扯\n\n🔍 避免玄學的預防機制\n\nPowered by Firstory Hosting",
+      "durationSeconds": 1337
+    },
+    {
+      "id": "cmukm6x1d04uk01uoe2oc4san",
+      "title": "EP158 小優的12話 專案管理的鬼故事 (品質管理篇) - 06. 憑感覺驗收的無底洞",
+      "url": "https://open.firstory.fm/story/cmukm6x1d04uk01uoe2oc4san",
+      "publishedAt": "2026-09-28T15:47:05Z",
+      "description": "【本集簡介】 「做得好一點」、「操作要很順」、「整體要有質感」——這些話聽起來很有方向，到了驗收現場卻可能變成專案團隊最害怕的鬼故事：每個人心裡都有一把尺，但沒有人知道尺的刻度在哪裡。\n\nEP158 從「憑感覺驗收」出發，拆解品質管理中最容易讓 PM 與執行團隊陷入無底洞的問題：如果規格沒有先定義，客戶看到成品才說「這不是我要的」，團隊究竟要怎麼判斷、怎麼改善？\n\n品質標準不應該等到最後才由某個人的喜好決定，而是要在專案一開始就被設計出來。從手機的防摔、防水，到系統要「如絲般滑順」、設計要「有質感」，都必須把抽象感受轉成團隊與客戶都能理解、檢查和簽認的允收條件。\n\n【本集重點】\n\n拒絕讓形容詞變成驗收標準：把「好用」、「絲滑」、「有質感」或「五彩斑斕的黑」拆成具體的行為、結果與限制。\n\n用 SMART 原則把感覺說清楚：把「找功能要很快」轉成操作次數或反應時間，成為可觀察、可計算的品質規格。\n\n用試做與敏捷迭代收斂模糊需求：先做出最小可用版本，讓使用者實際操作，再把問題整理成下一輪改善標準。\n\n用分段驗收避免最後一次全面翻盤：不要等 50、60 個項目全部完成後才驗收，而是做一個、驗收一個，讓問題提早浮現。\n\n【實務情境】 當客戶說外包設計「沒有質感」，卻無法具體描述想要的樣子時，團隊透過熟悉公司文化與品牌要求的內部設計專業者協助檢核，降低單純依賴個人感覺的爭議。\n\n驗收不只是看成品，也要找對能代表品質標準的人，並讓標準逐步被記錄下來。\n\n【聽完可以做什麼】 挑一個目前專案裡的抽象形容詞，例如「好用」或「有質感」，把它改寫成一項可以觀察、計算或逐項確認的允收標準，並在下一次開工前請客戶確認。\n\n【立即收聽】 YouTube｜https://www.youtube.com/@BSCS-HJ Firstory｜https://reurl.cc/jrpQ7L Spotify｜https://reurl.cc/RkDL1D Apple Podcast｜https://reurl.cc/vLXp1l\n\n【Workshop 專屬企業免費解憂】 一小時免費 Workshop（Hanson & 小羅 ） Hanson｜https://reurl.cc/4NY0AR 小羅｜https://reurl.cc/ZNMZng\n\n【支持節目】 加入會員｜https://biznutrify543.firstory.cc/join\n\nPowered by Firstory Hosting",
+      "durationSeconds": 1143
+    },
+    {
+      "id": "cmuc5dwai0naj01x7838qhwin",
+      "title": "EP157｜小優的12話專案管理鬼故事05- 老闆喝完酒，半年的專案變兩個月？解密職場排程鬼故事！ 🎧",
+      "url": "https://open.firstory.fm/story/cmuc5dwai0naj01x7838qhwin",
+      "publishedAt": "2026-09-22T04:04:23Z",
+      "description": "👤 Hanson：「小羅，聽說你今天又要帶來一個讓所有專案經理聽了都有感的鬼故事，而且還跟時間有關？」\n\n👤 小羅：「沒錯！在專案管理裡面，時間最可怕的地方就在於它『不可再生』。職場上偏偏最常上演的就是 - 明明精算過要半年的大案子，老闆前一晚跟客戶喝完酒，隔天拍拍你的肩膀說：『兩個月後要上線喔！大家敏捷一點、辛苦一下！』」\n\n👤 Hanson：「天啊！這根本是時空跳躍吧!!甘特圖瞬間縮短2/3！中秋節還沒到，工程師的肝先烤熟了。遇到這種神仙級的通靈排程，除了辭職，我們到底能怎麼解？」\n\n👤 小羅：「遇到老闆一句話，亂改規格和時間，硬碰硬或默默吞下都是死路一條。今天這集就要送大家『三大談判解套法寶』，教你如何用科學的方法保護團隊、守住底線！」\n\n🎧 這集《企業解憂事務所》的內容，是建立「時間管理」的正確專案思維，避免過度壓縮造成的恐懼！\n\n收聽本集你會了解：\n\n🔍 工作分解結構（WBS）的重要性\n\n🔍 職場常見的時間壓縮盲區\n\n🔍 專案管理黃金三角談判術\n\n🔍 杜邦要徑法(CPM)守護線\n\n🔍 緩衝管理(Project Buffer)機制\n\n🔍 合約與驗收標準的防禦思維\n\n🎙️ 🎙️ 🎙️ 收體連結在這邊\n\nYoutube 🎙️ https://www.youtube.com/@BSCS-HJ\n\nFirstory🎙️ https://reurl.cc/jrpQ7L\n\nSpotify🎙️ https://reurl.cc/RkDL1D\n\nApplePodcast🎙️ https://reurl.cc/vLXp1l\n\nKKBOX🎙️ https://reurl.cc/jrpQq1\n\nSoundOn🎙️ https://reurl.cc/ZNMZQp\n\nMixerBox🎙️ https://reurl.cc/3Mm6aX\n\nPocket Cast🎙️ https://reurl.cc/Y4nDgX\n\nRadiopublic🎙️ https://reurl.cc/E127v1\n\nPlayer.fm🎙️ https://reurl.cc/z6b8k7\n\nAmazon Music🎙️ https://reurl.cc/Y0W1ox\n\n讓企業經營不再卡關，預約一個小時的企業免費解憂 (診治醫生：Hanson & 小羅)：\n\nHanson：https://reurl.cc/4NY0AR\n\n小羅：https://reurl.cc/ZNMZng\n\nPowered by Firstory Hosting",
+      "durationSeconds": 922
+    },
+    {
+      "id": "cmtz9a8us1ckh01tqcfkh2mn6",
+      "title": "EP156｜小優的12話專案管理鬼故事04- 空降新老闆接手驗收？PM 必學的三道專案護身符",
+      "url": "https://open.firstory.fm/story/cmtz9a8us1ckh01tqcfkh2mn6",
+      "publishedAt": "2026-09-14T15:47:12Z",
+      "description": "# EP156｜空降新老闆接手驗收？PM 必學的三道專案護身符 專案做到一半，CEO 突然換人；原本要「極簡風」，新老闆卻偏好「酷炫風」。\n\n最棘手的不是重做，而是真正握有預算與否決權的人，將用另一套期待驗收你的成果。\n\n這一集，Hanson 與小羅從「空降最終頭目」的職場鬼故事出發，拆解專案團隊最怕遇到的管理難題：人力與時程已經吃緊，卻必須在新決策者上任後重新確認需求。若只依賴部門經理的口頭保證，或等到驗收才讓新老闆第一次看到成果，原本的驚喜很可能瞬間變成驚嚇。\n\n真正有效的做法，不是盲目討好或全面推翻，而是先理解新決策者的背景與偏好，再用最小幅度的調整，讓專案接上他的期待；同時把共識落實為會議紀錄、書面確認與正式變更流程，守住範疇、品質、時程與預算。\n\n這一集，你將聽見他們如何：\n\n找出真正的最終決策者 確認誰握有預算與否決權，不把中間人的「我說了算」誤當成最終承諾。\n\n做足背景功課再進會議 從新老闆的履歷與過往經驗理解偏好，並在關鍵說明會議中，用他熟悉的語言重新呈現專案價值。\n\n主動設計最小幅度的調整 預先提出符合新決策者需求的小改動，讓他參與改變、感受到掌握權，同時避免整個專案被迫重來。\n\n把口頭共識變成白紙黑字 邀請最高決策者親自與會、確認會議紀錄並完成書面簽核；若影響範疇、時程或預算，就回到正式變更管理流程。\n\n如果你正卡在「專案已經走到一半，驗收老闆卻換人」的困境，這一集會讓你重新理解：利害關係人管理不是事後補救，而是讓驗收不出現驚喜的前置風險管理。\n\n> 立即收聽《企業解憂事務所》EP156。聽完後，花 10 分鐘寫下新決策者最在意的三件事、可接受的最小調整，以及需要取得書面確認的項目，帶進下一場對齊會議。\n\n👇 別讓自己成為無情的 KPI 機器，現在就點擊收聽，為你的職涯重新找回熱情與價值！\n\nYoutube 🎙️ https://www.youtube.com/@BSCS-HJ\n\nFirstory🎙️ https://reurl.cc/jrpQ7L\n\nSpotify🎙️ https://reurl.cc/RkDL1D\n\nApplePodcast🎙️ https://reurl.cc/vLXp1l\n\n✨ 讓企業經營不再卡關，預約一個小時的 Workshop 專屬企業免費解憂 (診治醫生：Hanson & 小羅)：\n\nHanson：https://reurl.cc/4NY0AR\n\n小羅：https://reurl.cc/ZNMZng\n\nPowered by Firstory Hosting",
+      "durationSeconds": 901
+    }
+  ]
 }
