@@ -2,14 +2,14 @@ import {createHash} from 'node:crypto';
 import {columns,intakeColumns} from './smartsheet-schema';
 import {formType,type Submission} from './form-fields';
 import {claimJournal,completeJournal,journalPath,readJournal,type JournalRecord} from './intake-journal';
-import {privacyNotice} from './privacy-notice';
+import {publishedNoticeMatches} from './privacy-notice';
 const hosts={us:'https://api.smartsheet.com/2.0',eu:'https://api.smartsheet.eu/2.0',au:'https://api.smartsheet.au/2.0',gov:'https://api.smartsheetgov.com/2.0'};
 export type IntakeConfig={enabled:boolean;token:string;sheetId:string;baseUrl:string;consentVersion:string;privacyNoticeUrl:string;journalDirectory?:string};
 export function intakeConfig(env:Record<string,string|undefined>=process.env):IntakeConfig{
  const region=env.SMARTSHEET_REGION??'us',privacy=env.FORMS_PRIVACY_NOTICE_URL??'';
  return{enabled:env.SMARTSHEET_SUBMISSIONS_ENABLED==='true',token:env.SMARTSHEET_ACCESS_TOKEN??'',sheetId:env.SMARTSHEET_SHEET_ID??'',baseUrl:hosts[region as keyof typeof hosts]??'',consentVersion:env.FORMS_CONSENT_VERSION??'',privacyNoticeUrl:privacy,journalDirectory:env.FORMS_JOURNAL_DIRECTORY||'.data/intake'};
 }
-export function intakeReady(c:IntakeConfig){const localDraft=/^\/privacy(?:[/?#]|$)/.test(c.privacyNoticeUrl)&&!privacyNotice.published;return !localDraft&&c.enabled&&!!c.token&&/^\d+$/.test(c.sheetId)&&!!c.baseUrl&&!!c.consentVersion&&(/^(https:\/\/[^\s]+|\/(?!\/)[^\s]*)$/.test(c.privacyNoticeUrl));}
+export function intakeReady(c:IntakeConfig){return c.enabled&&!!c.token&&/^\d+$/.test(c.sheetId)&&Object.values(hosts).includes(c.baseUrl)&&publishedNoticeMatches(c.privacyNoticeUrl,c.consentVersion);}
 export class IntakeError extends Error{constructor(public status:number,public code:string,message:string){super(message);}}
 /** Preserve int64 identifiers exactly before JavaScript can round numeric JSON values. */
 export function parseSmartsheetJson(text:string){return JSON.parse(text.replace(/"(id|columnId|rowId|sheetId)"\s*:\s*(\d+)/g,(_,key,value)=>`"${key}":"${value}"`));}
