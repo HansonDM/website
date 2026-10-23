@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Tuesday 20:15 Asia/Taipei (UTC+8). GitHub may delay scheduled jobs.
+    - cron: '15 12 * * 2'
 permissions:
   contents: read
   pages: write
@@ -35,6 +38,8 @@ jobs:
         run: npm install --global pnpm@11.25.0
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
+      - name: Sync official Firstory RSS
+        run: python3 scripts/sync-podcast.py
       - name: Build approved website
         run: pnpm build
       - uses: actions/configure-pages@v5
