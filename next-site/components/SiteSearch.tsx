@@ -1,14 +1,15 @@
 'use client';
 import Link from 'next/link';
+import {navigateKnowledgeFilters} from '@/lib/knowledge-navigation';
 import {useEffect,useState} from 'react';
 import {useKnowledgeQuery,useKnowledgeReady} from './KnowledgeQueryProvider';
-import {cleanSearchQuery,searchHref,searchKind,searchKinds,searchSite,type SearchKind} from '@/lib/site-search';
+import {cleanSearchQuery,searchKind,searchKinds,searchSite,type SearchKind} from '@/lib/site-search';
 import type {CasePreviewEntry} from '@/lib/case-preview-model';
 export default function SiteSearch({entries=[]}:{entries?:CasePreviewEntry[]}){
  const ready=useKnowledgeReady(),params=useKnowledgeQuery(),one=(key:string)=>{const values=params.getAll(key);return values.length===1?values[0]:undefined;},initialQuery=cleanSearchQuery(one('q')),initialKind=searchKind(one('type'));const[query,setQuery]=useState(initialQuery),[kind,setKind]=useState<SearchKind>(initialKind),[limit,setLimit]=useState(8);
  useEffect(()=>{setQuery(initialQuery);setKind(searchKind(initialKind));setLimit(8);},[initialQuery,initialKind]);
  const active=!!cleanSearchQuery(query)||kind!=='all',results=active?searchSite(query,kind,entries):[];
- const update=(q:string,k:SearchKind)=>{setQuery(q);setKind(k);setLimit(8);window.history.pushState(null,'',searchHref(q,k));};
+ const update=(q:string,k:SearchKind)=>{setQuery(q);setKind(k);setLimit(8);navigateKnowledgeFilters('search',q,k);};
  return <section className="interior-section site-search" id="search" aria-labelledby="site-search-title"><div className="interior-section-heading"><p className="eyebrow">FIND YOUR NEXT STEP</p><h2 id="site-search-title">從一個問題，找到相關內容。</h2><p>搜尋本站服務、顧問團隊、內訓規劃、{entries.length>0?'匿名公司專案與顧問歷任題材、':''}Podcast 單集、文章初稿與常見問題。這是網站內容的關鍵字搜尋。</p></div>
  <form role="search" aria-label="網站內容搜尋" className="site-search-form" onSubmit={e=>{e.preventDefault();update(cleanSearchQuery(query),kind);}}><label className="knowledge-search" htmlFor="site-search-query">想了解什麼？<input disabled={!ready} id="site-search-query" type="search" name="q" maxLength={120} value={query} onChange={e=>{setQuery(e.target.value);setLimit(8);}} placeholder="例如：流程自動化、職涯領導力、二代接班"/></label><button disabled={!ready} className="button teal-button" type="submit">搜尋內容 →</button></form>
  <div className="filter-row" aria-label="搜尋內容類型">{searchKinds.map(k=><button disabled={!ready} type="button" key={k.value} aria-pressed={kind===k.value} onClick={()=>update(cleanSearchQuery(query),k.value)}>{k.label}</button>)}</div>

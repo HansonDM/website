@@ -1,13 +1,13 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {useRouter} from 'next/navigation';
 import {useKnowledgeQuery,useKnowledgeReady} from './KnowledgeQueryProvider';
 import Link from 'next/link';
+import {navigateKnowledgeFilters} from '@/lib/knowledge-navigation';
 import {cleanSearchQuery} from '@/lib/site-search';
-import {faqEntries,faqCategories,faqCategory,faqEntry,findFaqs,faqBrowseHref,faqQuestionHref} from '@/lib/faq-navigation';
+import {faqEntries,faqCategories,faqCategory,faqEntry,findFaqs,faqQuestionHref} from '@/lib/faq-navigation';
 
 export default function KnowledgeExplorer(){
- const ready=useKnowledgeReady(),router=useRouter(),params=useKnowledgeQuery(),one=(key:string)=>{const values=params.getAll(key);return values.length===1?values[0]:undefined;};
+ const ready=useKnowledgeReady(),params=useKnowledgeQuery(),one=(key:string)=>{const values=params.getAll(key);return values.length===1?values[0]:undefined;};
  const savedQuery=cleanSearchQuery(one('faq_q')),urlCategory=faqCategory(one('faq_topic'));
  const[category,setCategory]=useState(urlCategory),[query,setQuery]=useState(savedQuery),[target,setTarget]=useState<string|null>(null),[share,setShare]=useState<{id:string;url:string;message:string}|null>(null),list=useRef<HTMLDivElement>(null);
  useEffect(()=>{setQuery(savedQuery);setShare(null);},[savedQuery]);
@@ -15,14 +15,14 @@ export default function KnowledgeExplorer(){
  useEffect(()=>{
   const openTarget=()=>{const entry=faqEntry(window.location.hash.slice(1));if(!entry){setTarget(null);return;}const url=new URL(window.location.href),single=(key:string)=>{const values=url.searchParams.getAll(key);return values.length===1?values[0]:undefined;};
    if(!findFaqs(single('faq_q'),single('faq_topic')).some(f=>f.id===entry.id)){
-    setQuery('');setCategory(entry.categoryId);window.history.replaceState(window.history.state,'',faqBrowseHref('',entry.categoryId,single('q'),single('type'),entry.id));
+    setQuery('');setCategory(entry.categoryId);navigateKnowledgeFilters('faq','',entry.categoryId,'replace',entry.id);
    }else{setQuery(cleanSearchQuery(single('faq_q')));setCategory(faqCategory(single('faq_topic')));}
    setTarget(entry.id);
   };
   openTarget();window.addEventListener('hashchange',openTarget);return()=>window.removeEventListener('hashchange',openTarget);
  },[savedQuery,urlCategory]);
  useEffect(()=>{if(!target)return;const element=document.getElementById(target);if(element instanceof HTMLDetailsElement){element.open=true;element.scrollIntoView({block:'start'});element.querySelector('summary')?.focus({preventScroll:true});setTarget(null);}},[target,query,category]);
- const results=findFaqs(query,category),update=(value:string,kind:string)=>{setQuery(value);setCategory(faqCategory(kind));setShare(null);router.push(faqBrowseHref(value,kind,one('q'),one('type')),{scroll:false});};
+ const results=findFaqs(query,category),update=(value:string,kind:string)=>{setQuery(value);setCategory(faqCategory(kind));setShare(null);navigateKnowledgeFilters('faq',value,kind);};
  const expand=(open:boolean)=>list.current?.querySelectorAll('details').forEach(item=>{item.open=open;});
  const copy=async(id:string)=>{const path=faqQuestionHref(id);if(!path)return;const url=new URL(path,'https://www.hansondm.com').href;try{await navigator.clipboard.writeText(url);setShare({id,url,message:'問題網址已複製，只包含這則公開問答。'});}catch{setShare({id,url,message:'請複製下方的問題網址。'});}};
  return <section className="interior-section faq-explorer" id="faq" aria-labelledby="faq-title"><div className="interior-section-heading"><p className="eyebrow">COMMON QUESTIONS</p><h2 id="faq-title">開始之前，你可能想知道。</h2><p>從需求準備、工具使用到洽詢流程，先了解常見問題；也可用上方內容搜尋查找。</p></div>
