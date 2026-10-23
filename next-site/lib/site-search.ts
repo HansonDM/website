@@ -34,4 +34,4 @@ export function searchSite(query:string,kind:SearchKind='all',entries:readonly C
   return{...record,score};
  }).filter((record):record is SearchRecord&{score:number}=>record!==null).sort((a,b)=>b.score-a.score);
 }
-export function searchHref(query:string,kind:SearchKind){const params=new URLSearchParams();const q=cleanSearchQuery(query);if(q)params.set('q',q);if(kind!=='all')params.set('type',kind);return'/knowledge'+(params.size?'?'+params.toString():'')+'#search';}
+export function searchHref(query:string,kind:SearchKind){const params=new URLSearchParams();const q=cleanSearchQuery(query);if(q)params.set('q',q);if(kind!=='all')params.set('type',kind);return'/knowledge/'+(params.size?'?'+params.toString():'')+'#search';}
