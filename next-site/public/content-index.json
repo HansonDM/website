@@ -1,0 +1,258 @@
+[
+  {
+    "parent": "ai-transformation",
+    "slug": "adoption",
+    "title": "AI 導入規劃",
+    "href": "/ai-transformation/adoption",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "ai-transformation",
+    "slug": "automation",
+    "title": "n8n 與流程自動化",
+    "href": "/ai-transformation/automation",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "ai-transformation",
+    "slug": "assistant",
+    "title": "AI 客服與知識助理",
+    "href": "/ai-transformation/assistant",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "ai-transformation",
+    "slug": "data",
+    "title": "數據應用與營運洞察",
+    "href": "/ai-transformation/data",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "standards",
+    "title": "人才標準與職能梳理",
+    "href": "/talent-development/standards",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "inventory",
+    "title": "人才盤點與發展對話",
+    "href": "/talent-development/inventory",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "assessment",
+    "title": "企業員工評量工具",
+    "href": "/talent-development/assessment",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "leadership",
+    "title": "領導力與管理能力",
+    "href": "/talent-development/leadership",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "succession",
+    "title": "接班梯隊與關鍵人才",
+    "href": "/talent-development/succession",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "ai-transformation",
+    "slug": "industry-applications",
+    "title": "AI 轉型與產業應用",
+    "href": "/ai-transformation/industry-applications",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "ai-transformation",
+    "slug": "service-process-projects",
+    "title": "客戶服務、流程優化與專案管理",
+    "href": "/ai-transformation/service-process-projects",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "career-leadership",
+    "title": "職涯領導力與人才發展",
+    "href": "/talent-development/career-leadership",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "employer-brand-evp",
+    "title": "雇主品牌與員工價值主張",
+    "href": "/talent-development/employer-brand-evp",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "social-impact",
+    "title": "ESG 社會面與社會影響力",
+    "href": "/talent-development/social-impact",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "organizational-diagnosis",
+    "title": "企業診斷與跨部門溝通",
+    "href": "/talent-development/organizational-diagnosis",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "talent-development",
+    "slug": "family-succession",
+    "title": "二代接班專屬團隊",
+    "href": "/talent-development/family-succession",
+    "kind": "service",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "ai-productivity",
+    "title": "AI 應用與工作效率",
+    "href": "/academy/ai-productivity",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "workflow-automation",
+    "title": "流程優化與自動化",
+    "href": "/academy/workflow-automation",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "manager-communication",
+    "title": "主管溝通與團隊帶領",
+    "href": "/academy/manager-communication",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "leadership-coaching",
+    "title": "領導力與人才培育",
+    "href": "/academy/leadership-coaching",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "team-collaboration",
+    "title": "跨部門協作與問題解決",
+    "href": "/academy/team-collaboration",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "academy",
+    "slug": "talent-review",
+    "title": "人才盤點與發展實務",
+    "href": "/academy/talent-review",
+    "kind": "course",
+    "status": "planning-content"
+  },
+  {
+    "parent": "knowledge",
+    "slug": "start-with-one-workflow",
+    "title": "AI 導入前，先把一個工作流程說清楚",
+    "href": "/knowledge/start-with-one-workflow",
+    "kind": "article",
+    "status": "editorial-draft"
+  },
+  {
+    "parent": "knowledge",
+    "slug": "evidence-based-talent-conversation",
+    "title": "人才盤點之後，如何展開一場有方向的發展對話？",
+    "href": "/knowledge/evidence-based-talent-conversation",
+    "kind": "article",
+    "status": "editorial-draft"
+  },
+  {
+    "parent": "knowledge",
+    "slug": "training-needs-brief",
+    "title": "企業內訓需求，如何從「想上一堂課」說得更具體？",
+    "href": "/knowledge/training-needs-brief",
+    "kind": "article",
+    "status": "editorial-draft"
+  },
+  {
+    "parent": "partnerships",
+    "slug": "alliance",
+    "title": "策略聯盟",
+    "href": "/partnerships/alliance",
+    "kind": "partnership",
+    "status": "planning-content"
+  },
+  {
+    "parent": "partnerships",
+    "slug": "cross-industry",
+    "title": "跨界合作與企業交流",
+    "href": "/partnerships/cross-industry",
+    "kind": "partnership",
+    "status": "planning-content"
+  },
+  {
+    "parent": "partnerships",
+    "slug": "education",
+    "title": "產學與協會合作",
+    "href": "/partnerships/education",
+    "kind": "partnership",
+    "status": "planning-content"
+  },
+  {
+    "parent": "partnerships",
+    "slug": "instructors",
+    "title": "講師與專業顧問合作",
+    "href": "/partnerships/instructors",
+    "kind": "partnership",
+    "status": "planning-content"
+  },
+  {
+    "parent": "cases",
+    "slug": "ai-observation",
+    "title": "AI 導入的流程與服務觀察",
+    "href": "/cases/ai-observation",
+    "kind": "guide",
+    "status": "planning-content"
+  },
+  {
+    "parent": "cases",
+    "slug": "talent-observation",
+    "title": "人才發展的行動與組織觀察",
+    "href": "/cases/talent-observation",
+    "kind": "guide",
+    "status": "planning-content"
+  },
+  {
+    "parent": "cases",
+    "slug": "learning-observation",
+    "title": "企業內訓的學習與工作應用觀察",
+    "href": "/cases/learning-observation",
+    "kind": "guide",
+    "status": "planning-content"
+  }
+]

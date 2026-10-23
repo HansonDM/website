@@ -1,0 +1,2 @@
+export type CasePreviewEntry={id:string;group:'company'|'experience';categories:string[];name:string;title:string;summary:string;approach:string[];role:string;status:string;note:string;related:string[]};
+export function filterCasePreview(entries:CasePreviewEntry[],group:CasePreviewEntry['group'],category:string){return entries.filter(e=>e.group===group&&(category==='all'||e.categories.includes(category)));}

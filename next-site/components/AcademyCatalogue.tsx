@@ -1,0 +1,37 @@
+'use client';
+import {useEffect,useState} from 'react';
+import Link from 'next/link';
+import {courseProfiles,comparisonLimit,comparisonCourses,comparisonHref,comparisonInquiryHref,courseMatches,parseComparison,trainingBrief} from '@/lib/academy-planning';
+import {inquiryHref} from '@/lib/inquiry-links';
+import {EmptyState} from './InteriorUI';
+export default function AcademyCatalogue({initialComparison=[]}:{initialComparison?:string[]}){
+ const[category,setCategory]=useState('全部方向'),[query,setQuery]=useState(''),[selected,setSelected]=useState<string[]>(initialComparison),[note,setNote]=useState(''),[shareUrl,setShareUrl]=useState('');
+ useEffect(()=>{const restore=()=>{const values=new URL(window.location.href).searchParams.getAll('compare');setSelected(parseComparison(values.length===1?values[0]:undefined));setNote('');setShareUrl('');};restore();window.addEventListener('popstate',restore);return()=>window.removeEventListener('popstate',restore);},[]);
+ const changeSelection=(next:string[])=>{setSelected(next);setNote('');setShareUrl('');window.history.replaceState(window.history.state,'',comparisonHref(next,window.location.hash||''));};
+ const toggle=(slug:string)=>{if(selected.includes(slug))changeSelection(selected.filter(s=>s!==slug));else if(selected.length<comparisonLimit)changeSelection([...selected,slug]);};
+ const chosen=comparisonCourses(selected),results=courseProfiles.filter(c=>(category==='全部方向'||c.category===category)&&courseMatches(c.slug,query));
+ const rows=[{label:'適合對象',content:(c:typeof courseProfiles[number])=><p>{c.audience}</p>},{label:'學習目標',content:(c:typeof courseProfiles[number])=><ul>{c.goals.map(g=><li key={g}>{g}</li>)}</ul>},{label:'工作情境練習',content:(c:typeof courseProfiles[number])=><p>{c.practice}</p>}];
+ const download=()=>{const blob=new Blob(['\uFEFF'+trainingBrief(selected)],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download='韓森企業內訓需求討論單.txt';document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setNote('討論單已準備下載，尚未送出洽詢。');};
+ return <>
+  <section id="internal" className="interior-section"><div className="interior-section-heading"><p className="eyebrow">CORPORATE LEARNING</p><h2>企業內訓，從工作現場出發。</h2><p>以下為可討論的內訓方向，實際課綱、講師、時數與費用依需求確認。可先選擇最多三項，比較學習目標與適合對象。</p></div>
+   <label className="knowledge-search academy-search">查找內訓方向<input type="search" maxLength={120} value={query} onChange={e=>setQuery(e.target.value)} placeholder="例如：主管、流程、人才盤點"/></label>
+   <div className="filter-row" aria-label="內訓方向分類">{['全部方向','AI 與數位','領導與管理','組織與協作'].map(t=><button type="button" key={t} aria-pressed={t===category} onClick={()=>setCategory(t)}>{t}</button>)}</div>
+   <div className="academy-results-note"><p className="result-count" role="status">找到 {results.length} 個方向 · 已選 {selected.length} / {comparisonLimit} 項比較</p><a className="detail-link" href="#compare">查看已選方向 ↓</a></div>
+   <div className="direction-grid">{results.map(c=><article className="direction-card" key={c.title}><p className="category-label">{c.category} · 內訓規劃</p><h3>{c.title}</h3><p>{c.description}</p><dl><dt>適合對象</dt><dd>{c.audience}</dd></dl><Link className="outline-link" href={`/academy/${c.slug}`}>查看課程規劃 <span>→</span></Link><Link href={inquiryHref('企業內訓',c.title)}>討論這個內訓方向 <span>→</span></Link><button className="course-select" type="button" aria-pressed={selected.includes(c.slug)} disabled={!selected.includes(c.slug)&&selected.length>=comparisonLimit} onClick={()=>toggle(c.slug)}>{selected.includes(c.slug)?'已加入比較 ✓':'加入比較 ＋'}<span className="sr-only">：{c.title}</span></button></article>)}</div>
+   {results.length===0&&<EmptyState title="沒有相符的內訓方向" text="請試試其他關鍵字，或重設分類繼續查找。" icon="search"/>}
+   {(query||category!=='全部方向')&&<button className="receipt-action" type="button" onClick={()=>{setQuery('');setCategory('全部方向');}}>重設課程篩選</button>}
+   {selected.length===comparisonLimit&&<p className="notice">已選滿三項；如需比較其他方向，可先在下方移除一項。</p>}
+  </section>
+  <section id="compare" className="interior-section course-comparison" aria-labelledby="comparison-title"><div className="interior-section-heading"><p className="eyebrow">CHOOSE YOUR LEARNING DIRECTION</p><h2 id="comparison-title">一起比較，找到團隊的學習起點。</h2><p>選項來自既有課程規劃，可再依企業的工作情境討論調整。</p></div>
+   {chosen.length===0?<EmptyState title="先選擇想了解的方向" text="在上方加入一至三個內訓方向，即可並列比較並下載需求討論單。"/>:<>
+    <div className="comparison-desktop"><table className="comparison-table"><caption className="sr-only">已選內訓方向比較</caption><thead><tr><th scope="col">比較面向</th>{chosen.map(c=><th key={c.slug} scope="col"><Link href={`/academy/${c.slug}`}>{c.title} ↗</Link><button type="button" className="comparison-remove" aria-label={`移除${c.title}`} onClick={()=>toggle(c.slug)}>移除</button></th>)}</tr></thead><tbody>{rows.map(row=><tr key={row.label}><th scope="row">{row.label}</th>{chosen.map(c=><td key={c.slug}>{row.content(c)}</td>)}</tr>)}</tbody></table></div>
+    <div className="comparison-mobile">{chosen.map(c=><article className="comparison-card" key={c.slug}><p className="category-label">{c.category} · 內訓規劃</p><h3><Link href={`/academy/${c.slug}`}>{c.title} ↗</Link></h3>{rows.map(row=><div className="comparison-row" key={row.label}><h4>{row.label}</h4>{row.content(c)}</div>)}<button className="comparison-remove" type="button" aria-label={`移除${c.title}`} onClick={()=>toggle(c.slug)}>移除這個方向</button></article>)}</div>
+    <aside className="comparison-planning-note"><strong>帶著工作情境，接著討論。</strong><p>可以先整理學員對象與人數、希望改善的問題、課後期待的行動，以及期間與形式。實際課程安排在需求確認後規劃。</p></aside>
+    <div className="comparison-actions"><Link className="button gold-button" href={comparisonInquiryHref(selected)}>帶入這些方向洽詢 →</Link><button className="receipt-action" type="button" onClick={download}>下載內訓討論單</button><button className="receipt-action" type="button" onClick={async()=>{const url=new URL(comparisonHref(selected),window.location.origin).href;setShareUrl(url);try{await navigator.clipboard.writeText(url);setNote('比較網址已複製，只包含所選課程方向。');}catch{setNote('請複製下方的比較網址。');}}}>複製比較網址</button><button className="receipt-action" type="button" onClick={()=>changeSelection([])}>清除比較</button></div>
+   </>}
+   <p role="status" aria-live="polite" className="notice">{note}</p>{shareUrl&&<label className="comparison-share">比較網址<input readOnly value={shareUrl} onFocus={e=>e.target.select()}/></label>}
+   <p className="notice">比較與下載不會送出洽詢，也不代表完成報名或保留名額。要聯繫時，請至洽詢頁確認接收狀態。</p>
+  </section>
+  <section id="public" className="interior-section soft-panel"><div className="interior-section-heading"><p className="eyebrow">PUBLIC PROGRAMS</p><h2>公開班與開課資訊</h2><p>確認後的課程將提供完整內容、適合對象、日期與報名方式。</p></div><EmptyState title="公開班資訊籌備中" text="目前尚無已公告的課程日期或報名名額。歡迎先提出感興趣的主題，待課程確認後再討論參與方式。"/><Link href="/contact?topic=%E5%85%AC%E9%96%8B%E7%8F%AD" className="button gold-button">提出課程需求 →</Link></section>
+ </>;
+}
