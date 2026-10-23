@@ -11,9 +11,14 @@ export function filterArticles(query:unknown,category:unknown){
 }
 export function articleLibraryHref(query:unknown,category:unknown){const q=articleQuery(query),kind=articleCategory(category),params=new URLSearchParams();if(q)params.set('article_q',q);if(kind!=='全部文章')params.set('article_topic',kind);return'/knowledge'+(params.size?'?'+params.toString():'')+'#articles';}
 export function articleOutline(value:unknown){const article=findArticle(value);return article?[...article.sections.map((s,i)=>({id:`article-section-${i+1}`,title:s.title})),{id:'prepare',title:'帶回工作：兩分鐘整理下一步'}]:[];}
+export function articleReadingAnchor(value:unknown,hash:unknown){
+ if(!findArticle(value)||typeof hash!=='string')return undefined;
+ const allowed=['content',...articleOutline(value).map(s=>s.id)];
+ return allowed.find(id=>hash==='#'+id);
+}
 export function articleShareHref(value:unknown,hash:unknown=''){
  const article=findArticle(value);if(!article)return'/knowledge#articles';
- const allowed=new Set(['#content',...articleOutline(value).map(s=>'#'+s.id)]);
- return'/knowledge/'+article.slug+(typeof hash==='string'&&allowed.has(hash)?hash:'');
+ const anchor=articleReadingAnchor(value,hash);
+ return'/knowledge/'+article.slug+(anchor?'#'+anchor:'');
 }
 export function articleDiscussionBrief(value:unknown){const article=findArticle(value);if(!article)return'';return['韓森管理顧問有限公司｜文章工作討論單',article.title,'文章內容初稿，供預覽與內容審閱；非Podcast轉錄或客戶實績。','本文件由裝置產生，下載不代表已送出洽詢。','',article.intro,'','閱讀重點',...article.sections.map((s,i)=>`${i+1}. ${s.title}`),'','帶回工作：整理下一步',...article.prepare.flatMap(p=>['・'+p,'我的整理：','']),'我想先採取的一個行動：','可以一起討論的對象：','希望回顧的工作改變：','','請自行決定要保存及分享的內容。', '需要交流時，可至網站洽詢頁確認接收狀態。'].join('\n');}
