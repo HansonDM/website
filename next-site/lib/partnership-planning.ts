@@ -16,3 +16,9 @@ export function partnershipInquiryHref(value:unknown){const plan=partnershipPlan
 export const partnershipProcess:[string,string][]=[['理解專長與對象','整理雙方專業、服務對象及共同關注的課題。'],['討論合作範圍','釐清內容、參與方式與可投入資源。'],['確認分工與條件','對齊窗口、工作範圍及需要確認的安排。'],['安排後續交流','依共識討論內容準備、試行及回顧方式。']];
 export const partnershipFaq=[{question:'還不確定合作類型，可以先交流嗎？',answer:'可以先描述專業、服務對象與期待的合作方向，再依議題討論適合的合作模式。'}, {question:'有哪些內容適合放在初次提案？',answer:'可先提供可公開的專長、服務對象、合作構想及期待。資料或素材的進一步分享，在確認範圍後再安排。'}, {question:'合作資訊何時會公開？',answer:'合作範圍、單位或個人介紹、名稱及Logo，需先經雙方確認與同意。提出構想不代表已完成合作或公開授權。'}];
 export const partnershipDetails:ContentDetail[]=partnershipPlans.map(plan=>({parent:'partnerships',slug:plan.id,title:plan.title,en:'CO-CREATE WITH HANSON',intro:plan.description,kind:'partnership',label:'合作規劃說明',topic:'策略合作',audience:plan.audience,prepare:plan.prepare,sections:[{title:'從共同的企業課題開始',paragraphs:[plan.description,'先了解彼此專長與服務對象，再把合作構想整理為可討論的範圍。實際合作內容與安排依雙方確認，不預設固定專案、課程或參與人員。']},{title:'可以一起討論的合作面向',bullets:plan.possibilities},{title:'把想法整理成下一步',paragraphs:['依交流目的，可先共同整理以下內容，作為後續討論的基礎。'],bullets:plan.outcomes},{title:'合作資訊的確認與呈現',paragraphs:['先對齊工作分工、內容與素材的使用方式，再討論合作介紹、聯合課程或活動資訊。對外呈現的名稱、Logo、經歷與成果均需確認後使用。','初次交流可從公開資訊與內容摘要開始，詳細安排在需求釐清後討論。']}],faq:plan.faq,related:plan.related}));
+
+/** Public planning content only. Never accepts inquiry fields or free text. */
+export function partnershipBrief(value:unknown){
+ const plan=partnershipPlan(value);if(!plan)return'';
+ return ['韓森管理顧問有限公司｜合作需求討論單','合作方向：'+plan.title,'本文件為合作交流準備，不代表合作成立、活動排定或公開授權。','下載或列印不代表已送出提案。','','一、合作目的',plan.description,'','二、可以先整理',...plan.prepare.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','三、共同討論的面向',...plan.possibilities.map(item=>'・'+item),'','四、下一步確認',...plan.outcomes.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','五、交流前確認','□ 可公開的資料及素材使用範圍：＿＿＿＿＿＿','□ 雙方窗口、角色與後續討論事項：＿＿＿＿＿＿','','請勿填入機密提案、私人聯絡資料、客戶名單或未經同意的教材。','本討論單不讀取洽詢表單的姓名、聯絡資訊或提案原文。','線上接收仍未啟用；實際合作內容需經雙方確認。'].join('\n');
+}
