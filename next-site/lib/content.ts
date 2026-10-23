@@ -3,8 +3,8 @@ export const pages = [
  {slug:'ai-transformation',title:'AI 數位轉型',en:'AI TRANSFORMATION',intro:'從真實的工作難題出發，讓 AI 成為企業的日常能力。',items:['AI 應用盤點與導入規劃','流程優化與自動化設計','企業知識管理與 AI 助理'],detail:'先釐清需求、資料與工作流程，再循序建立可落地的應用，讓團隊理解、採用並持續改善。'},
  {slug:'talent-development',title:'人才資產發展',en:'TALENT DEVELOPMENT',intro:'讓每一份潛力，都能轉化為組織前進的力量。',items:['企業員工評量工具與人才盤點','領導與管理能力發展','團隊協作與組織發展'],detail:'以企業目標為起點，連結人才盤點、能力培育與實際工作情境，建立持續發展的人才資產。'},
  {slug:'academy',title:'企業學院',en:'HANSON ACADEMY',intro:'把學習帶進工作，把能力留在組織。',items:['企業內訓｜依組織需求規劃','公開班｜課程資訊籌備中','實作工作坊｜從理解走向應用','內訓方向比較與需求討論單'],detail:'企業內訓可依對象、目標與工作場景討論內容。公開班日期、講師及報名資訊將於確認後公告。'},
- {slug:'cases',title:'成功案例',en:'OUR IMPACT',intro:'用具體的改變，說明顧問工作的價值。',items:['AI 導入的流程與服務觀察','人才發展的行動與組織觀察','企業內訓的學習與工作應用觀察'],detail:'案例內容整理中。將於取得客戶授權並確認成果後公開；目前不展示未核實的客戶名稱、數字或成效。'},
- {slug:'knowledge',title:'解憂知識中心',en:'IDEAS FOR TOMORROW',intro:'讓一個好觀點，成為下一次改變的起點。',items:[],detail:'Podcast 節目、文章與影音資源整理中。上架內容將附上已確認的原始來源與收聽連結。'},
+ {slug:'cases',title:'成功案例',en:'OUR IMPACT',intro:'用具體的改變，說明顧問工作的價值。',items:['AI 導入的流程與服務觀察','人才發展的行動與組織觀察','企業內訓的學習與工作應用觀察'],detail:'以匿名題材分開呈現公司服務／專案規劃與顧問歷任經驗，保留工作角色與服務範圍。完整成果案例待證據核實及授權，不展示客戶Logo或成果數字。'},
+ {slug:'knowledge',title:'解憂知識中心',en:'IDEAS FOR TOMORROW',intro:'讓一個好觀點，成為下一次改變的起點。',items:[],detail:'提供本站服務、匿名題材、三篇文章初稿與常見問題的關鍵字查找。Podcast 原始節目資料確認後提供收聽連結。'},
  {slug:'partnerships',title:'共創合作夥伴',en:'BETTER TOGETHER',intro:'讓專業彼此連結，讓企業看見更多可能。',items:['策略聯盟','跨界合作與企業交流','產學與協會合作','講師與專業顧問合作'],detail:'歡迎以具體的合作構想展開交流。我們會先了解雙方專長、服務對象與合作方式，再共同討論下一步。'},
  {slug:'community',title:'社群中心',en:'STAY CONNECTED',intro:'在持續交流中，找到成長的同行者。',items:['AI 應用與流程實作','職涯發展與組織支持','主管帶領與跨部門協作'],detail:'從站內文章、服務與內訓規劃開始，整理主題與工作情境，再提出交流需求。六個平台的官方社群連結確認後公布。'},
  {slug:'contact',title:'聯絡與預約',en:'LET’S TALK',intro:'你的企業難題，我們一起找方向。',items:[],detail:'告訴我們目前的挑戰、希望達成的目標，以及方便聯繫的方式。'}

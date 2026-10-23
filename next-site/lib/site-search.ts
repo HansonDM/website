@@ -4,8 +4,9 @@ import {servicePlanners,planningHref} from './service-planning';
 import {detailPages} from './detail-content';
 import {faqs} from './interior-content';
 import {consultantExpertise} from './consultant-team';
+import {caseTopicHref,type CasePreviewEntry} from './case-preview-model';
 
-export const searchKinds=[{value:'all',label:'全部內容'},{value:'page',label:'網站與顧問團隊'},{value:'service',label:'服務方案'},{value:'course',label:'內訓規劃'},{value:'partnership',label:'合作方向'},{value:'guide',label:'成果觀察指南'},{value:'article',label:'文章初稿'},{value:'faq',label:'常見問題'}] as const;
+export const searchKinds=[{value:'all',label:'全部內容'},{value:'page',label:'網站與顧問團隊'},{value:'service',label:'服務方案'},{value:'course',label:'內訓規劃'},{value:'company-case',label:'公司專案題材'},{value:'consultant-experience',label:'顧問歷任經驗'},{value:'partnership',label:'合作方向'},{value:'guide',label:'成果觀察指南'},{value:'article',label:'文章初稿'},{value:'faq',label:'常見問題'}] as const;
 export type SearchKind=typeof searchKinds[number]['value'];
 export type SearchRecord={id:string;kind:Exclude<SearchKind,'all'>;title:string;summary:string;body:string;href:string;label:string;topic:string};
 export const searchRecords:SearchRecord[]=[
@@ -22,9 +23,10 @@ export const searchRecords:SearchRecord[]=[
 export function cleanSearchQuery(value:unknown){return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,120):'';}
 export function searchKind(value:unknown):SearchKind{return searchKinds.some(k=>k.value===value)?value as SearchKind:'all';}
 function normalize(text:string){return text.normalize('NFKC').toLocaleLowerCase('zh-TW').replace(/人工智慧|人工智能/g,'ai').replace(/\s/g,'');}
-export function searchSite(query:string,kind:SearchKind='all'){
+export function caseSearchRecords(entries:readonly CasePreviewEntry[]):SearchRecord[]{return entries.flatMap(entry=>{const href=caseTopicHref(entry.id,entries);if(!href)return[];return[{id:'case-'+entry.id,kind:entry.group==='company'?'company-case' as const:'consultant-experience' as const,title:entry.title,summary:entry.summary,body:[entry.name,entry.status,entry.role,...entry.approach,entry.note].join(' '),href,label:entry.group==='company'?'公司專案題材 · 匿名':'顧問歷任經驗 · 匿名',topic:entry.role}];});}
+export function searchSite(query:string,kind:SearchKind='all',entries:readonly CasePreviewEntry[]=[]){
  const terms=cleanSearchQuery(query).split(/\s+/).filter(Boolean).map(normalize);
- return searchRecords.filter(r=>kind==='all'||r.kind===kind).map(record=>{
+ return [...searchRecords,...caseSearchRecords(entries)].filter(r=>kind==='all'||r.kind===kind).map(record=>{
   const fields=[[record.title,40],[record.summary,12],[record.topic,8],[record.body,2]] as const;
   let score=0;for(const term of terms){const matches=fields.filter(([text])=>normalize(text).includes(term));if(!matches.length)return null;score+=matches.reduce((sum,[,weight])=>sum+weight,0);}
   return{...record,score};
