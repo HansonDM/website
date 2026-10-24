@@ -1,5 +1,11 @@
 # 網站表單 → n8n Cloud → Smartsheet｜2026-10-24
 
+## 最新：通知與附件（2026-10-24）
+
+原網站表單已改用 n8n v2；附件存入原 Smartsheet 對應列，確認收件後通知 Hanson.lin@hansondm.com。PDF／PNG／JPG，最多3個、合計5MB；不向填表者寄信，不隨信轉寄原文或檔案。正式流程YjX4Kcv7gOJFTiVV，設定key=production-v2，告知2026-10-24-v2。原首頁與Sitemap保持。最新發布、雙尺寸實測與維運見 docs/INTAKE-NOTIFICATION-ATTACHMENTS-RELEASE-20261024.md；下方v1狀態屬歷史紀錄。
+
+以下說明保留 v1 建置歷史；現行通知附件細節另見 INTAKE-NOTIFICATION-ATTACHMENTS.md。
+
 使用者已核可保留網站表單、改由 n8n Cloud 接收。此方案取代上一階段 Render 建議；不新購主機、不更動首頁／Sitemap／網域、不另建 Smartsheet 主表。
 
 ## 資源與處理
@@ -44,7 +50,7 @@ N8n HTTP Request的raw本文／文字回應在此版本對Add Rows出現stream�
 
 ## 維運
 
-- 在config表只找key=production的單列。緊急關閉設enabled=false；GET即回ready=false，POST503，不需等待Pages重建。不要改validation列作正式告知。
+- 現行v2在config表只找key=production-v2的單列；v1的production不是目前的正式入口。緊急關閉設enabled=false；GET即回ready=false，POST503，不需等待Pages重建。不要改validation列作正式告知。
 - 主表的「串接測試（勿聯絡）」、合成公司與@example.com資料均為測試，不能聯絡或計作客戶成果。一般正式資料狀態為新洽詢；伺服器忽略訪客自行指定的status。
 - 收件不代表預約、報名、候補、合作核准或通知送達；本流程沒有寄信、LINE、行銷或外部AI節點。
 - 清理資料前先核對需求處理／權利申請與必要留存。不得只刪pending收據再重送；不得把私有防重表或Smartsheet內容加入公開搜尋。
