@@ -22,5 +22,5 @@ export const partnershipDetails:ContentDetail[]=partnershipPlans.map(plan=>({par
 /** Public planning content only. Never accepts inquiry fields or free text. */
 export function partnershipBrief(value:unknown){
  const plan=partnershipPlan(value);if(!plan)return'';
- return ['韓森管理顧問有限公司｜合作需求討論單','合作方向：'+plan.title,'本文件為合作交流準備，不代表合作成立、活動排定或公開授權。','下載或列印不代表已送出提案。','','一、合作目的',plan.description,'','二、可以先整理',...plan.prepare.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','三、共同討論的面向',...plan.possibilities.map(item=>'・'+item),'','四、下一步確認',...plan.outcomes.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','五、交流前確認','□ 可公開的資料及素材使用範圍：＿＿＿＿＿＿','□ 雙方窗口、角色與後續討論事項：＿＿＿＿＿＿','','請勿填入機密提案、私人聯絡資料、客戶名單或未經同意的教材。','本討論單不讀取洽詢表單的姓名、聯絡資訊或提案原文。','線上接收仍未啟用；實際合作內容需經雙方確認。'].join('\n');
+ return ['韓森管理顧問有限公司｜合作需求討論單','合作方向：'+plan.title,'本文件為合作交流準備，不代表合作成立、活動排定或公開授權。','下載或列印不代表已送出提案。','','一、合作目的',plan.description,'','二、可以先整理',...plan.prepare.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','三、共同討論的面向',...plan.possibilities.map(item=>'・'+item),'','四、下一步確認',...plan.outcomes.map(item=>'□ '+item+'：＿＿＿＿＿＿'),'','五、交流前確認','□ 可公開的資料及素材使用範圍：＿＿＿＿＿＿','□ 雙方窗口、角色與後續討論事項：＿＿＿＿＿＿','','請勿填入機密提案、私人聯絡資料、客戶名單或未經同意的教材。','本討論單不讀取洽詢表單的姓名、聯絡資訊或提案原文。','實際收件狀態以表單顯示為準；實際合作內容需經雙方確認。'].join('\n');
 }

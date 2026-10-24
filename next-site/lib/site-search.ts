@@ -20,7 +20,7 @@ export const searchRecords:SearchRecord[]=[
  ...consultantExpertise.map((p,i)=>({id:`team-${i+1}`,kind:'page' as const,title:p.title,summary:p.description,body:p.areas.join(' '),href:'/about#team',label:'顧問團隊專長',topic:p.topic})),
  {id:'succession-team',kind:'page',title:'二代接班專屬團隊',summary:'從世代期待對齊、角色與權責調整，到人才培育與轉型落地，整合專業協助釐清接班課題。',body:'企業診斷 專案管理 跨部門溝通 人才發展 一代二代 經驗傳承',href:'/about#succession-team',label:'顧問團隊協作',topic:'人才資產發展'},
  ...faqs.map((f,i)=>({id:`faq-${i+1}`,kind:'faq' as const,title:f.question,summary:f.answer,body:'',href:`/knowledge#faq-${i+1}`,label:'常見問題',topic:f.category})),
- {id:'privacy',kind:'page',title:'資料使用告知（草稿）',summary:'說明洽詢資料用途與接收流程；保存期限、公開信箱仍待定，一般接收未啟用。',body:'資料查詢 更正 刪除 隱私 Smartsheet',href:'/privacy',label:'資料告知 · 草稿',topic:'聯絡與預約'},
+ {id:'privacy',kind:'page',title:'資料使用告知',summary:'說明洽詢資料用途、保存原則、雲端處理流程及資料權利聯絡方式。',body:'資料查詢 更正 刪除 隱私 Smartsheet',href:'/privacy',label:'資料使用告知',topic:'聯絡與預約'},
 ];
 export function cleanSearchQuery(value:unknown){return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,120):'';}
 export function searchKind(value:unknown):SearchKind{return searchKinds.some(k=>k.value===value)?value as SearchKind:'all';}

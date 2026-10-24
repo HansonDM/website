@@ -28,7 +28,7 @@ export const faqs=[
  {category:'企業學院',question:'企業內訓可以客製化嗎？',answer:'可以先透過需求交流，討論學員對象、工作情境、學習目標與可安排的時間，再規劃課程內容、活動方式與後續實踐。具體安排依需求確認。',href:'/academy#custom'},
  {category:'企業學院',question:'公開班何時開課？如何報名？',answer:'目前尚無已確認的公開班日期與報名資訊。課程上架後將提供內容、對象、時間及報名方式；現階段可在聯絡與預約頁提出感興趣的主題。',href:'/academy#public'},
  {category:'合作與洽詢',question:'想提出講師或策略合作，需要提供什麼？',answer:'請提供專業領域、服務對象、合作類型、提案摘要與聯絡方式。合作內容與對外資訊需經雙方確認後才會公開。',href:'/partnerships#proposal'},
- {category:'合作與洽詢',question:'送出需求就代表已完成預約嗎？',answer:'提出需求不代表完成預約。目前線上接收尚未啟用；正式啟用後，仍需確認需求範圍與雙方時間。',href:'/contact'},
+ {category:'合作與洽詢',question:'送出需求就代表已完成預約嗎？',answer:'提出需求不代表完成預約。實際收件狀態以表單顯示為準，後續仍需確認需求範圍與雙方時間。',href:'/contact'},
  {category:'AI 數位轉型',question:'流程自動化需要先更換所有系統嗎？',answer:'先確認既有工具、資料流向與可串接條件，再討論適合的改進範圍。是否調整系統取決於工作需求與現有條件，並非一開始就要全面更換。',href:'/ai-transformation/automation'},
  {category:'AI 數位轉型',question:'AI 客服可以回答所有問題嗎？',answer:'應先界定可使用的知識、更新責任與回覆範圍，並設計需要確認或轉由人員處理的情況。規劃時會討論如何檢查來源與回覆內容。',href:'/ai-transformation/assistant'},
  {category:'人才資產發展',question:'企業員工評量結果會如何使用？',answer:'使用目的、授權、可見對象與回饋方式需事先確認。結果應與工作觀察及發展對話一起理解，不以單一結果取代管理判斷。',href:'/talent-development/assessment'},
