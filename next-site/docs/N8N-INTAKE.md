@@ -1,5 +1,7 @@
 # 網站表單 → n8n Cloud → Smartsheet｜2026-10-24
 
+> 最新v3（2026-10-24）：使用者核可公司窗口＋填表者確認信，已啟用 /webhook/hanson-website-intake-v3，告知2026-10-24-v3，流程MOdhBrzFTPz265IG。下方公司窗口限定／v2為歷史版本；以 INTAKE-VISITOR-CONFIRMATION.md 與 intake-v3-release-evidence.json 為準。
+
 ## 最新：通知與附件（2026-10-24）
 
 原網站表單已改用 n8n v2；附件存入原 Smartsheet 對應列，確認收件後通知 Hanson.lin@hansondm.com。PDF／PNG／JPG，最多3個、合計5MB；不向填表者寄信，不隨信轉寄原文或檔案。正式流程YjX4Kcv7gOJFTiVV，設定key=production-v2，告知2026-10-24-v2。原首頁與Sitemap保持。最新發布、雙尺寸實測與維運見 docs/INTAKE-NOTIFICATION-ATTACHMENTS-RELEASE-20261024.md；下方v1狀態屬歷史紀錄。
