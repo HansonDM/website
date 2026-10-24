@@ -27,7 +27,7 @@ jobs:
       CASE_PREVIEW_ENABLED: 'false'
       WEBSITE_RELEASE_MODE: production
       NEXT_PUBLIC_STATIC_SITE: 'true'
-      NEXT_PUBLIC_INTAKE_API_URL: https://hansondm.app.n8n.cloud/webhook/hanson-website-intake-v1
+      NEXT_PUBLIC_INTAKE_API_URL: https://hansondm.app.n8n.cloud/webhook/hanson-website-intake-v2
       SMARTSHEET_SUBMISSIONS_ENABLED: 'false'
       NEXT_TELEMETRY_DISABLED: '1'
     steps:

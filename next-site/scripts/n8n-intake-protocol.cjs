@@ -1,4 +1,5 @@
 // Pure decisions shared by the n8n builder and offline tests; no network or secrets.
+const effects=require('./n8n-intake-effects.cjs');const {parseAttachments}=effects;
 function answer(ctx,code,status,message){return {...ctx,proceed:false,reply:{code,body:{status,...(ctx.input?{submissionId:ctx.input.submissionId}:{}),message}}};}
 function readiness(config,policy,mode){return !!config&&config.enabled===true&&config.noticePublished===true&&typeof config.noticeVersion==='string'&&!!config.noticeVersion&&config.noticeUrl==='https://www.hansondm.com/privacy/'&&(mode==='validation'||policy.published===true&&policy.version===config.noticeVersion&&['retention','contact','region','access'].every(k=>typeof policy[k]==='string'&&!!policy[k].trim()&&!/待定|待確認|待補/.test(policy[k])))&&Number.isInteger(config.maxPerMinute)&&config.maxPerMinute>=1&&config.maxPerMinute<=100&&Number.isInteger(config.minIntervalMs)&&config.minIntervalMs>=0;}
 function validate(envelope,config,policy,mode,owner,normalize){
@@ -6,7 +7,8 @@ function validate(envelope,config,policy,mode,owner,normalize){
  if(envelope.headers?.origin!=='https://www.hansondm.com')return answer(ctx,403,'rejected','無法驗證送出來源，請由網站表單重新送出。');
  if(!readiness(config,policy,mode))return answer(ctx,503,'unavailable','洽詢接收尚未啟用，本次資料未儲存、未送出。');
  if(!/^application\/json(?:\s*;|$)/i.test(envelope.headers?.['content-type']||''))return answer(ctx,415,'rejected','資料格式錯誤。');
- if(Buffer.byteLength(JSON.stringify(envelope.body||{}),'utf8')>24000)return answer(ctx,413,'rejected','內容過長，請縮短後再送出。');
+ const body=envelope.body||{},small={...body};delete small.attachments;if(Buffer.byteLength(JSON.stringify(small),'utf8')>24000||Buffer.byteLength(JSON.stringify(body),'utf8')>7100000)return answer(ctx,413,'rejected','內容或附件過大，請縮減後再送出。');
+ try{ctx.attachments=parseAttachments(body.attachments).map(({content,...metadata})=>metadata);}catch{return answer(ctx,400,'rejected','附件限 PDF、PNG、JPG，最多 3 個、合計 5 MB；請確認檔案與檔名。');}
  try{ctx.input=normalize(envelope.body);}catch{return answer(ctx,400,'rejected','請確認必填欄位、電子郵件、需求內容與資料使用同意。');}
  if(envelope.body.consentVersion!==config.noticeVersion)return answer(ctx,409,'notice_changed','資料使用告知已更新，請重新整理並閱讀最新內容後再送出。');
  if(mode==='validation'&&(!ctx.input.name.includes('串接測試（勿聯絡）')||!ctx.input.email.endsWith('@example.com')||ctx.input.company!=='合成測試'))return answer(ctx,400,'rejected','此入口僅供受控合成驗證，不接收真實洽詢。');
@@ -29,8 +31,8 @@ function rate(ctx){const l=ctx.lock,reset=ctx.now-Number(l.windowStart)>=60000,s
 function parseRemote(packet){
  if(!Number.isInteger(packet?.statusCode)||packet.statusCode<200||packet.statusCode>=300)throw Error('UPSTREAM_RESPONSE');
  const raw=packet.body!==undefined?packet.body:packet.data;
- if(typeof raw==='string')return JSON.parse(raw.replace(/"(id|columnId|rowId|sheetId)"\s*:\s*(\d+)/g,(_,key,value)=>'"'+key+'":"'+value+'"'));
- const visit=value=>{if(Array.isArray(value))return value.map(visit);if(value&&typeof value==='object'){if('_readableState'in value||'_events'in value)throw Error('STREAM_RESPONSE');return Object.fromEntries(Object.entries(value).map(([k,v])=>{if(['id','columnId','rowId','sheetId'].includes(k)&&typeof v==='number'){if(!Number.isSafeInteger(v))throw Error('UNSAFE_IDENTIFIER');return[k,String(v)];}return[k,visit(v)];}));}return value;};
+ if(typeof raw==='string')return JSON.parse(raw.replace(/"(id|columnId|rowId|sheetId|parentId)"\s*:\s*(\d+)/g,(_,key,value)=>'"'+key+'":"'+value+'"'));
+ const visit=value=>{if(Array.isArray(value))return value.map(visit);if(value&&typeof value==='object'){if('_readableState'in value||'_events'in value)throw Error('STREAM_RESPONSE');return Object.fromEntries(Object.entries(value).map(([k,v])=>{if(['id','columnId','rowId','sheetId','parentId'].includes(k)&&typeof v==='number'){if(!Number.isSafeInteger(v))throw Error('UNSAFE_IDENTIFIER');return[k,String(v)];}return[k,visit(v)];}));}return value;};
  if(!raw||typeof raw!=='object')throw Error('UPSTREAM_RESPONSE');return visit(raw);
 }
 function prepare(ctx,packet,schema,formType,mode){
@@ -43,4 +45,4 @@ function claimedReceipt(ctx,rows){const found=rows.filter(r=>r?.submissionId===c
 function wrote(ctx,packet){try{const data=parseRemote(packet),row=Array.isArray(data.result)?data.result[0]:data.result;if(data.resultCode!==0||!/^\d+$/.test(String(row?.id)))throw Error('WRITE');return {...ctx,rowId:String(row.id),proceed:true};}catch{const result=answer(ctx,202,'pending_verification','接收狀態尚待確認，請保留送出編號，避免重複送出。');if(ctx.config.key==='validation'){let data;try{data=parseRemote(packet)}catch{}result.reply.body.diagnostic={keys:Object.keys(packet||{}),statusCode:packet?.statusCode,errorType:typeof packet?.error,dataPrefix:typeof packet?.data==='string'?packet.data.slice(0,180):'',errorSummary:typeof packet?.error==='string'?packet.error.replace(/Bearer\s+\S+/ig,'[REDACTED]').replace(/[A-Za-z0-9_-]{24,}/g,'[REDACTED]').slice(0,200):'',errorCode:data?.errorCode,resultCode:data?.resultCode,errorMessage:data?.message,results:Array.isArray(data?.result)?data.result.length:typeof data?.result};}return result;}}
 function verify(ctx,packet){try{const row=parseRemote(packet);if(String(row.id)!==ctx.rowId||!Array.isArray(row.cells))throw Error('ROW');for(const expected of ctx.expected){const actual=row.cells.filter(c=>String(c.columnId)===expected.columnId);if(actual.length!==1||(actual[0].value??'')!==expected.value)throw Error('CELL');}return {...ctx,proceed:true};}catch{return answer(ctx,202,'pending_verification','資料已送交接收服務，欄位核對尚待確認；請保留編號，避免重複送出。');}}
 function completed(ctx,rows){const ok=rows.length===1&&rows[0].status==='received'&&rows[0].rowId===ctx.rowId&&rows[0].owner===ctx.owner;return answer(ctx,ok?201:202,ok?'received':'pending_verification',ok?'已收到您的需求，後續將依聯絡資訊與您確認；本次送出尚不代表完成預約。':'收件確認紀錄需核對，請保留編號，避免重複送出。');}
-module.exports={answer,readiness,validate,claim,priorReceipt,rate,parseRemote,prepare,claimedReceipt,wrote,verify,completed};
+module.exports={...effects,answer,readiness,validate,claim,priorReceipt,rate,parseRemote,prepare,claimedReceipt,wrote,verify,completed};

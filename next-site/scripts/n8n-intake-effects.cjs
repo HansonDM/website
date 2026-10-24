@@ -1,0 +1,25 @@
+// Pure validation and effect decisions. No credentials or network calls.
+function parseAttachments(raw){
+ if(raw===undefined)return[];if(!Array.isArray(raw)||raw.length>3)throw Error('ATTACHMENT_COUNT');let total=0;
+ return raw.map((f,index)=>{if(!f||typeof f!=='object'||Array.isArray(f)||typeof f.name!=='string'||typeof f.type!=='string'||typeof f.content!=='string'||!Number.isSafeInteger(f.size)||f.size<=0)throw Error('ATTACHMENT_FORMAT');
+ const name=f.name.normalize('NFKC').trim(),ext=name.split('.').pop().toLowerCase(),mime=ext==='pdf'?'application/pdf':ext==='png'?'image/png':['jpg','jpeg'].includes(ext)?'image/jpeg':'';
+ if(!mime||name.length>180||/^[.]|[\\/\u0000-\u001f\u007f]/.test(name)||f.type&&f.type!==mime||f.size>5242880||f.content.length>6990508||f.content.length%4!==0||!/^[A-Za-z0-9+/]*={0,2}$/.test(f.content))throw Error('ATTACHMENT_FORMAT');
+ const bytes=Buffer.from(f.content,'base64');total+=bytes.length;if(total>5242880||bytes.length!==f.size||bytes.toString('base64')!==f.content)throw Error('ATTACHMENT_SIZE');
+ const valid=mime==='application/pdf'?bytes.subarray(0,5).toString()==='%PDF-':mime==='image/png'?bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])):bytes.length>=4&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255&&bytes.at(-2)===255&&bytes.at(-1)===217;if(!valid)throw Error('ATTACHMENT_SIGNATURE');
+ return {index,name,mime,size:bytes.length,sha256:require('crypto').createHash('sha256').update(bytes).digest('hex'),content:f.content};});
+}
+function attachmentContext(ctx,index){const file=ctx.attachments?.[index];if(!file)return {...ctx,hasAttachment:false};return {...ctx,hasAttachment:true,file:{...file,storedName:ctx.input.submissionId+'_'+String(index+1).padStart(2,'0')+'_'+file.name},effectKey:ctx.input.submissionId+':attachment:'+index};}
+function effectClaimed(ctx,rows,status){const match=rows.filter(r=>r?.submissionId===ctx.effectKey&&r.owner===ctx.owner&&r.fingerprint===ctx.effectFingerprint&&r.status===status);return match.length===1?{...ctx,effectReceiptId:match[0].id,proceed:true}:{...ctx,proceed:false};}
+function attachmentUploaded(ctx,packet,parse){try{const body=parse(packet),remote=body.result;if(body.resultCode!==0||!remote||!/^\d+$/.test(String(remote.id)))throw Error('ATTACHMENT_ID');return {...ctx,attachmentId:String(remote.id),proceed:true};}catch{return {...ctx,proceed:false};}}
+function attachmentVerified(ctx,packet,parse){try{const a=parse(packet);if(String(a.id)!==ctx.attachmentId||a.name!==ctx.file.storedName||a.attachmentType!=='FILE'||a.mimeType!==ctx.file.mime||a.parentType!=='ROW'||String(a.parentId)!==ctx.rowId||a.sizeInKb!==Math.ceil(ctx.file.size/1024))throw Error('ATTACHMENT_READBACK');return {...ctx,proceed:true};}catch{return {...ctx,proceed:false};}}
+function notificationContext(ctx,recipient,kind='owner'){
+ const test=ctx.input.name.includes('串接測試（勿聯絡）')&&ctx.input.company==='合成測試'&&ctx.input.email.endsWith('@example.com'),to=kind==='owner'||test?'Hanson.lin@hansondm.com':ctx.input.email;
+ if(recipient!=='Hanson.lin@hansondm.com'||!['owner','visitor'].includes(kind))throw Error('NOTIFICATION_RECIPIENT');
+ const subject=(test?'[串接測試／勿聯絡] ':'')+(kind==='owner'?'韓森網站｜新洽詢通知｜':'韓森管理顧問｜已收到您的洽詢｜')+ctx.input.submissionId;
+ const text=kind==='owner'?['網站已核對並收到一筆需求。','送出編號：'+ctx.input.submissionId,'主題：'+ctx.input.topic,'附件數量：'+(ctx.attachments?.length||0),'請登入 Smartsheet 查看內容與附件：https://app.smartsheet.com/sheets/wg939gRQ9FJvMGpm4cFQ5WMjFJ69fwC6mRXP5j51?view=grid','本通知不附表單原文或檔案，請勿直接轉寄。',test?'本封為合成資料端到端驗證，請勿聯絡。':''].join('\n'):['您好，韓森管理顧問已收到您的洽詢。','送出編號：'+ctx.input.submissionId,'後續將由處理窗口與您確認需求。這封信不代表完成預約、報名、保留名額或合作核准。','如非本人提出，請來信 Hanson.lin@hansondm.com 告知。','本信不包含洽詢原文或附件。'].join('\n');
+ const mail={subject,body:{contentType:'Text',content:text},toRecipients:[{emailAddress:{address:to}}],replyTo:[{emailAddress:{address:'Hanson.lin@hansondm.com'}}]};
+ return {...ctx,mail,effectKey:ctx.input.submissionId+':notification:'+kind,effectFingerprint:require('crypto').createHash('sha256').update(JSON.stringify(mail)).digest('hex'),notificationKind:kind};
+}
+function draftCreated(ctx,packet,parse){try{const m=parse(packet);if(!m.id||m.isDraft!==true||m.subject!==ctx.mail.subject||m.toRecipients?.length!==1||m.toRecipients[0].emailAddress.address.toLowerCase()!==ctx.mail.toRecipients[0].emailAddress.address.toLowerCase())throw Error('DRAFT');return {...ctx,messageId:m.id,proceed:true};}catch{return {...ctx,proceed:false};}}
+function mailSentVerified(ctx,packet,parse){try{const m=parse(packet);if(m.id!==ctx.messageId||m.isDraft!==false||!m.sentDateTime||m.subject!==ctx.mail.subject||m.toRecipients?.length!==1||m.toRecipients[0].emailAddress.address.toLowerCase()!==ctx.mail.toRecipients[0].emailAddress.address.toLowerCase())throw Error('SENT');return {...ctx,proceed:true};}catch{return {...ctx,proceed:false};}}
+module.exports={parseAttachments,attachmentContext,effectClaimed,attachmentUploaded,attachmentVerified,notificationContext,draftCreated,mailSentVerified};
