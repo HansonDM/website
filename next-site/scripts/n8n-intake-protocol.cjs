@@ -37,7 +37,7 @@ function parseRemote(packet){
 }
 function prepare(ctx,packet,schema,formType,mode){
  try{const remote=parseRemote(packet).data;if(!Array.isArray(remote))throw Error('SCHEMA');const ids={};for(const c of schema){const matches=remote.filter(r=>r.title===c.title&&r.type===c.type&&/^\d+$/.test(String(r.id)));if(matches.length!==1)throw Error('SCHEMA');ids[c.key]=String(matches[0].id);}
- const values={...ctx.input,formType:formType(ctx.input.topic),consentVersion:ctx.config.noticeVersion,submittedAt:new Date(ctx.now).toISOString(),status:mode==='validation'||ctx.input.name.includes('串接測試（勿聯絡）')&&ctx.input.company==='合成測試'&&ctx.input.email.endsWith('@example.com')?'串接測試（勿聯絡）':'新洽詢'};
+ const values={...ctx.input,formType:formType(ctx.input.topic),consentVersion:ctx.config.noticeVersion,submittedAt:new Date(ctx.now).toISOString(),status:mode==='validation'||ctx.input.name.includes('串接測試（勿聯絡）')&&ctx.input.company==='合成測試'?'串接測試（勿聯絡）':'新洽詢'};
  const expected=schema.map(c=>({columnId:ids[c.key],value:values[c.key]??''}));const body='[{"cells":['+expected.map(c=>'{"columnId":'+c.columnId+',"value":'+JSON.stringify(c.value)+',"strict":true}').join(',')+']}]';return {...ctx,expected,body,postBody:[{cells:expected.map(c=>({...c,strict:true}))}],proceed:true};
  }catch{const result=answer(ctx,503,'unavailable','接收欄位尚未完成核對，本次資料未寫入。');if(mode==='validation')result.reply.body.diagnostic={keys:Object.keys(packet||{}),statusCode:packet?.statusCode,bodyType:typeof packet?.body,bodyKeys:packet?.body&&typeof packet.body==='object'?Object.keys(packet.body):[],dataType:typeof packet?.data,errorType:typeof packet?.error};return result;}
 }
