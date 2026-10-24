@@ -17,7 +17,7 @@ export const siteDocuments:SiteDocument[]=[
  {path:'/',title:homeTitle,description:homeDescription,image:'/HANSON_LOGO_B_0.jpg',imageAlt:'韓森管理顧問有限公司官方金色 H Logo',imageWidth:1024,imageHeight:723,noindex:false,follow:true},
  ...pages.map(page=>({path:`/${page.slug}`,title:page.title,description:summary(page.intro+' '+page.detail),...banner(page.slug),noindex:false,follow:true})),
  ...detailPages.map(page=>({path:`/${page.parent}/${page.slug}`,title:page.title+(page.kind==='article'?'（初稿）':''),description:summary(page.intro+' '+(page.kind==='article'?'本文為原創文章初稿，供工作討論參考，尚未核定為正式文章。':page.kind==='course'?'企業內訓規劃方向；課綱、講師、時數、日期與費用依需求確認，尚未公告公開班。':page.kind==='guide'?'成果觀察與需求討論指南，不代表已驗證的客戶實績。':page.label+'，實際範圍依需求確認。')),...banner(page.kind==='article'?articleThemes[page.topic]??page.parent:page.parent),noindex:page.kind==='article',follow:true})),
- {path:'/privacy',title:privacyNotice.published?'資料使用告知':'資料使用告知（草稿）',description:privacyNotice.published?'韓森管理顧問網站洽詢資料的用途、保存、處理及資料權利聯絡方式。':'資料使用告知草稿。保存期限、公開聯絡信箱與資料處理地區仍待確認；一般訪客的線上洽詢接收尚未啟用。',...banner('contact'),noindex:true,follow:false},
+ {path:'/privacy',title:privacyNotice.published?'資料使用告知':'資料使用告知（草稿）',description:privacyNotice.published?'韓森管理顧問網站洽詢資料的用途、保存、處理及資料權利聯絡方式。':'資料使用告知草稿。已提供保存原則與公開聯絡信箱；清理方式、接收主機與資料處理地區仍待確認，線上洽詢接收尚未啟用。',...banner('contact'),noindex:true,follow:false},
 ];
 
 export function siteDocument(value:unknown){

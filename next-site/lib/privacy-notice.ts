@@ -1,12 +1,12 @@
-/** Business policy is pending user input. Do not publish or invent these values. */
+/** Published from user-provided retention/contact and approved n8n workflow; see N8N-INTAKE.md. */
 export const privacyNotice={
- published:false,
- version:'',
+ published:true,
+ version:'2026-10-24-v1',
  url:'/privacy',
- access:'待確認：可存取洽詢資料的人員與職責。',
- retention:'待定：洽詢資料與收件追蹤紀錄的保存期限、到期處理方式。',
- contact:'待定：可公開的資料查詢、更正或刪除聯絡信箱。',
- region:'待確認：正式主機及 Smartsheet 帳戶適用的資料處理與儲存地區。',
+ access:'由韓森管理顧問授權之需求處理與系統管理人員依職務需要存取。資料處理窗口：Hanson.lin@hansondm.com。n8n Cloud 與 Smartsheet 為本流程使用的雲端處理服務。',
+ retention:'目前未設定固定保存年限，依儲存空間及實際業務需要管理，於回覆洽詢與後續業務聯繫所必要範圍內保存。利用目的消失或收到停止利用、刪除申請時，由處理窗口依法辦理；依法或業務上仍須保存的部分另行說明。',
+ contact:'Hanson.lin@hansondm.com',
+ region:'本流程使用 n8n Cloud（依供應商公告，雲端主機與平台資料位於歐盟）及 Smartsheet 美國資料區，並由韓森授權窗口處理需求。供應商的維運、支援及子處理者可能涉及其公告之跨境處理。',
 };
 
 /** A URL or environment flag alone is not a published business policy. */
