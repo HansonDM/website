@@ -1,3 +1,4 @@
+import {followUpSearchText} from './follow-up-templates';
 /** Public help only: never include receipts, sheet links, personal data or credentials. */
 export const intakeHelpHref='/contact/#receipt-help';
 export const intakeHelp=[
@@ -7,4 +8,4 @@ export const intakeHelp=[
  {id:'attachments',question:'附件可以上傳什麼？會出現在確認信裡嗎？',answer:'表單接收狀態允許時，可上傳 PDF、PNG 或 JPG，最多 3 個，合計 5 MB。附件存入該筆需求的私有收件紀錄，不會附在公司通知或填表者確認信中，也不會加入網站搜尋。需要更換檔案時，可用「移除已選附件」清除本頁選擇；這不會刪除已收件的附件。請勿上傳不必要的個人資料或未經授權的機密檔案。'},
  {id:'follow-up',question:'送出後如何補充、更正或查詢資料？',answer:'請透過下方公開聯絡信箱提供送出編號及要處理的事項，由窗口核對後協助補充、更正、查詢或刪除。請勿在公開社群貼出需求原文、附件或他人資料；來信不需重新寄送全部附件。實際交流時間與服務安排另由雙方確認。'},
 ] as const;
-export const intakeHelpSearchText=intakeHelp.map(item=>item.question+' '+item.answer).join(' ');
+export const intakeHelpSearchText=intakeHelp.map(item=>item.question+' '+item.answer).join(' ')+' '+followUpSearchText;
