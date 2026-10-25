@@ -1,4 +1,5 @@
 'use client';
+import ParticipationPanel from './ParticipationPanel';
 import DiscussionPrint from './DiscussionPrint';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
@@ -43,6 +44,6 @@ export default function AcademyCatalogue({initialComparison=[]}:{initialComparis
    <p role="status" aria-live="polite" className="notice">{note}</p>{shareUrl&&<label className="comparison-share">比較網址<input readOnly value={shareUrl} onFocus={e=>e.target.select()}/></label>}
    <p className="notice">比較與下載不會送出洽詢，也不代表完成報名或保留名額。要聯繫時，請至洽詢頁確認接收狀態。</p>
   </section>
-  <section id="public" className="interior-section soft-panel"><div className="interior-section-heading"><p className="eyebrow">PUBLIC PROGRAMS</p><h2>公開班與開課資訊</h2><p>確認後的課程將提供完整內容、適合對象、日期與報名方式。</p></div><EmptyState title="公開班資訊籌備中" text="目前尚無已公告的課程日期或報名名額。歡迎先提出感興趣的主題，待課程確認後再討論參與方式。"/><Link href="/contact?topic=%E5%85%AC%E9%96%8B%E7%8F%AD" className="button gold-button">提出課程需求 →</Link></section>
+  <section id="public" className="interior-section soft-panel"><div className="interior-section-heading"><p className="eyebrow">PUBLIC PROGRAMS</p><h2>公開班與開課資訊</h2><p>確認後的課程將提供完整內容、適合對象、日期與報名方式。</p></div><ParticipationPanel kind="academy"/><Link href="/contact?topic=%E5%85%AC%E9%96%8B%E7%8F%AD" className="button gold-button">提出課程需求 →</Link></section>
  </>;
 }

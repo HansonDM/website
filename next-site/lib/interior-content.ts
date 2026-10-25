@@ -26,7 +26,7 @@ export const faqs=[
  {category:'人才資產發展',question:'人才盤點與企業員工評量工具有什麼關係？',answer:'人才盤點是綜合工作證據與組織需求的討論流程；評量工具可以提供部分參考資訊。工具的使用需先確認目的、授權與資料使用方式，不以單一結果取代管理判斷。',href:'/talent-development#assessment'},
  {category:'人才資產發展',question:'如何開始規劃主管培育？',answer:'先釐清主管層級、日常管理課題與預期改變，再討論適合的情境練習、課後任務與檢視方式。可在洽詢時提供對象、人數及目前遇到的問題。',href:'/talent-development#leadership'},
  {category:'企業學院',question:'企業內訓可以客製化嗎？',answer:'可以先透過需求交流，討論學員對象、工作情境、學習目標與可安排的時間，再規劃課程內容、活動方式與後續實踐。具體安排依需求確認。',href:'/academy#custom'},
- {category:'企業學院',question:'公開班何時開課？如何報名？',answer:'目前尚無已確認的公開班日期與報名資訊。課程上架後將提供內容、對象、時間及報名方式；現階段可在聯絡與預約頁提出感興趣的主題。',href:'/academy#public'},
+ {category:'企業學院',question:'公開班何時開課？如何報名？',answer:'目前尚無開放課程。課程公告後將提供內容、對象、時間及參與方式；可在企業學院依欄位受理狀態，另行訂閱課程通知。完成信箱驗證後才生效，每封通知可退訂；訂閱不等於報名、候補或保留名額。',href:'/academy#public'},
  {category:'合作與洽詢',question:'想提出講師或策略合作，需要提供什麼？',answer:'請提供專業領域、服務對象、合作類型、提案摘要與聯絡方式。合作內容與對外資訊需經雙方確認後才會公開。',href:'/partnerships#proposal'},
  {category:'合作與洽詢',question:'送出需求就代表已完成預約嗎？',answer:'提出需求不代表完成預約。實際收件狀態以表單顯示為準，後續仍需確認需求範圍與雙方時間。',href:'/contact'},
  {category:'AI 數位轉型',question:'流程自動化需要先更換所有系統嗎？',answer:'先確認既有工具、資料流向與可串接條件，再討論適合的改進範圍。是否調整系統取決於工作需求與現有條件，並非一開始就要全面更換。',href:'/ai-transformation/automation'},
