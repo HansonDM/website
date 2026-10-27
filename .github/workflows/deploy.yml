@@ -29,6 +29,7 @@ jobs:
       NEXT_PUBLIC_STATIC_SITE: 'true'
       NEXT_PUBLIC_INTAKE_API_URL: https://hansondm.app.n8n.cloud/webhook/hanson-website-intake-v3
       NEXT_PUBLIC_PARTICIPATION_API_URL: https://hansondm.app.n8n.cloud/webhook/hanson-website-participation-v1
+      NEXT_PUBLIC_BOOKING_API_URL: https://hansondm.app.n8n.cloud/webhook/hanson-website-booking-v1
       SMARTSHEET_SUBMISSIONS_ENABLED: 'false'
       NEXT_TELEMETRY_DISABLED: '1'
     steps:

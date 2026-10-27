@@ -8,4 +8,4 @@ GitHub Pages構建環境：DEPLOY_TARGET=github-pages、CASE_CONTENT_MODE=anonym
 
 現行表單提供10秒狀態檢查與手動GET恢復，保留未送文字／附件；見docs/INTAKE-AVAILABILITY.md。現行聯絡頁提供收件與確認信說明及三種空白聯絡範本，privacy提供資料權利聯絡範本；草稿、複製與下載均不寄信、不讀表單資料，見docs/FOLLOW-UP-TEMPLATES-20261024.md。現行聯絡頁提供收件與確認信說明；release-status.json及既有部署後site-health.cjs只讀核對版本、能力、sitemap與noindex，不寄信或寫資料，見docs/SITE-SUPPORT-OPERATIONS.md。
 
-課程通知採獨立信箱驗證、僅通知已公告課程、每封可退訂；新公開 API 以 NEXT_PUBLIC_PARTICIPATION_API_URL 指向 n8n，功能開放狀態另由後端旗標核對。原洽詢 v3、附件及雙方通知保持不變。尚無開放課程，預約與報名尚未開放。詳見 docs/SUBSCRIPTION-NOTICES-20261025.md。
+課程通知採獨立信箱驗證、僅通知已公告課程、每封可退訂；新公開 API 以 NEXT_PUBLIC_PARTICIPATION_API_URL 指向 n8n，功能開放狀態另由後端旗標核對。原洽詢 v3、附件及雙方通知保持不變。尚無開放課程，正式報名尚未開放。線上預約採獨立 NEXT_PUBLIC_BOOKING_API_URL，由公司主行事曆核對，開放狀態以正式後端為準。詳見 docs/SUBSCRIPTION-NOTICES-20261025.md。
