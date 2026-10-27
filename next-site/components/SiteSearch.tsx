@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import {siteHelpLinks} from '@/lib/site-help';
 import {navigateKnowledgeFilters} from '@/lib/knowledge-navigation';
 import {useEffect,useState} from 'react';
 import {useKnowledgeQuery,useKnowledgeReady} from './KnowledgeQueryProvider';
@@ -15,6 +16,7 @@ export default function SiteSearch({entries=[]}:{entries?:CasePreviewEntry[]}){
  <div className="filter-row" aria-label="搜尋內容類型">{searchKinds.map(k=><button disabled={!ready} type="button" key={k.value} aria-pressed={kind===k.value} onClick={()=>update(cleanSearchQuery(query),k.value)}>{k.label}</button>)}</div>
  <p className="result-count" role="status" aria-live="polite">{active?`找到 ${results.length} 筆相關內容${results.length>limit?`，目前顯示 ${limit} 筆`:''}`:'輸入關鍵字，或選擇一種內容類型開始查找。'}</p>
  {!active&&<div className="search-suggestions"><span>你也可以從這裡開始</span>{['流程自動化','職涯領導力','二代接班','內訓需求'].map(q=><button disabled={!ready} type="button" key={q} onClick={()=>update(q,'all')}>{q} ↗</button>)}</div>}
+ <aside className="preparation-box" id="site-help" aria-labelledby="site-help-title"><h3 id="site-help-title">辦理申請，先看使用說明。</h3><p>想確認收件、調整預約，或處理課程通知？這裡可直接閱讀操作方式；開啟說明不會送出申請或變更既有資料。</p><nav className="receipt-actions" aria-label="網站使用說明">{siteHelpLinks.map(link=><a key={link.id} className="receipt-action" href={link.href}>{link.title} →</a>)}</nav></aside>
  {active&&results.length>0&&<ol className="search-results">{results.slice(0,limit).map(r=><li key={r.id}><p className="category-label">{r.label} · {r.topic}</p><h3>{['faq','company-case','consultant-experience','podcast'].includes(r.kind)?<a href={r.href}>{r.title}</a>:<Link href={r.href}>{r.title}</Link>}</h3><p>{r.summary}</p>{r.kind==='podcast'?<a className="detail-link" href={r.href}>閱讀單集介紹與收聽 →</a>:r.kind==='faq'?<a className="detail-link" href={r.href}>閱讀完整問答 →</a>:['company-case','consultant-experience'].includes(r.kind)?<a className="detail-link" href={r.href}>查看題材與工作角色 →</a>:<Link className="detail-link" href={r.href}>查看內容 →</Link>}</li>)}</ol>}
  {active&&results.length===0&&<div className="empty-state"><h3>目前沒有相符的內容</h3><p>可縮短關鍵字或切換內容類型，也可以先了解兩項核心服務。</p><div className="search-empty-links"><Link href="/ai-transformation">AI 數位轉型 →</Link><Link href="/talent-development">人才資產發展 →</Link></div></div>}
  <div className="search-result-actions">{results.length>limit&&<button disabled={!ready} className="receipt-action" type="button" onClick={()=>setLimit(v=>v+8)}>顯示更多內容</button>}{active&&<button disabled={!ready} className="receipt-action" type="button" onClick={()=>update('','all')}>重設搜尋</button>}</div>
