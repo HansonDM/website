@@ -2,6 +2,7 @@
 const assert=require('node:assert/strict');
 const {ORIGIN,INTAKE}=require('./release-status.cjs');
 const SUBSCRIPTION='https://hansondm.app.n8n.cloud/webhook/hanson-website-participation-v1/catalogue',BOOKING='https://hansondm.app.n8n.cloud/webhook/hanson-website-booking-v1/catalogue';
+const RETRY_DELAYS_MS=Object.freeze([5000,10000,20000,30000,45000]);
 function publicUrl(value){const u=new URL(value);assert.equal(u.origin,ORIGIN);assert(!u.username&&!u.password&&!u.hash&&!u.search);assert(/^\/(?:[a-z0-9-]+\/)*$/.test(u.pathname));return u.href;}
 function checkRelease(r,expected){
  assert.equal(r.schemaVersion,1);assert.equal(r.siteOrigin,ORIGIN);assert.equal(r.intakeStatusUrl,INTAKE);
@@ -42,17 +43,25 @@ function checkNoindex(html,url,r){
  assert(meta&&/content=["'][^"']*\bnoindex\b/i.test(meta),'Missing noindex: '+url);
  if(url===ORIGIN+'/privacy/'){assert(/content=["'][^"']*\bnofollow\b/i.test(meta));assert(html.includes(r.consentVersion));}
 }
-async function runHealth({expected,fetchImpl=fetch}){
+async function runHealth({expected,fetchImpl=fetch,probe=1}){
  assert(/^[a-f0-9]{40}$/.test(expected.commit));assert(/^[1-9][0-9]{0,19}$/.test(expected.runId));
- const read=async(url)=>{assert([INTAKE,SUBSCRIPTION,BOOKING].includes(url)||url.startsWith(ORIGIN+'/'));const u=new URL(url);u.searchParams.set('release',expected.commit);u.searchParams.set('run',expected.runId);const response=await fetchImpl(u.href,{method:'GET',redirect:'error',credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(8000)});assert.equal(response.status,200,'Public GET failed: '+url);const text=await response.text();assert(text.length<2_000_000,'Oversized public response');return text;};
+ assert(Number.isInteger(probe)&&probe>=1&&probe<=RETRY_DELAYS_MS.length+1);
+ const read=async(url)=>{assert([INTAKE,SUBSCRIPTION,BOOKING].includes(url)||url.startsWith(ORIGIN+'/'));const u=new URL(url);u.searchParams.set('release',expected.commit);u.searchParams.set('run',expected.runId);if(url===ORIGIN+'/release-status.json')u.searchParams.set('probe',String(probe));const response=await fetchImpl(u.href,{method:'GET',redirect:'error',credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(8000)});assert.equal(response.status,200,'Public GET failed: '+url);const text=await response.text();assert(text.length<2_000_000,'Oversized public response');return text;};
  const r=JSON.parse(await read(ORIGIN+'/release-status.json'));checkRelease(r,expected);
  const [status,subscription,booking,xml,...pages]=await Promise.all([read(INTAKE),read(SUBSCRIPTION),read(BOOKING),read(ORIGIN+'/sitemap.xml'),...r.noindexUrls.map(read)]);
  checkIntake(JSON.parse(status));checkSubscription(JSON.parse(subscription));const bookingState=JSON.parse(booking);checkBooking(bookingState);checkSitemap(xml,r);pages.forEach((html,i)=>checkNoindex(html,r.noindexUrls[i],r));
  return {status:'passed',checkedAt:new Date().toISOString(),sourceCommit:r.sourceCommit,runId:r.runId,publicGetCount:9,formPosts:0,subscriptionEnabled:true,bookingEnabled:true,bookingSlotCount:bookingState.slots.length,intakeReady:true,ownerMailEnabled:true,visitorMailEnabled:true,attachmentsEnabled:true,sitemapUrls:r.sitemapUrls.length,noindexPages:pages.length};
 }
+async function runHealthWithRetry({expected,fetchImpl=fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),onRetry=()=>{}}){
+ // Pages can report success before every CDN edge serves the new run metadata.
+ // Keep exact SHA/run checks; only public reads are retried, at most six times.
+ for(let attempt=1;attempt<=RETRY_DELAYS_MS.length+1;attempt++){
+  try{return {...await runHealth({expected,fetchImpl,probe:attempt}),attempts:attempt};}
+  catch(error){if(attempt>RETRY_DELAYS_MS.length)throw error;const delayMs=RETRY_DELAYS_MS[attempt-1];onRetry({attempt,delayMs,error});await sleepImpl(delayMs);}
+ }
+}
 if(require.main===module){
  const commit=process.env.EXPECTED_COMMIT,runId=process.env.EXPECTED_RUN_ID;
- // Bounded retry for Pages propagation; every request is a GET, never a submission retry.
- (async()=>{for(let attempt=1;attempt<=6;attempt++){try{console.log(JSON.stringify(await runHealth({expected:{commit,runId}})));return;}catch(error){console.error('Read-only health attempt '+attempt+' failed: '+error.message);if(attempt===6)throw error;await new Promise(resolve=>setTimeout(resolve,5000));}}})().catch(()=>{process.exitCode=1;});
+ runHealthWithRetry({expected:{commit,runId},onRetry:({attempt,delayMs,error})=>console.error('Read-only health attempt '+attempt+'/6 failed: '+error.message+'; retrying in '+delayMs/1000+'s.')}).then(result=>console.log(JSON.stringify(result))).catch(error=>{console.error('Read-only health verification failed: '+error.message);process.exitCode=1;});
 }
-module.exports={SUBSCRIPTION,BOOKING,checkSubscription,checkBooking,publicUrl,checkRelease,checkIntake,checkSitemap,checkNoindex,runHealth};
+module.exports={SUBSCRIPTION,BOOKING,RETRY_DELAYS_MS,checkSubscription,checkBooking,publicUrl,checkRelease,checkIntake,checkSitemap,checkNoindex,runHealth,runHealthWithRetry};
