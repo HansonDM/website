@@ -1,24 +1,24 @@
 export type ServiceItem = {id:string;title:string;description:string;points:string[]};
 export const aiServices: ServiceItem[] = [
- {id:'adoption',title:'AI 導入規劃',description:'先看工作，再選工具。從高頻、重複且容易驗證的任務開始，建立適合企業的 AI 應用路徑。',points:['盤點部門任務與可用資料','釐清導入目標與使用邊界','規劃小範圍試行與驗收方式']},
- {id:'automation',title:'n8n 與流程自動化',description:'連結分散的表單、資料與通知，讓同一筆資訊能在合適的時間到達需要的人。',points:['梳理流程節點與負責角色','規劃跨系統資料串接','設計異常通知、重試與人工接手']},
- {id:'assistant',title:'AI 客服與知識助理',description:'從企業自己的知識與服務流程出發，規劃有來源、可轉接、可持續維護的回覆體驗。',points:['整理常見問題與知識來源','設計回覆範圍與轉接條件','規劃知識更新及回覆品質檢查']},
- {id:'data',title:'數據應用與營運洞察',description:'讓報表回應經營問題。先對齊資料定義，再規劃團隊真正用得上的追蹤方式。',points:['確認重要指標與資料品質','整合日常營運資訊','設計管理看板與例行檢視流程']}
+ {id:'adoption',title:'AI 導入規劃',description:'先選一個工作流程，釐清任務、資料與人工確認點，再規劃可驗證的 AI 試行。',points:['盤點部門任務與可用資料','釐清導入目標與使用邊界','規劃小範圍試行與驗收方式']},
+ {id:'automation',title:'n8n 與流程自動化',description:'串連表單、業務資料與通知，讓流程可追蹤、異常有人接手。',points:['梳理流程節點與負責角色','規劃跨系統資料串接','設計異常通知、結果查核與人工接手']},
+ {id:'assistant',title:'AI 客服與知識助理',description:'以企業可使用的知識為基礎，規劃有來源、知道何時轉接人工的 AI 客服與知識助理。',points:['整理常見問題與知識來源','設計回覆範圍與轉接條件','規劃知識更新及回覆品質檢查']},
+ {id:'data',title:'數據應用與營運洞察',description:'從經營問題出發，對齊指標、資料與檢視節奏，讓報表支持實際決策。',points:['確認重要指標與資料品質','整合日常營運資訊','設計管理看板與例行檢視流程']}
 ];
 export const talentServices: ServiceItem[] = [
- {id:'standards',title:'人才標準與職能梳理',description:'讓「需要什麼人才」成為團隊可以共同討論的語言。',points:['連結策略、職務與關鍵任務','定義能力及具體行為','建立主管可使用的觀察依據']},
- {id:'inventory',title:'人才盤點與發展對話',description:'結合工作表現、發展意願與職務需求，討論人才配置與培育優先順序。',points:['規劃盤點對象與評估流程','對齊主管的判斷標準','形成個人與團隊發展議題']},
- {id:'assessment',title:'企業員工評量工具',description:'以工作風格、職場特質與能力發展為討論起點，協助主管理解團隊差異。',points:['先確認工具用途與授權','說明資料使用方式與結果邊界','連結發展對話，避免單一結果決策']},
- {id:'leadership',title:'領導力與管理能力',description:'以管理者每天會遇到的情境，練習帶人、溝通、授權與回饋。',points:['辨識不同管理層級的課題','設計情境練習與工作任務','結合課後實踐與主管回饋']},
- {id:'succession',title:'接班梯隊與關鍵人才',description:'從關鍵職務與未來任務出發，建立可持續檢視的人才培育路徑。',points:['盤點關鍵職位及接班需求','設計階段培育與歷練安排','追蹤準備度與發展進展']}
+ {id:'standards',title:'人才標準與職能梳理',description:'從策略與關鍵任務出發，把人才期待整理成主管能觀察、能討論的職能與行為。',points:['連結策略、職務與關鍵任務','定義能力及具體行為','建立主管可使用的觀察依據']},
+ {id:'inventory',title:'人才盤點與發展對話',description:'結合工作證據、發展意願與職務需求，讓人才盤點形成可以追蹤的培育行動。',points:['規劃盤點對象與評估流程','對齊主管的判斷標準','形成個人與團隊發展議題']},
+ {id:'assessment',title:'企業員工評量工具',description:'依人才發展目的，討論企業員工評量工具的選用、結果回饋與工作情境應用。',points:['先確認工具用途與授權','說明資料使用方式與結果邊界','連結發展對話，避免單一結果決策']},
+ {id:'leadership',title:'領導力與管理能力',description:'從回饋、授權與協作等帶人情境出發，讓管理學習連結工作中的練習與回顧。',points:['辨識不同管理層級的課題','設計情境練習與工作任務','結合課後實踐與主管回饋']},
+ {id:'succession',title:'接班梯隊與關鍵人才',description:'盤點關鍵職務與未來任務，規劃人才歷練、支持資源與準備度回顧。',points:['盤點關鍵職位及接班需求','設計階段培育與歷練安排','追蹤準備度與發展進展']}
 ];
 export const academyDirections=[
- {slug:'ai-productivity',title:'AI 應用與工作效率',category:'AI 與數位',description:'從日常任務出發，練習需求表達、內容整理與 AI 協作。',audience:'一般同仁、部門主管'},
- {slug:'workflow-automation',title:'流程優化與自動化',category:'AI 與數位',description:'拆解重複流程，建立自動化思維與工作情境練習。',audience:'流程負責人、營運團隊'},
- {slug:'manager-communication',title:'主管溝通與團隊帶領',category:'領導與管理',description:'以回饋、授權與協作情境，培養管理者的日常行動能力。',audience:'新任主管、中階主管'},
- {slug:'leadership-coaching',title:'領導力與人才培育',category:'領導與管理',description:'連結組織方向、人才發展對話與主管的培育責任。',audience:'中高階主管、人資團隊'},
- {slug:'team-collaboration',title:'跨部門協作與問題解決',category:'組織與協作',description:'透過共同問題與情境討論，建立協作、釐清與行動的習慣。',audience:'跨部門團隊、專案成員'},
- {slug:'talent-review',title:'人才盤點與發展實務',category:'組織與協作',description:'對齊人才標準，練習以工作證據進行發展討論。',audience:'人資夥伴、用人主管'}
+ {slug:'ai-productivity',title:'AI 應用與工作效率',category:'AI 與數位',description:'從日常任務練習 AI 需求表達、內容整理與查核，完成可帶回工作的任務說明。',audience:'一般同仁、部門主管'},
+ {slug:'workflow-automation',title:'流程優化與自動化',category:'AI 與數位',description:'拆解工作流程、辨識自動化機會與人工判斷點，形成一份可討論的試行方案。',audience:'流程負責人、營運團隊'},
+ {slug:'manager-communication',title:'主管溝通與團隊帶領',category:'領導與管理',description:'以具體帶人情境，練習回饋、授權與確認理解，帶回一項可實踐的管理行動。',audience:'新任主管、中階主管'},
+ {slug:'leadership-coaching',title:'領導力與人才培育',category:'領導與管理',description:'從員工的發展意願與工作證據出發，練習發展對話，規劃主管能提供的培育支持。',audience:'中高階主管、人資團隊'},
+ {slug:'team-collaboration',title:'跨部門協作與問題解決',category:'組織與協作',description:'把跨部門的不同期待轉為共同問題，練習事實釐清、角色分工與行動追蹤。',audience:'跨部門團隊、專案成員'},
+ {slug:'talent-review',title:'人才盤點與發展實務',category:'組織與協作',description:'對齊人才盤點目的與標準，使用工作證據練習討論，將結果連結到發展行動。',audience:'人資夥伴、用人主管'}
 ];
 export const faqs=[
  {category:'AI 數位轉型',question:'企業想導入 AI，第一步應該準備什麼？',answer:'先整理一個希望改善的工作流程：目前誰在做、使用哪些資料、花費時間，以及希望改善的結果。需求交流可從這些具體情境開始，不必先選定工具。',href:'/ai-transformation'},

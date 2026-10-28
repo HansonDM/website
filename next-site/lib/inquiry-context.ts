@@ -11,7 +11,7 @@ export function resolveInquiryContext(rawTopic:unknown,rawInterest:unknown,rawFr
  const interest=planning?planningInterest(planning,focus):comparison.length?comparisonInterest(comparison):typeof rawInterest==='string'?rawInterest.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,200):'';
  const detail=detailPages.find(p=>p.topic===topic&&p.title===interest);
  const expertise=consultantExpertise.findIndex(p=>p.topic===topic&&p.title===interest);
- const teamSource=expertise>=0?{href:`/about#expertise-${expertise+1}`,label:'返回顧問團隊介紹'}:topic==='人才資產發展'&&interest==='二代接班專屬團隊'?{href:'/about#succession-team',label:'返回二代接班團隊介紹'}:null;
+ const teamSource=expertise>=0?{href:`/about#expertise-${expertise+1}`,label:'返回顧問團隊介紹'}:topic==='人才資產發展'&&['二代接班專屬團隊','二代接班協作顧問團隊'].includes(interest)?{href:'/about#succession-team',label:'返回二代接班團隊介紹'}:null;
  const community=communityTopics.find(t=>t.topic===topic&&t.title===interest);
  const from=!planning&&!comparison.length&&rawFrom==='community'&&community?'community' as const:!planning&&!comparison.length&&rawFrom==='team'&&teamSource?'team' as const:undefined;
  const source=planning?{href:planningHref(planning,focus),label:'返回需求整理'}:comparison.length?{href:comparisonHref(comparison),label:'返回內訓方向比較'}:from==='community'?{href:communityHref(community!.id),label:'返回社群交流主題'}:from==='team'?teamSource:detail?{href:`/${detail.parent}/${detail.slug}`,label:detail.kind==='article'?'返回相關文章':detail.kind==='guide'?'返回成果觀察指南':'返回內容說明'}:teamSource;

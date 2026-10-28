@@ -20,7 +20,7 @@ export const searchRecords:SearchRecord[]=[
  ...servicePlanners.map(p=>({id:`planner-${p.id}`,kind:'page' as const,title:p.title,summary:p.intro,body:[...p.conditions.map(c=>c.label),...p.prompts,'準備事項 需求整理 討論單 下載 服務方向 洽詢'].join(' '),href:planningHref(p.id),label:'需求整理工具',topic:p.topic})),
  ...detailPages.map(p=>({id:`${p.parent}/${p.slug}`,kind:p.kind,title:p.title,summary:p.intro,body:[...p.audience,...p.prepare,...p.sections.flatMap(s=>[s.title,...s.paragraphs??[],...s.bullets??[]]),...p.faq?.flatMap(f=>[f.question,f.answer])??[]].join(' '),href:`/${p.parent}/${p.slug}`,label:p.kind==='article'?'文章 · 內容初稿':p.kind==='course'?'企業內訓 · 規劃方向':p.kind==='partnership'?'合作規劃說明':p.kind==='guide'?'成果觀察指南':'服務規劃說明',topic:p.topic})),
  ...consultantExpertise.map((p,i)=>({id:`team-${i+1}`,kind:'page' as const,title:p.title,summary:p.description,body:p.areas.join(' '),href:'/about#team',label:'顧問團隊專長',topic:p.topic})),
- {id:'succession-team',kind:'page',title:'二代接班專屬團隊',summary:'從世代期待對齊、角色與權責調整，到人才培育與轉型落地，整合專業協助釐清接班課題。',body:'企業診斷 專案管理 跨部門溝通 人才發展 一代二代 經驗傳承',href:'/about#succession-team',label:'顧問團隊協作',topic:'人才資產發展'},
+ {id:'succession-team',kind:'page',title:'二代接班協作顧問團隊',summary:'從世代期待對齊、角色與權責調整，到人才培育與轉型落地，整合專業協助釐清接班課題。',body:'企業診斷 專案管理 跨部門溝通 人才發展 一代二代 經驗傳承 二代接班專屬團隊',href:'/about#succession-team',label:'顧問團隊協作',topic:'人才資產發展'},
  ...faqs.map((f,i)=>({id:`faq-${i+1}`,kind:'faq' as const,title:f.question,summary:f.answer,body:'',href:`/knowledge#faq-${i+1}`,label:'常見問題',topic:f.category})),
  {id:'privacy',kind:'page',title:'資料使用告知',summary:'說明洽詢資料用途、保存原則、雲端處理流程及資料權利聯絡方式。',body:'資料查詢 更正 刪除 隱私 Smartsheet',href:'/privacy',label:'資料使用告知',topic:'聯絡與預約'},
 ];
