@@ -1,6 +1,6 @@
 export const webChat={
  url:'https://hansondm.app.n8n.cloud/webhook/hanson-website-webchat-v1',
- bot:'hansondm-line-191nfqkp',corpusVersion:'9573a18beda9b69d053ed3d7987f9d9d342165b83f833b28630a3fc3d4c69beb',version:'2026-10-28-webchat-v1',noticeUrl:'/privacy/#webchat',
+ bot:'hansondm-line-191nfqkp',corpusVersion:'6b74e5c5a60042cdf9d70b2ec8b5cb7314c33b3a5d072dd7cd5c7fc25822d76f',version:'2026-10-28-webchat-v1',noticeUrl:'/privacy/#webchat',
  maxLength:2000,historyTurnLimit:12,historyCharacterLimit:12000,
 } as const;
 // Two explicitly approved public snapshots keep chat available during the Pages/n8n rollout.
