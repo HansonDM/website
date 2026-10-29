@@ -17,7 +17,7 @@ export function comparisonHref(slugs:readonly string[],hash='#compare'){
  const anchor=['#internal','#compare','#public','#custom',''].includes(hash)?hash:'#compare';
  return'/academy'+(params.size?'?'+params.toString():'')+anchor;
 }
-export function comparisonInquiryHref(slugs:readonly string[]){const ids=parseComparison(slugs.join(','));return ids.length?'/contact?'+new URLSearchParams({topic:'企業內訓',compare:ids.join(',')}).toString()+'#inquiry':'/contact?topic='+encodeURIComponent('企業內訓')+'#inquiry';}
+export function comparisonInquiryHref(slugs:readonly string[]){const ids=parseComparison(slugs.join(','));return ids.length?'/contact?'+new URLSearchParams({t:'training',compare:ids.join(',')}).toString()+'#inquiry':'/contact/?t=training#inquiry';}
 export function courseMatches(slug:string,query:string){
  const course=courseProfiles.find(c=>c.slug===slug);if(!course)return false;
  const normalize=(text:string)=>text.normalize('NFKC').toLowerCase().replace(/\s/g,'');

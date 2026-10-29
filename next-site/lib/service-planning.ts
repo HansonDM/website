@@ -1,3 +1,4 @@
+import {inquiryTopicCode} from './inquiry-codes';
 import {detailPages} from './detail-content';
 
 export const planningLimit=3;
@@ -24,5 +25,5 @@ export function parsePlanningFocus(value:unknown,raw:unknown):string[]{
 export function planningSelection(value:unknown,ids:readonly string[]){return parsePlanningFocus(value,ids.join(',')).map(slug=>planningOptions(value).find(p=>p.slug===slug)!);}
 export function planningInterest(value:unknown,ids:readonly string[]){const plan=servicePlanner(value);return planningSelection(value,ids).map(p=>p.title).join('／')||(plan?`${plan.topic}需求整理`:'');}
 export function planningHref(value:unknown,ids:readonly string[]=[]){const plan=servicePlanner(value);if(!plan)return'/contact#inquiry';const focus=parsePlanningFocus(plan.id,ids.join(',')),query=new URLSearchParams();if(focus.length)query.set('focus',focus.join(','));return`/${plan.parent}`+(query.size?'?'+query.toString():'')+'#'+plan.anchor;}
-export function planningInquiryHref(value:unknown,ids:readonly string[]){const plan=servicePlanner(value);if(!plan)return'/contact#inquiry';const query=new URLSearchParams({topic:plan.topic,planning:plan.id});const focus=parsePlanningFocus(plan.id,ids.join(','));if(focus.length)query.set('focus',focus.join(','));return'/contact?'+query.toString()+'#inquiry';}
+export function planningInquiryHref(value:unknown,ids:readonly string[]){const plan=servicePlanner(value);if(!plan)return'/contact#inquiry';const query=new URLSearchParams({t:inquiryTopicCode(plan.topic)!,planning:plan.id});const focus=parsePlanningFocus(plan.id,ids.join(','));if(focus.length)query.set('focus',focus.join(','));return'/contact?'+query.toString()+'#inquiry';}
 export function planningBrief(value:unknown,ids:readonly string[],ready:readonly string[]){const plan=servicePlanner(value);if(!plan)return'';const selected=planningSelection(plan.id,ids);return['韓森管理顧問有限公司｜'+plan.topic+'需求討論單','供需求交流準備使用，非正式評鑑或服務方案承諾。','此文件由裝置產生；下載不代表已送出洽詢。','','一、想討論的服務方向',...(selected.length?selected.map(p=>'・'+p.title):['尚未選定，可先討論目前的課題。']),'','二、準備事項',...plan.conditions.flatMap(c=>[`${ready.includes(c.id)?'已整理':'待確認'}：${c.label}`,...(ready.includes(c.id)?[]:['建議：'+c.next])]),'','三、可補充的討論資訊',...plan.prompts,'','請勿在討論單填入員工個別評量結果、客戶資料或機密內容。','準備事項不會自動帶入洽詢表單；可自行決定要分享的內容。','正式接收狀態請以網站洽詢頁顯示為準。'].join('\n');}

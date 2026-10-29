@@ -1,6 +1,6 @@
 export const brandVideo = {
   "src": "/media/hanson-brand-v2.mp4",
-  "poster": "/media/hanson-brand-v2-poster.jpg",
+  "poster": "/media/hanson-brand-v2-poster.webp",
   "subtitles": "/media/hanson-brand-v2.zh-TW.vtt",
   "title": "一起打開職場新可能",
   "durationLabel": "約 69 秒・繁體中文字幕",

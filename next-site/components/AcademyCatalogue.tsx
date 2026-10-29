@@ -1,4 +1,6 @@
 'use client';
+import {VoiceInput} from '@/components/VoiceField';
+
 import ParticipationPanel from './ParticipationPanel';
 import DiscussionPrint from './DiscussionPrint';
 import {useCallback,useEffect,useRef,useState} from 'react';
@@ -25,7 +27,7 @@ export default function AcademyCatalogue({initialComparison=[]}:{initialComparis
   <noscript><style>{`.interior-academy .academy-search,.interior-academy #internal .filter-row,.interior-academy .academy-results-note,.interior-academy .course-select,.interior-academy .course-comparison,.interior-academy .section-links a[href="#compare"],.interior-academy .academy-tools-note,.interior-academy .academy-browse-actions{display:none}`}</style><p className="notice academy-reading-notice">目前可直接閱讀六個內訓方向與課程規劃。查找、比較、分享與下載需啟用瀏覽器 JavaScript；公開班尚未公告，洽詢是否可送出以表單顯示為準。</p></noscript>
   {!ready&&<p className="notice academy-tools-note">內訓方向可直接閱讀；查找與比較工具需啟用網站腳本。</p>}
   <section id="internal" className="interior-section"><div className="interior-section-heading"><p className="eyebrow">CORPORATE LEARNING</p><h2>企業內訓，從工作現場出發。</h2><p>以下為可討論的內訓方向，實際課綱、講師、時數與費用依需求確認。可先選擇最多三項，比較學習目標與適合對象。</p></div>
-   <label className="knowledge-search academy-search">查找內訓方向<input disabled={!ready} type="search" maxLength={120} value={query} onChange={e=>navigate({query:e.target.value},'replace','#internal')} placeholder="例如：主管、流程、人才盤點"/></label>
+   <label className="knowledge-search academy-search">查找內訓方向<VoiceInput voiceLabel="查找內訓方向" disabled={!ready} type="search" maxLength={120} value={query} onChange={e=>navigate({query:e.target.value},'replace','#internal')} placeholder="例如：主管、流程、人才盤點"/></label>
    <div className="filter-row" aria-label="內訓方向分類">{academyCategories.map(t=><button disabled={!ready} type="button" key={t.id} aria-pressed={t.id===category} onClick={()=>navigate({category:t.id},'push','#internal')}>{t.label}</button>)}</div>
    <div className="academy-results-note"><p className="result-count" role="status">找到 {results.length} 個方向 · 已選 {selected.length} / {comparisonLimit} 項比較</p><a className="detail-link" href="#compare">查看已選方向 ↓</a></div>
    <div className="direction-grid">{results.map(c=><article className="direction-card" key={c.title}><p className="category-label">{c.category} · 內訓規劃</p><h3>{c.title}</h3><p>{c.description}</p><dl><dt>適合對象</dt><dd>{c.audience}</dd></dl><Link className="outline-link" href={`/academy/${c.slug}`}>查看課程規劃 <span>→</span></Link><Link href={inquiryHref('企業內訓',c.title)}>討論這個內訓方向 <span>→</span></Link><button className="course-select" type="button" aria-pressed={selected.includes(c.slug)} disabled={!ready||(!selected.includes(c.slug)&&selected.length>=comparisonLimit)} onClick={()=>toggle(c.slug)}>{selected.includes(c.slug)?'已加入比較 ✓':'加入比較 ＋'}<span className="sr-only">：{c.title}</span></button></article>)}</div>

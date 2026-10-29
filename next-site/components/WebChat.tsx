@@ -1,4 +1,6 @@
 'use client';
+import {VoiceTextarea} from '@/components/VoiceField';
+
 
 import {useEffect,useRef,useState,type FormEvent} from 'react';
 import {webChat,chatReady,chatReply,chatHistory,chatLink,type ChatTurn} from '@/lib/webchat';
@@ -17,10 +19,10 @@ export default function WebChat(){
  useEffect(()=>{if(!open)return;const overflow=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=overflow;};},[open]);
 
  async function check(){
-  capability.current?.abort();const controller=new AbortController();capability.current=controller;setChecking(true);setAvailable(false);setNote('正在確認聊天連線…');
+  capability.current?.abort();const controller=new AbortController();capability.current=controller;setChecking(true);setAvailable(false);setNote('正在確認聊天連線（最長約 10 秒）…');
   const timer=setTimeout(()=>controller.abort(),10000);
   try{const r=await fetch(webChat.url,{method:'GET',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error',cache:'no-store',signal:controller.signal});const valid=r.ok&&chatReady(await r.json());if(!alive.current||capability.current!==controller)return;setAvailable(valid);setNote(valid?'': '本分頁目前無法確認聊天服務，請稍後重新確認，或使用聯絡頁。');}
-  catch{if(alive.current&&capability.current===controller)setNote('本分頁目前無法確認聊天連線；未送出任何訊息。');}
+  catch{if(alive.current&&capability.current===controller)setNote('本分頁在 10 秒內未能確認聊天連線或連線失敗；可按「重新確認聊天連線」。未送出任何訊息。');}
   finally{clearTimeout(timer);if(alive.current&&capability.current===controller){setChecking(false);capability.current=null;}}
  }
  function show(){if(!ready||!dialog.current?.showModal)return;setOpen(true);dialog.current.showModal();if(!available&&!checking)void check();}
@@ -41,7 +43,7 @@ export default function WebChat(){
  function fresh(){if(inFlight.current)return;epoch.current++;session.current='';setTurns([]);setDraft('');setNote('已清除本分頁對話，尚未送出新訊息。');input.current?.focus();}
 
  return <div className="hanson-webchat">
-  <button ref={launcher} className="webchat-launcher" type="button" disabled={!ready} onClick={show} aria-haspopup="dialog" aria-controls="hanson-webchat-dialog" aria-expanded={open}><span aria-hidden="true">✦</span>韓森 AI 顧問</button>
+  <button ref={launcher} className="webchat-launcher" type="button" disabled={!ready} onClick={show} title="開啟韓森 AI 顧問" aria-label="韓森 AI 顧問" aria-haspopup="dialog" aria-controls="hanson-webchat-dialog" aria-expanded={open}><span aria-hidden="true">✦</span><span className="webchat-launcher-label">韓森 AI 顧問</span></button>
   <noscript><a className="webchat-noscript" href="/contact/#inquiry">聊天需啟用 JavaScript；可至聯絡頁洽詢。</a></noscript>
   <dialog ref={dialog} id="hanson-webchat-dialog" className="webchat-dialog" aria-labelledby="webchat-title" aria-describedby="webchat-description" onClose={closed} onCancel={()=>{}}>
    <div className="webchat-heading"><div><p className="eyebrow">HANSON · SHARED KNOWLEDGE</p><h2 id="webchat-title">韓森 AI 顧問</h2></div><button type="button" className="webchat-close" aria-label="關閉韓森 AI 顧問" onClick={()=>dialog.current?.close()} autoFocus>×</button></div>
@@ -55,7 +57,7 @@ export default function WebChat(){
    <form onSubmit={submit} className="webchat-form">
     <label className="webchat-consent"><input type="checkbox" checked={consent} disabled={busy} onChange={e=>setConsent(e.target.checked)}/><span>我已閱讀<a href={webChat.noticeUrl} target="_blank" rel="noopener noreferrer">聊天資料說明</a>，同意將訊息及本分頁近期對話送至 n8n、OpenAI 與 Pinecone 處理。</span></label>
     <label htmlFor="webchat-question">想討論的問題（最多2,000字）</label>
-    <textarea ref={input} id="webchat-question" value={draft} maxLength={webChat.maxLength} rows={3} disabled={busy} required onChange={e=>setDraft(e.target.value)} placeholder="例如：我們想導入 AI，該先從哪個工作流程開始？"/>
+    <VoiceTextarea voiceLabel="想討論的問題（最多2,000字）" ref={input} id="webchat-question" value={draft} maxLength={webChat.maxLength} rows={3} disabled={busy} required onChange={e=>setDraft(e.target.value)} placeholder="例如：我們想導入 AI，該先從哪個工作流程開始？"/>
     <p className="webchat-data-note">請勿輸入密碼、員工個資、機密文件或私人管理連結。對話僅留在本分頁記憶體，重新整理會清除；不與 LINE 私人對話合併。</p>
     <div className="webchat-actions"><button type="submit" disabled={!ready||!available||!consent||!draft.trim()||busy}>{busy?'回覆中…':'送出問題 →'}</button><button type="button" disabled={busy||!turns.length} onClick={fresh}>清除本分頁對話</button></div>
    </form>

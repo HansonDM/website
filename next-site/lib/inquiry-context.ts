@@ -4,6 +4,17 @@ import {consultantExpertise} from './consultant-team';
 import {communityTopics,communityHref} from './community-content';
 import {inquiryTopics} from './form-fields';
 import {parseComparison,comparisonInterest,comparisonHref} from './academy-planning';
+import {inquiryTopicCodes} from './inquiry-codes';
+/** Legacy links remain valid. Reject repeated, conflicting or unknown compact identifiers. */
+export function resolveInquiryQuery(values:URLSearchParams){
+ const one=(key:string)=>{const all=values.getAll(key);return all.length===1?all[0]:undefined;};
+ const short=one('t'),ref=one('ref'),detail=ref?detailPages.find(p=>p.parent+'/'+p.slug===ref):undefined;
+ const invalid=values.has('t')&&(!short||!Object.hasOwn(inquiryTopicCodes,short)||values.has('topic'))||values.has('ref')&&(!detail||values.has('interest'));
+ if(invalid)return resolveInquiryContext(undefined,undefined);
+ const topic=short?inquiryTopicCodes[short]:one('topic');
+ if(detail&&detail.topic!==topic)return resolveInquiryContext(undefined,undefined);
+ return resolveInquiryContext(topic,detail?.title??one('interest'),one('from'),one('compare'),one('planning'),one('focus'));
+}
 export function resolveInquiryContext(rawTopic:unknown,rawInterest:unknown,rawFrom?:unknown,rawComparison?:unknown,rawPlanning?:unknown,rawFocus?:unknown){
  const topic=typeof rawTopic==='string'&&(inquiryTopics as readonly string[]).includes(rawTopic)?rawTopic:'';
  const planner=servicePlanner(rawPlanning);const planning=planner?.topic===topic?planner.id:undefined;const focus=planning?parsePlanningFocus(planning,rawFocus):[];

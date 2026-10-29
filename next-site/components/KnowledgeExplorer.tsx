@@ -1,4 +1,6 @@
 'use client';
+import {VoiceInput} from '@/components/VoiceField';
+
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {useKnowledgeQuery,useKnowledgeReady} from './KnowledgeQueryProvider';
 import Link from 'next/link';
@@ -28,7 +30,7 @@ export default function KnowledgeExplorer(){
  const expand=(open:boolean)=>list.current?.querySelectorAll('details').forEach(item=>{item.open=open;});
  const copy=async(id:string)=>{const path=faqQuestionHref(id);if(!path)return;const epoch=++shareEpoch.current,source=window.location.href,url=new URL(path,'https://www.hansondm.com').href;setShare(null);try{await navigator.clipboard.writeText(url);if(epoch===shareEpoch.current&&source===window.location.href)setShare({id,url,message:'問題網址已複製，只包含這則公開問答。'});}catch{if(epoch===shareEpoch.current&&source===window.location.href)setShare({id,url,message:'請複製下方的問題網址。'});}};
  return <section className="interior-section faq-explorer" id="faq" aria-labelledby="faq-title"><div className="interior-section-heading"><p className="eyebrow">COMMON QUESTIONS</p><h2 id="faq-title">開始之前，你可能想知道。</h2><p>從需求準備、工具使用到洽詢流程，先了解常見問題；也可用上方內容搜尋查找。</p></div>
-  <form role="search" aria-label="常見問題查找" className="site-search-form" onSubmit={e=>{e.preventDefault();update(cleanSearchQuery(query),category);}}><label className="knowledge-search" htmlFor="faq-query">查找常見問題<input disabled={!ready} id="faq-query" type="search" maxLength={120} value={query} placeholder="例如：企業知識、主管培育、合作" onChange={e=>{setQuery(e.target.value);resetShare();}}/></label><button disabled={!ready} className="button teal-button" type="submit">查找問題 →</button></form>
+  <form role="search" aria-label="常見問題查找" className="site-search-form" onSubmit={e=>{e.preventDefault();update(cleanSearchQuery(query),category);}}><label className="knowledge-search" htmlFor="faq-query">查找常見問題<VoiceInput voiceLabel="查找常見問題" disabled={!ready} id="faq-query" type="search" maxLength={120} value={query} placeholder="例如：企業知識、主管培育、合作" onChange={e=>{setQuery(e.target.value);resetShare();}}/></label><button disabled={!ready} className="button teal-button" type="submit">查找問題 →</button></form>
   <div className="filter-row" role="group" aria-label="常見問題分類">{faqCategories.map(c=><button disabled={!ready} type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>update(cleanSearchQuery(query),c.id)}>{c.label}（{c.id==='all'?faqEntries.length:faqEntries.filter(f=>f.categoryId===c.id).length}）</button>)}</div>
   <div className="faq-tools"><p className="result-count" role="status" aria-live="polite">找到 {results.length} 則常見問題</p><div>{results.length>0&&<><button disabled={!ready} type="button" className="receipt-action" onClick={()=>expand(true)}>展開目前問題</button><button disabled={!ready} type="button" className="receipt-action" onClick={()=>expand(false)}>收合目前問題</button></>}{(query||category!=='all')&&<button disabled={!ready} type="button" className="receipt-action" onClick={()=>update('','all')}>重設問題篩選</button>}</div></div>
   <p className="notice">分類與查找條件可保留在網址，請勿輸入個人或機密資料。複製單題網址只分享該問答，不包含查找文字；不會送出洽詢。</p>
