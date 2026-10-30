@@ -1,5 +1,6 @@
 import {detailPages,type ContentDetail} from './detail-content';
 import {inquiryHref} from './inquiry-links';
+import {publicChannels} from './public-channels';
 
 export const communityTopics=[
  {id:'ai-practice',title:'AI 應用與流程實作',topic:'AI 數位轉型',en:'AI IN EVERYDAY WORK',intro:'從一個反覆發生的工作任務，找到可以一起交流的 AI 與流程改善議題。',paragraphs:['先把工作現況說清楚：誰在什麼時候需要哪些資料、目前如何處理、哪些步驟需要判斷。讓交流從具體情境開始，再討論 AI、工具或自動化的角色。','釐清流程後，可以對照導入規劃與自動化服務，或從內訓方向了解團隊需要練習的能力。實際範圍與安排再依需求確認。'],prompts:['選一個想先改善的高頻任務','整理資料來源、操作角色與例外情境','描述希望觀察的工作改變'],resources:['/knowledge/start-with-one-workflow','/ai-transformation/adoption','/ai-transformation/automation','/academy/workflow-automation']},
@@ -11,7 +12,7 @@ export function communityHref(value:unknown){const topic=communityTopic(value);r
 export function communityInquiryHref(value:unknown){const topic=communityTopic(value);return topic?inquiryHref(topic.topic,topic.title,'community'):'/contact#inquiry';}
 export function communityResources(value:unknown):ContentDetail[]{const topic=communityTopic(value);return topic?topic.resources.map(href=>detailPages.find(p=>`/${p.parent}/${p.slug}`===href)).filter((p):p is ContentDetail=>!!p&&p.kind!=='article'):[];}
 export const communityFaq=[
- {question:'目前可以直接加入官方社群嗎？',answer:'已確認的 X 帳號可從官方平台區開啟；其他平台待確認後提供入口，也可先從主題內容了解服務與交流方向。'},
+ {question:'目前可以直接加入官方社群嗎？',answer:`本頁已提供 ${publicChannels.map(channel=>channel.name).join('、')} 入口。LINE 為韓森管理顧問官方帳號，YouTube 為企業解憂事務所節目頻道；Facebook 與 Instagram 為林明輝個人帳號。加入好友、追蹤或訂閱請在各平台自行操作。`},
  {question:'閱讀文章或選擇主題，會自動訂閱通知嗎？',answer:'不會。主題選擇只用來瀏覽本站公開內容，不會建立會員、訂閱通知或送出個人資料。'},
  {question:'想進一步交流，需要準備什麼？',answer:'可先整理想討論的工作情境、對象與期待，再從主題前往洽詢。表單會顯示當下接收狀態；提出需求不代表已加入社群、報名活動或完成預約。'}
 ];
