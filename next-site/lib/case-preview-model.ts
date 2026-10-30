@@ -1,4 +1,4 @@
-export type CasePreviewEntry={id:string;group:'company'|'experience';categories:string[];name:string;title:string;summary:string;approach:string[];role:string;status:string;note:string;related:string[]};
+export type CasePreviewEntry={id:string;group:'company'|'experience';categories:string[];name:string;title:string;summary:string;approach:string[];outputs?:string[];role:string;status:string;note:string;related:string[]};
 export function filterCasePreview(entries:CasePreviewEntry[],group:CasePreviewEntry['group'],category:string){return entries.filter(e=>e.group===group&&(category==='all'||e.categories.includes(category)));}
 export function caseTopicEntry(value:unknown,entries:readonly CasePreviewEntry[]){return typeof value==='string'?entries.find(e=>e.id===value&&/^(company|experience)-\d{2}$/.test(e.id)&&e.id.startsWith(e.group+'-')):undefined;}
 export function caseTopicHref(value:unknown,entries:readonly CasePreviewEntry[]){const entry=caseTopicEntry(value,entries);return entry?'/cases#'+entry.id:null;}

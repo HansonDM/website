@@ -32,7 +32,7 @@ export const searchRecords:SearchRecord[]=[
 export function cleanSearchQuery(value:unknown){return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,120):'';}
 export function searchKind(value:unknown):SearchKind{return searchKinds.some(k=>k.value===value)?value as SearchKind:'all';}
 function normalize(text:string){return text.normalize('NFKC').toLocaleLowerCase('zh-TW').replace(/人工智慧|人工智能/g,'ai').replace(/\s/g,'');}
-export function caseSearchRecords(entries:readonly CasePreviewEntry[]):SearchRecord[]{return entries.flatMap(entry=>{const href=caseTopicHref(entry.id,entries);if(!href)return[];return[{id:'case-'+entry.id,kind:entry.group==='company'?'company-case' as const:'consultant-experience' as const,title:entry.title,summary:entry.summary,body:[entry.name,entry.status,entry.role,...entry.approach,entry.note].join(' '),href,label:entry.group==='company'?'公司專案題材 · 匿名':'顧問歷任經驗 · 匿名',topic:entry.role}];});}
+export function caseSearchRecords(entries:readonly CasePreviewEntry[]):SearchRecord[]{return entries.flatMap(entry=>{const href=caseTopicHref(entry.id,entries);if(!href)return[];return[{id:'case-'+entry.id,kind:entry.group==='company'?'company-case' as const:'consultant-experience' as const,title:entry.title,summary:entry.summary,body:[entry.name,entry.status,entry.role,...entry.approach,...(entry.outputs??[]),entry.note].join(' '),href,label:entry.group==='company'?'公司專案題材 · 匿名':'顧問歷任經驗 · 匿名',topic:entry.role}];});}
 export function searchSite(query:string,kind:SearchKind='all',entries:readonly CasePreviewEntry[]=[]){
  const terms=cleanSearchQuery(query).split(/\s+/).filter(Boolean).map(normalize);
  return [...searchRecords,...caseSearchRecords(entries)].filter(r=>kind==='all'||r.kind===kind).map(record=>{
