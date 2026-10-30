@@ -188,3 +188,14 @@ body:has(.interior-contact) .hanson-webchat{padding:12px 6% 24px}body:has(.inter
 .lead-consultant:not(.lead-consultant-compact) .receipt-actions>a{display:inline-flex;align-items:center;min-height:48px}
 /* Keep approved social card appearance with a real native-link touch target. */
 .social-card>.receipt-action{display:inline-flex;align-items:center;min-height:48px}
+
+/* Consultant overview first; full supplied biographies stay in native disclosures. */
+.consultant-disclosure{grid-column:1/-1;min-width:0;margin-top:8px;padding-top:18px;border-top:1px solid #dce4df}
+.consultant-disclosure>summary{display:flex;align-items:center;gap:16px;min-height:48px;padding:12px 16px;border-radius:12px;background:#f1f5f2;color:var(--teal);font-size:17px;font-weight:600;cursor:pointer;list-style:none}
+.consultant-disclosure>summary::-webkit-details-marker{display:none}
+.consultant-disclosure>summary>span{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;min-width:0}
+.consultant-disclosure>summary small{font-size:13px;font-weight:400;color:var(--muted)}
+.consultant-disclosure>summary::after{content:'＋';margin-left:auto;font-size:22px;line-height:1;flex-shrink:0}
+.consultant-disclosure[open]>summary::after{content:'－'}
+.consultant-disclosure>summary:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+.consultant-disclosure .lead-profile-details{margin-top:24px}
