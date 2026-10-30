@@ -12,7 +12,7 @@ export function communityHref(value:unknown){const topic=communityTopic(value);r
 export function communityInquiryHref(value:unknown){const topic=communityTopic(value);return topic?inquiryHref(topic.topic,topic.title,'community'):'/contact#inquiry';}
 export function communityResources(value:unknown):ContentDetail[]{const topic=communityTopic(value);return topic?topic.resources.map(href=>detailPages.find(p=>`/${p.parent}/${p.slug}`===href)).filter((p):p is ContentDetail=>!!p&&p.kind!=='article'):[];}
 export const communityFaq=[
- {question:'目前可以直接加入官方社群嗎？',answer:`本頁已提供 ${publicChannels.map(channel=>channel.name).join('、')} 入口。LINE 為韓森管理顧問官方帳號，YouTube 為企業解憂事務所節目頻道；Facebook 與 Instagram 為林明輝個人帳號。加入好友、追蹤或訂閱請在各平台自行操作。`},
+ {question:'目前可以直接加入官方社群嗎？',answer:`本頁已提供 ${publicChannels.map(channel=>channel.name).join('、')} 入口。LINE 為韓森管理顧問官方帳號，YouTube 為企業解憂事務所節目頻道；Facebook 與 Instagram 為林明輝個人帳號，LinkedIn 為個人專業檔案。加入好友、追蹤或訂閱請在各平台自行操作。`},
  {question:'閱讀文章或選擇主題，會自動訂閱通知嗎？',answer:'不會。主題選擇只用來瀏覽本站公開內容，不會建立會員、訂閱通知或送出個人資料。'},
  {question:'想進一步交流，需要準備什麼？',answer:'可先整理想討論的工作情境、對象與期待，再從主題前往洽詢。表單會顯示當下接收狀態；提出需求不代表已加入社群、報名活動或完成預約。'}
 ];
