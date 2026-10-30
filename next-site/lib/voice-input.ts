@@ -23,3 +23,10 @@ export function voiceError(code:string){return({
  network:'語音辨識連線失敗，沒有自動重試；可重新開始或改用鍵盤輸入。',
  'language-not-supported':'目前的辨識服務未支援繁體中文，可改用裝置鍵盤的語音輸入。'
 } as Record<string,string>)[code]??'目前無法完成語音辨識，可重新開始或使用鍵盤；原欄位未改動。';}
+
+export const voiceRecognitionLimits={segmentMs:60000,stalledMs:15000,startMs:10000,stopMs:2500} as const;
+export type VoiceStopReason='manual'|'limit'|'stalled'|'ended';
+export function voiceStopNote(reason:VoiceStopReason){
+ const prefix={manual:'麥克風已停止',limit:'已達本段60秒，麥克風已停止',stalled:'15秒未收到新辨識文字，已停止本段',ended:'瀏覽器已結束本段辨識'}[reason];
+ return prefix+'；目前文字已保留，可再次按「開始語音輸入」接續，或先核對後填入。原欄位尚未改動。';
+}
