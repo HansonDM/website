@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
+import tempfile
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -91,15 +92,68 @@ def download():
             if attempt == 2: raise
             time.sleep(2 * (attempt + 1))
 
+def latest_publication(snapshot):
+    if (not isinstance(snapshot, dict) or snapshot.get('showTitle') != '企業解憂事務所'
+            or snapshot.get('feedUrl') != FEED_URL or snapshot.get('showUrl') != SHOW_URL
+            or not isinstance(snapshot.get('episodes'), list) or not snapshot['episodes']
+            or snapshot.get('latest') != snapshot['episodes'][0]):
+        raise ValueError('INVALID_PODCAST_SNAPSHOT')
+    try:
+        published = datetime.fromisoformat(snapshot['latest']['publishedAt'].replace('Z', '+00:00'))
+        if published.tzinfo is None: raise ValueError('Missing publication timezone')
+        return published.astimezone(timezone.utc)
+    except (KeyError, TypeError, AttributeError, ValueError) as error:
+        raise ValueError('INVALID_PODCAST_PUBLICATION') from error
+
+def stage_snapshot(target, raw):
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.' + target.name + '.',
+                                     suffix='.tmp', delete=False) as stream:
+        temporary = Path(stream.name)
+        try:
+            stream.write(raw)
+            stream.flush()
+        except Exception:
+            temporary.unlink(missing_ok=True)
+            raise
+    return temporary
+
 def write_snapshot(snapshot):
-    # Fully validate before replacing either output. Failed fetches stop deployment.
-    encoded = json.dumps(snapshot, ensure_ascii=False, indent=2) + '\n'
+    # Prepare both outputs before replacing either. A caught I/O failure restores
+    # replaced files; this is not a cross-file transaction or crash recovery.
+    incoming = latest_publication(snapshot)
+    encoded = (json.dumps(snapshot, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
     targets = [ROOT / 'lib/podcast-feed.json', ROOT / 'public/podcast-status.json']
-    for target in targets:
-        target.parent.mkdir(parents=True, exist_ok=True)
-        temporary = target.with_suffix('.json.tmp')
-        temporary.write_text(encoded, encoding='utf-8')
-        temporary.replace(target)
+    previous = {target: target.read_bytes() if target.exists() else None for target in targets}
+    for raw in previous.values():
+        if raw is not None and incoming < latest_publication(json.loads(raw)):
+            raise ValueError('RSS_LATEST_EPISODE_REGRESSION')
+    staged = {}; replaced = []; temporary_files = []
+    try:
+        for target in targets:
+            staged[target] = stage_snapshot(target, encoded)
+            temporary_files.append(staged[target])
+        for target in targets:
+            staged[target].replace(target)
+            replaced.append(target)
+    except Exception as error:
+        rollback_errors = []
+        for target in reversed(replaced):
+            try:
+                if previous[target] is None:
+                    target.unlink(missing_ok=True)
+                else:
+                    restore = stage_snapshot(target, previous[target])
+                    temporary_files.append(restore)
+                    restore.replace(target)
+            except Exception as rollback_error:
+                rollback_errors.append(rollback_error)
+        if rollback_errors:
+            raise RuntimeError('PODCAST_SNAPSHOT_ROLLBACK_FAILED: inspect both outputs before rebuilding') from error
+        raise
+    finally:
+        for temporary in temporary_files:
+            temporary.unlink(missing_ok=True)
 
 if __name__ == '__main__':
     argparse.ArgumentParser(description=__doc__).parse_args()
