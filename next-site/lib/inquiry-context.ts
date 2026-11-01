@@ -26,5 +26,5 @@ export function resolveInquiryContext(rawTopic:unknown,rawInterest:unknown,rawFr
  const community=communityTopics.find(t=>t.topic===topic&&t.title===interest);
  const from=!planning&&!comparison.length&&rawFrom==='community'&&community?'community' as const:!planning&&!comparison.length&&rawFrom==='team'&&teamSource?'team' as const:undefined;
  const source=planning?{href:planningHref(planning,focus),label:'返回需求整理'}:comparison.length?{href:comparisonHref(comparison),label:'返回內訓方向比較'}:from==='community'?{href:communityHref(community!.id),label:'返回社群交流主題'}:from==='team'?teamSource:detail?{href:`/${detail.parent}/${detail.slug}`,label:detail.kind==='article'?'返回相關文章':detail.kind==='guide'?'返回成果觀察指南':'返回內容說明'}:teamSource;
- return{topic,interest,source,from,comparison,planning,focus,isCourse:comparison.length>0||detail?.kind==='course',isDraftArticle:detail?.kind==='article',isGuide:detail?.kind==='guide'};
+ return{topic,interest,source,from,comparison,planning,focus,isCourse:comparison.length>0||detail?.kind==='course',isDraftArticle:detail?.kind==='article',isApprovedArticle:detail?.kind==='article'&&detail.editorialStatus==='approved-review',isGuide:detail?.kind==='guide'};
 }

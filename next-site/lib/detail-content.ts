@@ -2,8 +2,9 @@ import {aiServices,talentServices,academyDirections} from './interior-content';
 import {extendedServiceDetails} from './extended-services';
 import {partnershipDetails} from './partnership-planning';
 import {caseGuideDetails} from './case-guides';
-export type ContentSection={title:string;paragraphs?:string[];bullets?:string[]};
-export type ContentDetail={parent:string;slug:string;title:string;en:string;intro:string;kind:'service'|'course'|'article'|'partnership'|'guide';label:string;audience:string[];sections:ContentSection[];prepare:string[];topic:string;faq?:{question:string;answer:string}[];related?:{href:string;title:string}[]};
+import {approvedArticleDetails} from './approved-articles-v2';
+export type ContentSection={title:string;paragraphs?:string[];bullets?:string[];after?:string[]};
+export type ContentDetail={parent:string;slug:string;title:string;en:string;intro:string;kind:'service'|'course'|'article'|'partnership'|'guide';label:string;audience:string[];sections:ContentSection[];prepare:string[];topic:string;faq?:{question:string;answer:string}[];related?:{href:string;title:string}[];editorialStatus?:'approved-review';opening?:string[];exerciseTitle?:string;cta?:string;references?:{number:number;title:string;url:string;note:string}[]};
 const aiExtras:Record<string,{audience:string[];situation:string;work:string[];prepare:string[]}>={
  adoption:{audience:['希望從第一個 AI 應用開始的企業','需要整合部門導入需求的主管'],situation:'已經試過幾種工具，卻還不確定哪些工作適合導入；各部門期待不同，也缺少共同的優先順序。',work:['選出一項範圍明確、可以比較前後差異的工作','整理任務步驟、資料來源與必須由人判斷的部分','討論試行目標、參與角色與檢視方法'],prepare:['一個希望改善的任務與目前做法','負責部門、參與角色及可投入的時間','可供討論的去識別化資料範例']},
  automation:{audience:['需要處理跨系統資料的營運團隊','希望減少重複輸入與追蹤工作的流程負責人'],situation:'表單填完仍要人工建檔，資訊在多個工具間搬移；流程出錯時，也不容易知道哪個環節需要處理。',work:['畫出觸發、資料處理、判斷與通知節點','確認每個系統的資料欄位、存取條件及負責人','規劃重複事件處理、失敗提示與人工補救路徑'],prepare:['目前使用的系統清單與流程示意','常見錯誤、例外情境與人工處理方式','系統管理窗口與資料可使用範圍']},
@@ -92,26 +93,8 @@ const coursePracticeNotes:Record<string,string[]>={
  ]
 };
 const courseDetails:ContentDetail[]=coursePlans.map((plan,i)=>{const direction=academyDirections[i];return{parent:'academy',slug:plan.slug,title:direction.title,en:'CORPORATE LEARNING',intro:direction.description,kind:'course',label:'企業內訓方向規劃',audience:[direction.audience],topic:'企業內訓',prepare:['學員角色、經驗與預計人數','希望改善的工作情境與學習目標','預計期間、形式與可安排時數'],sections:[{title:'可討論的學習目標',bullets:plan.goals},{title:'建議課程模組',paragraphs:['以下為課程規劃初稿，可依學員基礎與企業情境調整。'],bullets:plan.modules},{title:'工作情境練習',paragraphs:[plan.practice,...coursePracticeNotes[plan.slug],'練習可依學員情境調整，使用的素材需先確認可分享範圍。']},{title:'課程安排方式',paragraphs:['課程時數、形式、講師、日期與費用尚未定案，依需求交流後確認。本頁為企業內訓規劃方向，不代表已公告的公開班。']}],faq:[{question:'可以調整模組與案例嗎？',answer:'可依學員基礎、工作場景及預期改變討論調整。課綱與使用素材需在課前確認。'},{question:'看完規劃頁就可以報名嗎？',answer:'目前沒有已公告的開班日期或報名名額，可先透過洽詢頁提出內訓需求；實際收件狀態以表單顯示為準，送出不代表完成報名。'}]};});
-export const articleDetails:ContentDetail[]=[
- {parent:'knowledge',slug:'start-with-one-workflow',title:'AI 導入前，先把一個工作流程說清楚',en:'AI & WORK',intro:'從具體任務、資料與檢查方式開始，讓導入討論更容易落地。',kind:'article',label:'主題文章・內容初稿',audience:['準備導入 AI 的主管','流程負責人與營運團隊'],topic:'AI 數位轉型',prepare:['選一個你最想改善的工作流程','試著寫下觸發、輸入、步驟、輸出與檢查方式'],sections:[
- {title:'先描述工作，不急著替工具命名',paragraphs:['「我們想導入 AI」是一個方向，卻還不是可以執行的需求。若能說明誰在什麼時候，拿著哪些資料，需要完成什麼工作，接下來的討論就會更具體。','例如「每週要整理多份回報，再製作主管摘要」可以拆成資料收集、格式整理、重點判讀、摘要撰寫與確認。這是假設情境，目的是練習拆解工作，不代表已發生的客戶案例。']},
- {title:'用五個問題整理現況',bullets:['什麼事件會啟動這項工作？','資料從哪裡來，是否能被使用？','哪些步驟固定，哪些需要判斷？','完成後要交給誰，以什麼格式呈現？','誰負責檢查，怎樣才算可以使用？'],paragraphs:['試著用一句話寫下：當＿＿發生時，由＿＿使用＿＿資料，完成＿＿，交由＿＿確認；若資料不足或結果無法確認，就轉由＿＿處理。']},
- {title:'先約定比較方式，再開始試行',paragraphs:['試行前可以先記錄現況，例如處理步驟、反覆修改的原因與需要人工確認的項目。試行後用同樣的方式回顧，才能看出改變發生在哪裡。','速度只是其中一項觀察。資料是否正確、工作是否更容易交接，以及例外情境是否有人接手，也應一併討論。']},
- {title:'把第一次試行當成學習起點',paragraphs:['先選一個範圍可控的任務，保留人工確認，再整理過程中發現的資料與流程問題。當團隊知道什麼有效、什麼需要調整，才更容易決定下一步。']}
- ],related:[{href:'/ai-transformation/adoption',title:'AI 導入規劃'},{href:'/ai-transformation/automation',title:'n8n 與流程自動化'}]},
- {parent:'knowledge',slug:'evidence-based-talent-conversation',title:'人才盤點之後，如何展開一場有方向的發展對話？',en:'PEOPLE & DEVELOPMENT',intro:'把工作證據、員工發展意願與主管支持放在一起，讓盤點結果連結下一步行動。',kind:'article',label:'主題文章・內容初稿',audience:['人資夥伴','帶人主管與人才發展負責人'],topic:'人才資產發展',prepare:['整理一段可具體描述的工作表現','寫下想釐清的發展需求與可提供的支持'],sections:[
- {title:'從工作證據開始，而不是從評語開始',paragraphs:['「他很有潛力」或「溝通需要加強」都還太抽象。若能回到具體任務、發生的行為與工作影響，對話就比較容易被理解，也比較容易形成共識。','對話前可以先區分觀察到的事實、自己的解讀，以及還需要詢問對方的部分。這有助於避免把尚未確認的想法當成結論。']},
- {title:'讓雙方都能說明自己的理解',bullets:['先說明對話的目的與討論範圍','分享具體情境，邀請對方補充脈絡','詢問對方想發展的能力與工作期待','確認哪些事情需要資源、練習或主管支持'],paragraphs:['發展不只有升遷，也可以是專業深化、跨部門合作或承擔新任務。先聽見員工想走的方向，再一起確認組織能提供的歷練與支持。']},
- {title:'把發展目標連結到一個工作任務',paragraphs:['發展行動可以是一個新任務、一次協作、一段練習或一場學習。關鍵是讓雙方清楚：想練習什麼、何時可以試、由誰提供支持，以及什麼時候再回顧。','評量工具能提供部分參考，但不應取代工作中的觀察與對話。是否使用工具，仍需先確認目的、授權、資料範圍與回饋方式。']},
- {title:'用回顧讓發展持續發生',paragraphs:['回顧可以從「做了什麼、學到什麼、卡在哪裡、需要什麼支持」開始。當發展安排有具體任務與檢視節點，人才盤點就比較容易連結到持續的培育。']}
- ],related:[{href:'/talent-development/inventory',title:'人才盤點與發展對話'},{href:'/talent-development/leadership',title:'領導力與管理能力'}]},
- {parent:'knowledge',slug:'training-needs-brief',title:'企業內訓需求，如何從「想上一堂課」說得更具體？',en:'LEARNING & PRACTICE',intro:'先說清楚對象、工作情境與期待改變，再討論課程主題、形式與課後支持。',kind:'article',label:'主題文章・內容初稿',audience:['企業培訓負責人','人資與部門主管'],topic:'企業內訓',prepare:['學員對象與人數','兩個具體工作情境','課後希望看見的一項行動'],sections:[
- {title:'課名相同，學習需求可能很不同',paragraphs:['同樣是溝通課，新任主管可能需要練習回饋與授權；跨部門團隊則可能需要釐清資訊交接與共同問題。先說明工作情境，才能判斷課程應把時間放在哪裡。']},
- {title:'用四個欄位完成需求摘要',bullets:['學習對象：角色、經驗、參與人數與目前基礎','工作情境：最近反覆遇到的問題或任務','期待改變：課後希望更能完成的行為','安排條件：可用時間、形式、素材與預算範圍']},
- {title:'把學習活動連到實際工作',paragraphs:['課程可以透過對話演練、案例討論或情境練習，讓學員把概念用一次。若能事先選定可分享的素材，也更容易讓課程內容貼近工作。','練習成果不必很大，一份對話準備單、流程圖或行動草案，都可以成為回到工作後繼續討論的起點。實際安排仍需依課程目標與時數確認。']},
- {title:'為課後留下一個回顧節點',paragraphs:['除了課後感受，也可以討論學員在工作中試了什麼、遇到什麼困難，以及主管如何提供支持。先約定回顧方式，讓課程更容易與團隊的日常節奏連在一起。','我們希望讓＿＿角色，在＿＿情境中，更能完成＿＿行動；可安排的時間與形式是＿＿，課後由＿＿支持與回顧。']}
- ],related:[{href:'/academy#internal',title:'六個企業內訓方向'},{href:'/academy/manager-communication',title:'主管溝通與團隊帶領'},{href:'/academy/team-collaboration',title:'跨部門協作與問題解決'}]}
-];
+export const articleDetails:ContentDetail[]=approvedArticleDetails;
+
 export const detailPages:ContentDetail[]=[...serviceDetails,...extendedServiceDetails,...courseDetails,...articleDetails,...partnershipDetails,...caseGuideDetails];
 export function findDetail(parent:string,slug:string){return detailPages.find(p=>p.parent===parent&&p.slug===slug);}
 export function detailsFor(parent:string){return detailPages.filter(p=>p.parent===parent);}
